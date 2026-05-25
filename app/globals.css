@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@layer utilities {
+    .form-error {
+        @apply text-red-600 bg-red-300 p-4 mb-4
+    }
+}
