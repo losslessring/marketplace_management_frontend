@@ -1,43 +1,16 @@
-'use client'
-
-import { Button, Link, Stack, TextField } from '@mui/material'
-import NextLink from 'next/link'
-import { useFormState } from 'react-dom'
+import AccessForm from '@/app/components/accessForm'
+import { Link } from '@mui/material'
 import createUser from './create-user'
 
 export default function Signup() {
-    const [state, formAction] = useFormState(createUser, { error: '' })
-
     return (
-        <form action={formAction} className="w-full max-w-xs">
-            <Stack spacing={2}>
-                <TextField
-                    name="email"
-                    label="Email"
-                    variant="outlined"
-                    type="email"
-                    helperText={state.error}
-                    error={!!state.error}
-                />
-                <TextField
-                    name="password"
-                    label="Password"
-                    variant="outlined"
-                    type="password"
-                    helperText={state.error}
-                    error={!!state.error}
-                />
-                <Button type="submit" variant="contained">
-                    Signup
-                </Button>
-                <Link
-                    component={NextLink}
-                    href="/auth/login"
-                    className="self-center"
-                >
-                    Login
-                </Link>
-            </Stack>
-        </form>
+        <AccessForm action={createUser} buttonText="Sign up">
+            <Link
+                href="/auth/login"
+                className="underline flex w-full justify-center"
+            >
+                Log in
+            </Link>
+        </AccessForm>
     )
 }
