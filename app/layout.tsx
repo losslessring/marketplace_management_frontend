@@ -1,4 +1,3 @@
-import { Container, CssBaseline } from '@mui/material'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import authenticated from './auth/authenticated'
@@ -24,11 +23,12 @@ export default async function RootLayout({
     return (
         <html lang="en">
             <body className={inter.className}>
-                <Providers authenticated={isAuthenticated}>
-                    <CssBaseline />
-                    <Header logout={logout} />
-                    <Container>{children}</Container>
-                </Providers>
+                <div>
+                    <Providers authenticated={isAuthenticated}>
+                        <Header logout={logout} />
+                        <div>{children}</div>
+                    </Providers>
+                </div>
             </body>
         </html>
     )

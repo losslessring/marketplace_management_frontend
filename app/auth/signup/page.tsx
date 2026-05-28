@@ -1,5 +1,5 @@
 import AccessForm from '@/app/components/accessForm'
-import { Link } from '@mui/material'
+import Link from 'next/link'
 import createUser from './create-user'
 
 export default function Signup() {
