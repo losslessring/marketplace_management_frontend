@@ -1,8 +1,9 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export default function DarkModeToggle() {
     const [isDark, setIsDark] = useState(false)
+    const isFirstRender = useRef(true)
 
     useEffect(() => {
         const saved = localStorage.getItem('darkMode')
@@ -12,7 +13,12 @@ export default function DarkModeToggle() {
     }, [])
 
     useEffect(() => {
-        localStorage.setItem('darkMode', JSON.stringify(isDark))
+        if (isFirstRender.current === false) {
+            localStorage.setItem('darkMode', JSON.stringify(isDark))
+        }
+
+        isFirstRender.current = false
+
         if (isDark) {
             document.documentElement.classList.add('dark')
             document.body.classList.add('dark:bg-black')
@@ -25,10 +31,7 @@ export default function DarkModeToggle() {
     }, [isDark])
 
     return (
-        <button
-            onClick={() => setIsDark(!isDark)}
-            // className="bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 px-4 py-2 rounded"
-        >
+        <button onClick={() => setIsDark(!isDark)}>
             {isDark ? 'Light' : 'Dark'}
         </button>
     )

@@ -12,9 +12,9 @@ export default function Header({ logout }: HeaderProps) {
     const isAuthenticated = useContext(AuthContext)
 
     return (
-        <nav className="flex">
+        <nav className="flex flex-row justify-end px-2">
             {isAuthenticated && (
-                <>
+                <div className="flex gap-2">
                     <DarkModeToggle />
                     <button
                         onClick={async () => {
@@ -23,7 +23,7 @@ export default function Header({ logout }: HeaderProps) {
                     >
                         Log out
                     </button>
-                </>
+                </div>
             )}
         </nav>
     )
