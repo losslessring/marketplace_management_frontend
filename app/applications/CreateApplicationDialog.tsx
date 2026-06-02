@@ -1,0 +1,30 @@
+import CreateApplicationForm from './CreateApplicationForm'
+
+interface CreateApplicationDialogProps {
+    open: boolean
+    handleClose: () => void
+}
+
+export default function CreateApplicationDialog({
+    open,
+    handleClose,
+}: CreateApplicationDialogProps) {
+    return (
+        <div className="w-full h-full bg-gray-800 fixed flex justify-center items-center">
+            <div className="w-full max-w-xs flex flex-col gap-2 bg-gray-600 rounded-md">
+                <div className="flex justify-end ">
+                    <button onClick={() => handleClose()}>X</button>
+                </div>
+                <div className="dialog-title">
+                    <h1>Create Application</h1>
+                </div>
+                <div className="dialog-body">
+                    <CreateApplicationForm action={() => handleClose()} />
+                </div>
+                <div className="dialog-footer">
+                    <button onClick={() => handleClose()}>Cancel</button>
+                </div>
+            </div>
+        </div>
+    )
+}

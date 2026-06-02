@@ -1,7 +1,5 @@
-import getMe from './get-me'
+import CreateApplicationButton from './applications/CreateApplicationButton'
 
 export default async function Home() {
-    const me = await getMe()
-
-    return <></>
+    return <CreateApplicationButton />
 }
