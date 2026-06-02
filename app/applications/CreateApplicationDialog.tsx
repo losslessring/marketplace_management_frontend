@@ -12,17 +12,11 @@ export default function CreateApplicationDialog({
     return (
         <div className="w-full h-full bg-gray-800 fixed flex justify-center items-center">
             <div className="w-full max-w-xs flex flex-col gap-2 bg-gray-600 rounded-md">
-                <div className="flex justify-end ">
-                    <button onClick={() => handleClose()}>X</button>
-                </div>
-                <div className="dialog-title">
+                <div className="flex justify-center text-l">
                     <h1>Create Application</h1>
                 </div>
                 <div className="dialog-body">
-                    <CreateApplicationForm action={() => handleClose()} />
-                </div>
-                <div className="dialog-footer">
-                    <button onClick={() => handleClose()}>Cancel</button>
+                    <CreateApplicationForm handleClose={() => handleClose()} />
                 </div>
             </div>
         </div>
