@@ -12,7 +12,7 @@ export default function CreateApplicationDialog({
     return (
         <div className="w-full h-full bg-gray-800 fixed flex justify-center items-center">
             <div className="w-full max-w-xs flex flex-col gap-2 bg-gray-600 rounded-md">
-                <div className="flex justify-center text-l">
+                <div className="flex justify-center text-l mt-4">
                     <h1>Create Application</h1>
                 </div>
                 <div className="dialog-body">
