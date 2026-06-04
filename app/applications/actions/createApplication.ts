@@ -1,6 +1,7 @@
 'use server'
 
 import { post } from '@/app/common/util/fetch'
+import { revalidateTag } from 'next/cache'
 
 export default async function createApplication(
     _prevState: any,
@@ -10,5 +11,6 @@ export default async function createApplication(
     if (error) {
         return { error }
     }
+    revalidateTag('applications')
     return
 }

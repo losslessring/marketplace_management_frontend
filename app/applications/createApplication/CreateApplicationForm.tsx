@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 import { useFormState } from 'react-dom'
-import createApplication from './createApplication'
+import createApplication from '../actions/createApplication'
 
 export default function CreateApplicationForm({ handleClose }: any) {
     const [state, formAction] = useFormState(createApplication, { error: '' })

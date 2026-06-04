@@ -8,7 +8,6 @@ export default function CreateApplicationButton() {
         <>
             {dialogVisible && (
                 <CreateApplicationDialog
-                    open={dialogVisible}
                     handleClose={() => setDialogVisible(false)}
                 />
             )}

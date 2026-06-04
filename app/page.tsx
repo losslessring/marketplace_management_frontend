@@ -1,5 +1,10 @@
-import CreateApplicationButton from './applications/CreateApplicationButton'
+import Applications from './applications/Applications'
 
 export default async function Home() {
-    return <CreateApplicationButton />
+    return (
+        <>
+            {/* @ts-expect-error Async Server Component */}
+            <Applications />
+        </>
+    )
 }

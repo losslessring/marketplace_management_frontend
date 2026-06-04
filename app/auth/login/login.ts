@@ -2,13 +2,16 @@
 
 import { API_URL } from '@/app/common/constants/api'
 import { getErrorMessage } from '@/app/common/util/errors'
-import { FormError } from '@/app/interfaces/form-error.interface'
+import { FormResponse } from '@/app/interfaces/form-error.interface'
 import { jwtDecode } from 'jwt-decode'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { AUTHENTICATION_COOKIE } from '../auth-cookie'
 
-export default async function login(_prevState: FormError, formData: FormData) {
+export default async function login(
+    _prevState: FormResponse,
+    formData: FormData
+) {
     const res = await fetch(`${API_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
