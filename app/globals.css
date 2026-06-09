@@ -16,4 +16,13 @@
 
     .dialog-input {@apply block w-full rounded-md bg-gray-300 text-base  px-3 py-1.5 text-stone-800 outline outline-1 -outline-offset-1 outline-gray-300  focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-blue-400}
 
+    .basic-node {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: hotpink;
+        height: 60px;
+        width: 60px;
+        cursor: pointer;
+      }
 }
