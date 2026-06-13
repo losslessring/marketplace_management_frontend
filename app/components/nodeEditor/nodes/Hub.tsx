@@ -1,6 +1,6 @@
 import useDrag from '@/app/hooks/useDrag'
 
-export default function Basic({
+export default function Hub({
     id,
     className,
     children,
@@ -11,7 +11,7 @@ export default function Basic({
     useDrag(id)
     return (
         <div id={id} className={className}>
-            Basic
+            Hub
         </div>
     )
 }

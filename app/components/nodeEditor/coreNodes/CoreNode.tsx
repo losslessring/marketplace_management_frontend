@@ -1,17 +1,19 @@
+'use client'
 import useDrag from '@/app/hooks/useDrag'
 
-export default function Basic({
+export default function CoreNode({
     id,
+    name,
     className,
-    children,
 }: React.PropsWithChildren<{
     id: string
+    name: string
     className?: string
 }>) {
     useDrag(id)
     return (
         <div id={id} className={className}>
-            Basic
+            {name}
         </div>
     )
 }
