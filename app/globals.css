@@ -28,6 +28,7 @@
         height: 60px;
         width: 60px;
         cursor: pointer;
+        user-select: none;
       }
 
       .url-node {
@@ -51,4 +52,13 @@
         border-radius: 50%;
         cursor: pointer;
       }
+
+      .draggable {
+        position: absolute;
+        z-index: 9;
+        cursor: move;
+        touch-action: none;
+    }
+   
+
 }
