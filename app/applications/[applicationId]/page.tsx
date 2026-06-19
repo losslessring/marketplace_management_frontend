@@ -21,7 +21,10 @@ export default async function SingleApplication({
         <div>
             <BackButton>Back</BackButton>
             <div className="mb-1">{application.name}</div>
-            <NodeEditor coreNodes={coreNodes}></NodeEditor>
+            <NodeEditor
+                coreNodes={coreNodes}
+                applicationId={application.id}
+            ></NodeEditor>
         </div>
     )
 }

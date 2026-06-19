@@ -1,37 +1,52 @@
+import createNode from '@/app/applications/actions/createNode'
 import { ICoreNode } from '@/app/applications/interfaces/coreNode.interface'
-import CoreNode from './coreNodes/CoreNode'
 
 export default function NodeLibrary({
     coreNodes,
     existingNodes,
+    applicationId,
     addNodeHandler,
 }: {
     coreNodes: ICoreNode[]
     existingNodes: ICoreNode[]
+    applicationId: number
     addNodeHandler: (existingNodes: ICoreNode[]) => any
 }) {
     return (
         <div className="bg-pink-300">
             <div>Node Library</div>
-            {coreNodes.map((coreNode) => (
-                <div key={coreNode.id}>
-                    <CoreNode
-                        id={String(coreNode.id)}
-                        name={coreNode.name}
-                        className="library-core-node"
-                    />
-                    <button
-                        onClick={() =>
-                            addNodeHandler([
-                                ...existingNodes,
-                                { id: coreNode.id, name: coreNode.name },
-                            ])
-                        }
-                    >
-                        Add Node
-                    </button>
-                </div>
-            ))}
+            {coreNodes.map((coreNode, index) => {
+                const currentNodeId = existingNodes.length + 1
+                return (
+                    <div key={index}>
+                        <div id={'node-library-' + currentNodeId}>
+                            {coreNode.name}
+                        </div>
+                        <button
+                            onClick={() => {
+                                addNodeHandler([
+                                    ...existingNodes,
+                                    {
+                                        id: currentNodeId,
+                                        name: coreNode.name,
+                                        positionX: 99,
+                                        positionY: 99,
+                                    },
+                                ])
+                                console.log('created node')
+                                createNode({
+                                    positionX: 99,
+                                    positionY: 99,
+                                    nodeId: currentNodeId,
+                                    applicationId,
+                                })
+                            }}
+                        >
+                            Add Node
+                        </button>
+                    </div>
+                )
+            })}
         </div>
     )
 }

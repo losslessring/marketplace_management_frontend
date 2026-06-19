@@ -4,8 +4,15 @@ import { useEffect, useState } from 'react'
 import GraphEditor from './GraphEditor'
 import NodeLibrary from './NodeLibrary'
 
-export default function NodeEditor({ coreNodes }: { coreNodes: ICoreNode[] }) {
+export default function NodeEditor({
+    coreNodes,
+    applicationId,
+}: {
+    coreNodes: ICoreNode[]
+    applicationId: number
+}) {
     const [existingNodes, setExistingNodes] = useState<ICoreNode[]>([])
+
     useEffect(() => {
         console.log(existingNodes)
     }, [existingNodes])
@@ -15,8 +22,12 @@ export default function NodeEditor({ coreNodes }: { coreNodes: ICoreNode[] }) {
                 coreNodes={coreNodes}
                 existingNodes={existingNodes}
                 addNodeHandler={setExistingNodes}
+                applicationId={applicationId}
             ></NodeLibrary>
-            <GraphEditor existingNodes={existingNodes}></GraphEditor>
+            <GraphEditor
+                existingNodes={existingNodes}
+                changeNodePositionHandler={setExistingNodes}
+            ></GraphEditor>
         </div>
     )
 }
