@@ -1,6 +1,7 @@
 'use client'
 import { ICoreNode } from '@/app/applications/interfaces/coreNode.interface'
-import { useEffect, useState } from 'react'
+import { useNodeStore } from '@/app/stores/node-store'
+import { useEffect } from 'react'
 import GraphEditor from './GraphEditor'
 import NodeLibrary from './NodeLibrary'
 
@@ -11,7 +12,8 @@ export default function NodeEditor({
     coreNodes: ICoreNode[]
     applicationId: number
 }) {
-    const [existingNodes, setExistingNodes] = useState<ICoreNode[]>([])
+    // const [existingNodes, setExistingNodes] = useState<ICoreNode[]>([])
+    const { existingNodes } = useNodeStore()
 
     useEffect(() => {
         console.log(existingNodes)
@@ -21,13 +23,9 @@ export default function NodeEditor({
             <NodeLibrary
                 coreNodes={coreNodes}
                 existingNodes={existingNodes}
-                addNodeHandler={setExistingNodes}
                 applicationId={applicationId}
             ></NodeLibrary>
-            <GraphEditor
-                existingNodes={existingNodes}
-                changeNodePositionHandler={setExistingNodes}
-            ></GraphEditor>
+            <GraphEditor existingNodes={existingNodes}></GraphEditor>
         </div>
     )
 }

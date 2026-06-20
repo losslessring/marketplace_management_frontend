@@ -1,9 +1,7 @@
 import { useEffect } from 'react'
-import { ICoreNode } from '../../../../applications/interfaces/coreNode.interface'
 
 export default function useDrag(
     id: string,
-    changeNodePositionHandler: Function,
     updateExistingNodePosition: Function
 ) {
     useEffect(() => {
@@ -113,19 +111,6 @@ export default function useDrag(
 
             function closeDragElement() {
                 console.log('drag end x: ' + pos3 + ' y:' + pos4)
-                // setPosition({ positionX: pos3, positionY: pos4 })
-
-                changeNodePositionHandler((existingNodes: ICoreNode[]) =>
-                    existingNodes.map((existingNode: ICoreNode) => {
-                        return existingNode.id === Number(id)
-                            ? {
-                                  ...existingNode,
-                                  positionX: pos3,
-                                  positionY: pos4,
-                              }
-                            : existingNode
-                    })
-                )
 
                 updateExistingNodePosition(Number(id), pos3, pos4)
 
