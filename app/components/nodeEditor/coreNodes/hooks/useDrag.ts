@@ -1,9 +1,10 @@
 import { useEffect } from 'react'
-import { ICoreNode } from '../applications/interfaces/coreNode.interface'
+import { ICoreNode } from '../../../../applications/interfaces/coreNode.interface'
 
 export default function useDrag(
     id: string,
-    changeNodePositionHandler: Function
+    changeNodePositionHandler: Function,
+    updateExistingNodePosition: Function
 ) {
     useEffect(() => {
         function makeDraggable(element: any) {
@@ -125,6 +126,8 @@ export default function useDrag(
                             : existingNode
                     })
                 )
+
+                updateExistingNodePosition(Number(id), pos3, pos4)
 
                 // stop moving when mouse button is released:
                 document.onmouseup = null

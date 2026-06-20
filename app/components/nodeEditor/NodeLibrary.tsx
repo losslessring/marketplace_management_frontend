@@ -1,5 +1,6 @@
 import createNode from '@/app/applications/actions/createNode'
 import { ICoreNode } from '@/app/applications/interfaces/coreNode.interface'
+import { useNodeStore } from '@/app/stores/node-store'
 
 export default function NodeLibrary({
     coreNodes,
@@ -12,6 +13,7 @@ export default function NodeLibrary({
     applicationId: number
     addNodeHandler: (existingNodes: ICoreNode[]) => any
 }) {
+    const { addNode } = useNodeStore()
     return (
         <div className="bg-pink-300">
             <div>Node Library</div>
@@ -24,6 +26,7 @@ export default function NodeLibrary({
                         </div>
                         <button
                             onClick={() => {
+                                addNode()
                                 addNodeHandler([
                                     ...existingNodes,
                                     {
