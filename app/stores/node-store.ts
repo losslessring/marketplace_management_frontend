@@ -1,28 +1,97 @@
 import { create } from 'zustand'
 import { ICoreNode } from '../applications/interfaces/coreNode.interface'
 
-//const [existingNodes, setExistingNodes] = useState<ICoreNode[]>([])
-// changeNodePositionHandler((existingNodes: ICoreNode[]) =>
-//                     existingNodes.map((existingNode: ICoreNode) => {
-//                         return existingNode.id === Number(id)
-//                             ? {
-//                                   ...existingNode,
-//                                   positionX: pos3,
-//                                   positionY: pos4,
-//                               }
-//                             : existingNode
-//                     })
-//                 )
+interface IApplicationNodes {
+    applicationId: number | null
+    existingNodes: ICoreNode[]
+}
 
-// addNodeHandler([
-//     ...existingNodes,
-//     {
-//         id: currentNodeId,
-//         name: coreNode.name,
-//         positionX: 99,
-//         positionY: 99,
-//     },
-// ])
+interface IApplicationsNodeStore {
+    applicationsNodes: IApplicationNodes[]
+    initApplication: (id: number) => void
+    addNodeToApplication: (id: number) => void
+    updateNodePosition: (
+        applicationId: number,
+        nodeId: number,
+        positionX: number,
+        positionY: number
+    ) => void
+}
+
+export const useApplicationsNodeStore = create<IApplicationsNodeStore>(
+    (set) => ({
+        applicationsNodes: [],
+        initApplication: (id) =>
+            set((state) => {
+                if (
+                    !state.applicationsNodes.find(
+                        (application) => application.applicationId === id
+                    )
+                ) {
+                    return {
+                        applicationsNodes: [
+                            { applicationId: id, existingNodes: [] },
+                        ],
+                    }
+                } else {
+                    return state
+                }
+            }),
+        addNodeToApplication: (id) =>
+            set((state) => ({
+                applicationsNodes: state.applicationsNodes.map(
+                    (applicationNodes) => {
+                        return applicationNodes.applicationId === id
+                            ? {
+                                  ...applicationNodes,
+                                  existingNodes: [
+                                      ...applicationNodes.existingNodes,
+                                      {
+                                          id:
+                                              applicationNodes.existingNodes
+                                                  .length + 1,
+                                          name: 'Core',
+                                          positionX: 99,
+                                          positionY: 99,
+                                      },
+                                  ],
+                              }
+                            : applicationNodes
+                    }
+                ),
+            })),
+
+        updateNodePosition: (
+            applicationId: number,
+            nodeId: number,
+            positionX: number,
+            positionY: number
+        ) =>
+            set((state) => ({
+                applicationsNodes: state.applicationsNodes.map(
+                    (applicationNodes) => {
+                        return applicationNodes.applicationId === applicationId
+                            ? {
+                                  ...applicationNodes,
+                                  existingNodes:
+                                      applicationNodes.existingNodes.map(
+                                          (existingNode: ICoreNode) => {
+                                              return existingNode.id === nodeId
+                                                  ? {
+                                                        ...existingNode,
+                                                        positionX,
+                                                        positionY,
+                                                    }
+                                                  : existingNode
+                                          }
+                                      ),
+                              }
+                            : applicationNodes
+                    }
+                ),
+            })),
+    })
+)
 
 interface INodeStore {
     existingNodes: ICoreNode[]

@@ -1,19 +1,18 @@
-import createNodeInDatabase from '@/app/applications/actions/createNode'
 import { ICoreNode } from '@/app/applications/interfaces/coreNode.interface'
-import { useNodeStore } from '@/app/stores/node-store'
+import { useApplicationsNodeStore, useNodeStore } from '@/app/stores/node-store'
 
 export default function NodeLibrary({
     coreNodes,
     existingNodes,
     applicationId,
-}: // addNodeHandler,
-{
+}: {
     coreNodes: ICoreNode[]
     existingNodes: ICoreNode[]
     applicationId: number
-    // addNodeHandler: (existingNodes: ICoreNode[]) => any
 }) {
     const { addNode } = useNodeStore()
+    const { applicationsNodes, addNodeToApplication } =
+        useApplicationsNodeStore()
     return (
         <div className="bg-pink-300">
             <div>Node Library</div>
@@ -27,14 +26,16 @@ export default function NodeLibrary({
                         <button
                             onClick={() => {
                                 addNode()
+                                addNodeToApplication(applicationId)
+                                console.log(applicationsNodes)
 
                                 console.log('created node')
-                                createNodeInDatabase({
-                                    positionX: 99,
-                                    positionY: 99,
-                                    nodeId: currentNodeId,
-                                    applicationId,
-                                })
+                                // createNodeInDatabase({
+                                //     positionX: 99,
+                                //     positionY: 99,
+                                //     id: currentNodeId,
+                                //     applicationId,
+                                // })
                             }}
                         >
                             Add Node

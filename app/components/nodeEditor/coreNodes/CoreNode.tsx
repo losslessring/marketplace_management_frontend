@@ -1,6 +1,6 @@
 'use client'
 import useDrag from '@/app/components/nodeEditor/coreNodes/hooks/useDrag'
-import { useNodeStore } from '@/app/stores/node-store'
+import { useApplicationsNodeStore, useNodeStore } from '@/app/stores/node-store'
 
 export default function CoreNode({
     id,
@@ -12,6 +12,7 @@ export default function CoreNode({
     className?: string
 }>) {
     const { updateExistingNodePosition } = useNodeStore()
+    const { applicationsNodes, updateNodePosition } = useApplicationsNodeStore()
 
     useDrag(id, updateExistingNodePosition)
     // useEffect(() => console.log('existing nodes store', existingNodes))
