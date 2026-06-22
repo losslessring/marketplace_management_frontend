@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { ICoreNode } from '../applications/interfaces/coreNode.interface'
 
-interface IApplicationNodes {
+export interface IApplicationNodes {
     applicationId: number | null
     existingNodes: ICoreNode[]
 }
@@ -10,6 +10,7 @@ interface IApplicationsNodeStore {
     applicationsNodes: IApplicationNodes[]
     initApplication: (id: number) => void
     addNodeToApplication: (id: number) => void
+    addMultipleNodesToApplication: (id: number, nodes: ICoreNode[]) => void
     updateNodePosition: (
         applicationId: number,
         nodeId: number,
@@ -30,6 +31,7 @@ export const useApplicationsNodeStore = create<IApplicationsNodeStore>(
                 ) {
                     return {
                         applicationsNodes: [
+                            ...state.applicationsNodes,
                             { applicationId: id, existingNodes: [] },
                         ],
                     }
@@ -51,10 +53,24 @@ export const useApplicationsNodeStore = create<IApplicationsNodeStore>(
                                               applicationNodes.existingNodes
                                                   .length + 1,
                                           name: 'Core',
-                                          positionX: 99,
-                                          positionY: 99,
+                                          positionX: 0,
+                                          positionY: 0,
                                       },
                                   ],
+                              }
+                            : applicationNodes
+                    }
+                ),
+            })),
+
+        addMultipleNodesToApplication: (id, nodes) =>
+            set((state) => ({
+                applicationsNodes: state.applicationsNodes.map(
+                    (applicationNodes) => {
+                        return applicationNodes.applicationId === id
+                            ? {
+                                  ...applicationNodes,
+                                  existingNodes: [...nodes],
                               }
                             : applicationNodes
                     }
@@ -93,46 +109,46 @@ export const useApplicationsNodeStore = create<IApplicationsNodeStore>(
     })
 )
 
-interface INodeStore {
-    existingNodes: ICoreNode[]
-    addNode: () => void
-    updateExistingNodePosition: (
-        id: number,
-        positionX: number,
-        positionY: number
-    ) => void
-}
+// interface INodeStore {
+//     existingNodes: ICoreNode[]
+//     addNode: () => void
+//     updateExistingNodePosition: (
+//         id: number,
+//         positionX: number,
+//         positionY: number
+//     ) => void
+// }
 
-export const useNodeStore = create<INodeStore>((set) => ({
-    existingNodes: [],
-    addNode: () =>
-        set((state) => ({
-            existingNodes: [
-                ...state.existingNodes,
-                {
-                    id: state.existingNodes.length + 1,
-                    name: 'Core',
-                    positionX: 99,
-                    positionY: 99,
-                },
-            ],
-        })),
-    updateExistingNodePosition: (
-        id: number,
-        positionX: number,
-        positionY: number
-    ) =>
-        set((state: any) => ({
-            existingNodes: state.existingNodes.map(
-                (existingNode: ICoreNode) => {
-                    return existingNode.id === id
-                        ? {
-                              ...existingNode,
-                              positionX,
-                              positionY,
-                          }
-                        : existingNode
-                }
-            ),
-        })),
-}))
+// export const useNodeStore = create<INodeStore>((set) => ({
+//     existingNodes: [],
+//     addNode: () =>
+//         set((state) => ({
+//             existingNodes: [
+//                 ...state.existingNodes,
+//                 {
+//                     id: state.existingNodes.length + 1,
+//                     name: 'Core',
+//                     positionX: 99,
+//                     positionY: 99,
+//                 },
+//             ],
+//         })),
+//     updateExistingNodePosition: (
+//         id: number,
+//         positionX: number,
+//         positionY: number
+//     ) =>
+//         set((state: any) => ({
+//             existingNodes: state.existingNodes.map(
+//                 (existingNode: ICoreNode) => {
+//                     return existingNode.id === id
+//                         ? {
+//                               ...existingNode,
+//                               positionX,
+//                               positionY,
+//                           }
+//                         : existingNode
+//                 }
+//             ),
+//         })),
+// }))

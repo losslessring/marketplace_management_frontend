@@ -2,7 +2,13 @@ import { useEffect } from 'react'
 
 export default function useDrag(
     id: string,
-    updateExistingNodePosition: Function
+    applicationId: number,
+    updateNodePosition: (
+        applicationId: number,
+        nodeId: number,
+        positionX: number,
+        positionY: number
+    ) => void
 ) {
     useEffect(() => {
         function makeDraggable(element: any) {
@@ -52,7 +58,7 @@ export default function useDrag(
                     y = e.clientY
                 }
 
-                console.log('drag start x: ' + x + ' y:' + y)
+                // console.log('drag start x: ' + x + ' y:' + y)
 
                 // get the mouse cursor position at startup:
                 pos3 = x
@@ -105,14 +111,22 @@ export default function useDrag(
                 pos3 = x
                 pos4 = y
                 // set the element's new position:
+
                 element.style.top = element.offsetTop - pos2 + 'px'
                 element.style.left = element.offsetLeft - pos1 + 'px'
             }
 
             function closeDragElement() {
-                console.log('drag end x: ' + pos3 + ' y:' + pos4)
+                //console.log('drag end x: ' + pos3 + ' y:' + pos4)
 
-                updateExistingNodePosition(Number(id), pos3, pos4)
+                updateNodePosition(
+                    applicationId,
+                    Number(id),
+                    element.offsetLeft - pos1,
+                    element.offsetTop - pos2
+                )
+
+                //updateNodePosition(applicationId, Number(id), pos3, pos4)
 
                 // stop moving when mouse button is released:
                 document.onmouseup = null

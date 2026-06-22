@@ -31,6 +31,12 @@
         user-select: none;
       }
 
+      .position {
+        top: 45%;
+        left: 45%;
+      }
+
+
       .url-node {
         position: absolute;
         top: 0;

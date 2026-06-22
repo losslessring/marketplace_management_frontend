@@ -1,7 +1,7 @@
 'use client'
 
 import createTreeNodesInDatabase from '@/app/applications/actions/createTreeNodesInDatabase'
-import { useNodeStore } from '@/app/stores/node-store'
+import { useApplicationsNodeStore } from '@/app/stores/node-store'
 
 function SaveGraphButton({
     className,
@@ -10,27 +10,35 @@ function SaveGraphButton({
     className?: string
     applicationId: number
 }>) {
-    const { existingNodes } = useNodeStore()
+    //const { existingNodes } = useNodeStore()
+    const { applicationsNodes } = useApplicationsNodeStore()
 
     return (
         <button
             className={className}
             onClick={() => {
-                const nodesToDatabase = existingNodes.map((node) => ({
-                    positionX: node.positionX,
+                const nodesToDatabase = applicationsNodes
+                    .find(
+                        (application) =>
+                            application.applicationId === applicationId
+                    )
+                    ?.existingNodes.map((node) => ({
+                        positionX: node.positionX,
 
-                    positionY: node.positionY,
+                        positionY: node.positionY,
 
-                    nodeId: node.id,
-                }))
+                        nodeId: node.id,
+                    }))
 
                 console.log(applicationId)
                 console.log(nodesToDatabase)
 
-                createTreeNodesInDatabase({
-                    nodes: nodesToDatabase,
-                    applicationId,
-                })
+                if (nodesToDatabase) {
+                    createTreeNodesInDatabase({
+                        nodes: nodesToDatabase,
+                        applicationId,
+                    })
+                }
             }}
         >
             Save Graph

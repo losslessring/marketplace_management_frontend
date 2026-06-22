@@ -1,23 +1,20 @@
 import { ICoreNode } from '@/app/applications/interfaces/coreNode.interface'
-import { useApplicationsNodeStore, useNodeStore } from '@/app/stores/node-store'
+import { useApplicationsNodeStore } from '@/app/stores/node-store'
 
 export default function NodeLibrary({
     coreNodes,
-    existingNodes,
     applicationId,
 }: {
     coreNodes: ICoreNode[]
-    existingNodes: ICoreNode[]
     applicationId: number
 }) {
-    const { addNode } = useNodeStore()
     const { applicationsNodes, addNodeToApplication } =
         useApplicationsNodeStore()
     return (
         <div className="bg-pink-300">
             <div>Node Library</div>
             {coreNodes.map((coreNode, index) => {
-                const currentNodeId = existingNodes.length + 1
+                const currentNodeId = index + 1
                 return (
                     <div key={index}>
                         <div id={'node-library-' + currentNodeId}>
@@ -25,7 +22,7 @@ export default function NodeLibrary({
                         </div>
                         <button
                             onClick={() => {
-                                addNode()
+                                // addNode()
                                 addNodeToApplication(applicationId)
                                 console.log(applicationsNodes)
 
