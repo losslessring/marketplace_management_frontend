@@ -1,6 +1,6 @@
 'use client'
 import { ICoreNode } from '@/app/applications/interfaces/coreNode.interface'
-import { GetApplicationNodesRequest } from '@/app/applications/interfaces/GetApplicationNodesRequest'
+import { TreeNode } from '@/app/applications/interfaces/TreeNode'
 import { useApplicationsNodeStore } from '@/app/stores/node-store'
 import { useEffect } from 'react'
 import GraphEditor from './GraphEditor'
@@ -13,13 +13,10 @@ export default function NodeEditor({
 }: {
     coreNodes: ICoreNode[]
     applicationId: number
-    applicationNodesFromDatabase: GetApplicationNodesRequest[]
+    applicationNodesFromDatabase: TreeNode[]
 }) {
-    const {
-        applicationsNodes,
-        initApplication,
-        addMultipleNodesToApplication,
-    } = useApplicationsNodeStore()
+    const { initApplication, addMultipleNodesToApplication } =
+        useApplicationsNodeStore()
 
     useEffect(() => {
         console.log(
@@ -42,28 +39,13 @@ export default function NodeEditor({
         }
     }, [])
 
-    useEffect(() => {
-        // console.log(applicationNodesFromDatabase)
-    }, [])
-
-    useEffect(() => {
-        // console.log('Applications nodes', applicationsNodes)
-    }, [])
-
-    // const existingNodes = applicationsNodes.find(
-    //     (application) => application.applicationId === applicationId
-    // )
-
     return (
         <div className="grid grid-cols-1 grid-rows-[1fr_6fr] md:grid-rows-[1fr] md:grid-cols-[1fr_6fr] h-[84vh]">
             <NodeLibrary
                 coreNodes={coreNodes}
                 applicationId={applicationId}
             ></NodeLibrary>
-            <GraphEditor
-                // existingNodes={existingNodes?.existingNodes}
-                applicationId={applicationId}
-            ></GraphEditor>
+            <GraphEditor applicationId={applicationId}></GraphEditor>
         </div>
     )
 }

@@ -1,4 +1,4 @@
-export interface GetApplicationNodesRequest {
+export interface TreeNode {
     positionX: number
 
     positionY: number

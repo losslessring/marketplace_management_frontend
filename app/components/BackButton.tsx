@@ -9,7 +9,15 @@ function BackButton({
 }>) {
     const router = useRouter()
     return (
-        <button className={className} onClick={() => router.back()}>
+        <button
+            className={className}
+            onClick={() => {
+                // window.location.reload()
+                // router.back()
+                router.push('/')
+                router.refresh()
+            }}
+        >
             {children}
         </button>
     )

@@ -48,9 +48,11 @@ export const post = async (path: string, formData: FormData) => {
 }
 
 export const get = async <Response>(path: string, tags?: string[]) => {
+    // unstable_noStore()
     const res = await fetch(`${API_URL}/${path}`, {
         headers: { ...getHeaders() },
         next: { tags },
+        cache: 'no-store',
     })
     return res.json() as Response
 }

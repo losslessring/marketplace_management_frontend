@@ -1,5 +1,5 @@
-import AccessForm from '@/app/components/accessForm'
 import Link from 'next/link'
+import AccessForm from '../../../app/components/AccessForm'
 import createUser from './create-user'
 
 export default function Signup() {

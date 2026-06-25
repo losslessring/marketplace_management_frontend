@@ -1,13 +1,7 @@
-interface CreateTreeNode {
-    positionX: number
-
-    positionY: number
-
-    nodeId: number
-}
+import { TreeNode } from './TreeNode'
 
 export interface CreateTreeNodesRequest {
-    nodes: CreateTreeNode[]
+    nodes: TreeNode[]
 
     applicationId: number
 }

@@ -1,5 +1,5 @@
-import AccessForm from '@/app/components/accessForm'
 import Link from 'next/link'
+import AccessForm from '../../components/AccessForm'
 import login from './login'
 
 export default function Login() {
