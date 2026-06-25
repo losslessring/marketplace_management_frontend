@@ -1,23 +1,28 @@
 'use client'
-import { ICoreNode } from '@/app/applications/interfaces/coreNode.interface'
+import { useApplicationsNodeStore } from '@/app/stores/node-store'
 import CoreNode from './coreNodes/CoreNode'
 
 export default function GraphEditor({
-    existingNodes,
     applicationId,
 }: {
-    existingNodes: ICoreNode[] | undefined
     applicationId: number
 }) {
+    const { applicationsNodes } = useApplicationsNodeStore()
+
+    const existingNodes = applicationsNodes.find(
+        (application) => application.applicationId === applicationId
+    )
+    console.log('existing nodes', existingNodes)
     return (
         <div className="bg-blue-500 relative">
-            {existingNodes?.map((node, index) => (
+            {existingNodes?.existingNodes.map((node, index) => (
                 <div key={index}>
                     <CoreNode
                         id={String(node.id)}
                         applicationId={applicationId}
                         name={node.name}
-                        className="draggable basic-node"
+                        //className="draggable basic-node"
+                        className="drag-handle basic-node"
                     />
                 </div>
             ))}

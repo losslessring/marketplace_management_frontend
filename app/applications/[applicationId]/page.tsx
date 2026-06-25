@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic'
 import BackButton from '@/app/components/BackButton'
 import NodeEditor from '@/app/components/nodeEditor/NodeEditor'
 import SaveGraphButton from '@/app/components/nodeEditor/SaveGraphButton'

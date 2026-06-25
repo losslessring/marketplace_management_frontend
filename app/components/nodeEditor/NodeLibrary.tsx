@@ -22,17 +22,10 @@ export default function NodeLibrary({
                         </div>
                         <button
                             onClick={() => {
-                                // addNode()
                                 addNodeToApplication(applicationId)
                                 console.log(applicationsNodes)
 
                                 console.log('created node')
-                                // createNodeInDatabase({
-                                //     positionX: 99,
-                                //     positionY: 99,
-                                //     id: currentNodeId,
-                                //     applicationId,
-                                // })
                             }}
                         >
                             Add Node

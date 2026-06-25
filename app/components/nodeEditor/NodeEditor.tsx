@@ -22,7 +22,10 @@ export default function NodeEditor({
     } = useApplicationsNodeStore()
 
     useEffect(() => {
-        console.log(applicationNodesFromDatabase)
+        console.log(
+            'Applications nodes from database',
+            applicationNodesFromDatabase
+        )
         if (applicationNodesFromDatabase.length === 0) {
             initApplication(applicationId)
         } else {
@@ -36,7 +39,6 @@ export default function NodeEditor({
                     id: node.nodeId,
                 }))
             )
-            console.log('Applications nodes', applicationsNodes)
         }
     }, [])
 
@@ -48,9 +50,9 @@ export default function NodeEditor({
         // console.log('Applications nodes', applicationsNodes)
     }, [])
 
-    const existingNodes = applicationsNodes.find(
-        (application) => application.applicationId === applicationId
-    )
+    // const existingNodes = applicationsNodes.find(
+    //     (application) => application.applicationId === applicationId
+    // )
 
     return (
         <div className="grid grid-cols-1 grid-rows-[1fr_6fr] md:grid-rows-[1fr] md:grid-cols-[1fr_6fr] h-[84vh]">
@@ -59,7 +61,7 @@ export default function NodeEditor({
                 applicationId={applicationId}
             ></NodeLibrary>
             <GraphEditor
-                existingNodes={existingNodes?.existingNodes}
+                // existingNodes={existingNodes?.existingNodes}
                 applicationId={applicationId}
             ></GraphEditor>
         </div>

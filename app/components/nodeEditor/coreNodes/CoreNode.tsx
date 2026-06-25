@@ -2,6 +2,7 @@
 import useDrag from '@/app/components/nodeEditor/coreNodes/hooks/useDrag'
 import { useApplicationsNodeStore } from '@/app/stores/node-store'
 import { useEffect } from 'react'
+import InputConnection from './InputConnection'
 
 export default function CoreNode({
     id,
@@ -33,8 +34,9 @@ export default function CoreNode({
     // useEffect(() => console.log('existing nodes store', existingNodes))
 
     return (
-        <div id={id} className={className}>
-            {name}
+        <div id={id} className="draggable">
+            <div className="drag-handle basic-node">{name}</div>
+            <InputConnection></InputConnection>
         </div>
     )
 }

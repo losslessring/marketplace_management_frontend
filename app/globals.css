@@ -65,6 +65,34 @@
         cursor: move;
         touch-action: none;
     }
+
+    .drag-handle {
+      cursor: move;
+      z-index: 10;
+  }
+
+    .input-connection {
+      position: absolute;
+        top: 45%;
+        left: -10%;
+        background-color: blue;
+        height: 10px;
+        width: 10px;
+        border-radius: 50%;
+        cursor: pointer;
+        z-index: 10;
+    }
+
+    .output-connection {
+      position: absolute;
+        top: 50%;
+        left: 100%;
+        background-color: red;
+        height: 10px;
+        width: 10px;
+        border-radius: 50%;
+        cursor: pointer;
+    }
    
 
 }

@@ -20,8 +20,20 @@ export default function useDrag(
                 pos3 = 0,
                 pos4 = 0
 
-            element.onmousedown = dragMouseDown
-            element.ontouchstart = dragMouseDown
+            // element.onmousedown = dragMouseDown
+            // element.ontouchstart = dragMouseDown
+
+            let dragHandle = element.getElementsByClassName('drag-handle')[0]
+
+            if (dragHandle !== undefined) {
+                // if present, the header is where you move the DIV from:
+                dragHandle.onmousedown = dragMouseDown
+                dragHandle.ontouchstart = dragMouseDown //added touch event
+            } else {
+                // otherwise, move the DIV from anywhere inside the DIV:
+                element.onmousedown = dragMouseDown
+                element.ontouchstart = dragMouseDown //added touch event
+            }
 
             function dragMouseDown(e: any) {
                 e = e || window.event
