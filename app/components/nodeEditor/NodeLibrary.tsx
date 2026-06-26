@@ -1,4 +1,4 @@
-import { ICoreNode } from '@/app/applications/interfaces/coreNode.interface'
+import { ICoreNode } from '@/app/interfaces/coreNode.interface'
 import { useApplicationsNodeStore } from '@/app/stores/node-store'
 
 export default function NodeLibrary({

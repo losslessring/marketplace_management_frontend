@@ -12,8 +12,6 @@ function BackButton({
         <button
             className={className}
             onClick={() => {
-                // window.location.reload()
-                // router.back()
                 router.push('/')
                 router.refresh()
             }}

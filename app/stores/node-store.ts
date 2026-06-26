@@ -1,16 +1,16 @@
 import { create } from 'zustand'
-import { ICoreNode } from '../applications/interfaces/coreNode.interface'
+import { TreeNode } from '../interfaces/TreeNode'
 
 export interface IApplicationNodes {
     applicationId: number | null
-    existingNodes: ICoreNode[]
+    existingNodes: TreeNode[]
 }
 
 interface IApplicationsNodeStore {
     applicationsNodes: IApplicationNodes[]
     initApplication: (id: number) => void
     addNodeToApplication: (id: number) => void
-    addMultipleNodesToApplication: (id: number, nodes: ICoreNode[]) => void
+    addMultipleNodesToApplication: (id: number, nodes: TreeNode[]) => void
     updateNodePosition: (
         applicationId: number,
         nodeId: number,
@@ -49,10 +49,10 @@ export const useApplicationsNodeStore = create<IApplicationsNodeStore>(
                                   existingNodes: [
                                       ...applicationNodes.existingNodes,
                                       {
-                                          id:
+                                          nodeId:
                                               applicationNodes.existingNodes
                                                   .length + 1,
-                                          name: 'Core',
+                                          //   name: 'Core',
                                           positionX: 0,
                                           positionY: 0,
                                       },
@@ -91,8 +91,9 @@ export const useApplicationsNodeStore = create<IApplicationsNodeStore>(
                                   ...applicationNodes,
                                   existingNodes:
                                       applicationNodes.existingNodes.map(
-                                          (existingNode: ICoreNode) => {
-                                              return existingNode.id === nodeId
+                                          (existingNode: TreeNode) => {
+                                              return existingNode.nodeId ===
+                                                  nodeId
                                                   ? {
                                                         ...existingNode,
                                                         positionX,

@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { IApplication } from './interfaces/application.interface'
+import { IApplication } from '../interfaces/application.interface'
 
 interface ApplicationProps {
     application: IApplication

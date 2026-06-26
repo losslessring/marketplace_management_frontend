@@ -1,6 +1,6 @@
 'use client'
-import { ICoreNode } from '@/app/applications/interfaces/coreNode.interface'
-import { TreeNode } from '@/app/applications/interfaces/TreeNode'
+import { ICoreNode } from '@/app/interfaces/coreNode.interface'
+import { TreeNode } from '@/app/interfaces/TreeNode'
 import { useApplicationsNodeStore } from '@/app/stores/node-store'
 import { useEffect } from 'react'
 import GraphEditor from './GraphEditor'
@@ -32,8 +32,8 @@ export default function NodeEditor({
                 applicationNodesFromDatabase.map((node) => ({
                     positionX: node.positionX,
                     positionY: node.positionY,
-                    name: 'Core',
-                    id: node.nodeId,
+
+                    nodeId: node.nodeId,
                 }))
             )
         }

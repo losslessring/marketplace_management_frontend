@@ -18,9 +18,9 @@ export default function GraphEditor({
             {existingNodes?.existingNodes.map((node, index) => (
                 <div key={index}>
                     <CoreNode
-                        id={String(node.id)}
+                        id={String(node.nodeId)}
                         applicationId={applicationId}
-                        name={node.name}
+                        name={'Core'}
                         //className="draggable basic-node"
                         className="drag-handle basic-node"
                     />

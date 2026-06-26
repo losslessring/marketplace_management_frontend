@@ -16,6 +16,7 @@ function SaveGraphButton({
         <button
             className={className}
             onClick={() => {
+                console.log(applicationsNodes)
                 const nodesToDatabase = applicationsNodes
                     .find(
                         (application) =>
@@ -26,8 +27,9 @@ function SaveGraphButton({
 
                         positionY: node.positionY,
 
-                        nodeId: node.id,
+                        nodeId: node.nodeId,
                     }))
+                console.log(nodesToDatabase)
 
                 if (nodesToDatabase) {
                     fullUpdateTreeNodesInDatabase({

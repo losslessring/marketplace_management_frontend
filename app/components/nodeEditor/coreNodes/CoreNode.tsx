@@ -20,7 +20,7 @@ export default function CoreNode({
     useEffect(() => {
         const nodePosition = applicationsNodes
             .find((application) => application.applicationId === applicationId)
-            ?.existingNodes.find((node) => node.id === Number(id))
+            ?.existingNodes.find((node) => node.nodeId === Number(id))
 
         const element = document.getElementById(id)
 
