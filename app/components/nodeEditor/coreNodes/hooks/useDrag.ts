@@ -36,7 +36,8 @@ export default function useDrag(
 
             function dragMouseDown(e: any) {
                 e = e || window.event
-                e.preventDefault()
+                //e.preventDefault()
+                e.stopPropagation()
 
                 let x
                 let y
@@ -84,8 +85,8 @@ export default function useDrag(
 
             function elementDrag(e: any) {
                 e = e || window.event
-                e.preventDefault()
-
+                //e.preventDefault()
+                e.stopPropagation()
                 let x
                 let y
 

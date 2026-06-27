@@ -25,7 +25,7 @@ export const useNodeStore = create<INodeStore>((set) => ({
             nodes: [
                 ...state.nodes,
                 {
-                    nodeId: Math.floor(Math.random() * (1000000 - 100000)),
+                    nodeId: Math.floor(Math.random() * 1000000),
                     positionX: 0,
                     positionY: 0,
                 },
