@@ -7,13 +7,7 @@ export default function GraphEditor({
 }: {
     applicationId: number
 }) {
-    // const { applicationsNodes } = useApplicationsNodeStore()
-
-    // const existingNodes = applicationsNodes.find(
-    //     (application) => application.applicationId === applicationId
-    // )
     const { nodes } = useNodeStore()
-    console.log('existing nodes', nodes)
     return (
         <div className="bg-blue-500 relative">
             {nodes.map((node, index) => (

@@ -15,30 +15,12 @@ export default function NodeEditor({
     applicationId: number
     applicationNodesFromDatabase: TreeNode[]
 }) {
-    // const { initApplication, addMultipleNodesToApplication } =
-    //     useApplicationsNodeStore()
-
     const { nodes, initStore, updateNodes } = useNodeStore()
 
     useEffect(() => {
-        console.log(
-            'Applications nodes from database',
-            applicationNodesFromDatabase
-        )
         if (applicationNodesFromDatabase.length === 0) {
-            // initApplication(applicationId)
             initStore()
         } else {
-            // initApplication(applicationId)
-            // addMultipleNodesToApplication(
-            //     applicationId,
-            //     applicationNodesFromDatabase.map((node) => ({
-            //         positionX: node.positionX,
-            //         positionY: node.positionY,
-
-            //         nodeId: node.nodeId,
-            //     }))
-            // )
             initStore()
             updateNodes(applicationNodesFromDatabase)
         }

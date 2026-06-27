@@ -8,8 +8,6 @@ export default function NodeLibrary({
     coreNodes: ICoreNode[]
     applicationId: number
 }) {
-    // const { applicationsNodes, addNodeToApplication } =
-    //     useApplicationsNodeStore()
     const { nodes, addNode } = useNodeStore()
     return (
         <div className="bg-pink-300">
@@ -23,9 +21,7 @@ export default function NodeLibrary({
                         </div>
                         <button
                             onClick={() => {
-                                //addNodeToApplication(applicationId)
                                 addNode()
-                                // console.log(applicationsNodes)
                                 console.log(nodes)
 
                                 console.log('created node')
