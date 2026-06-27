@@ -5,6 +5,7 @@ interface INodeStore {
     nodes: TreeNode[]
     initStore: () => void
     addNode: () => void
+
     updateNodes: (newNodes: TreeNode[]) => void
     updateNodePosition: (
         nodeId: number,
@@ -50,4 +51,30 @@ export const useNodeStore = create<INodeStore>((set) => ({
         set((state) => ({
             nodes: [...newNodes],
         })),
+}))
+
+interface SelectedIdsStore {
+    ids: Set<number>
+    initStore: () => void
+    addId: (id: number) => void
+    removeId: (id: number) => void
+}
+
+export const useSelectedNodeStore = create<SelectedIdsStore>((set, get) => ({
+    ids: new Set<number>(),
+    initStore: () =>
+        set((state) => ({
+            ids: new Set<number>(),
+        })),
+    addId: (id) =>
+        set((state) => {
+            const prev = Array.from(state.ids)
+            return { ids: new Set([...prev, id]) }
+        }),
+    removeId: (id) =>
+        set((state) => {
+            state.ids.delete(id)
+            const prev = Array.from(state.ids)
+            return { ids: new Set([...prev]) }
+        }),
 }))

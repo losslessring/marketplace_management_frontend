@@ -1,14 +1,13 @@
 import { useEffect } from 'react'
 
 export default function useDrag(
-    id: string,
-    applicationId: number,
+    id: number,
     updateNodePosition: (
-        // applicationId: number,
         nodeId: number,
         positionX: number,
         positionY: number
-    ) => void
+    ) => void,
+    setIsDragging: Function
 ) {
     useEffect(() => {
         function makeDraggable(element: any) {
@@ -124,6 +123,7 @@ export default function useDrag(
                 pos3 = x
                 pos4 = y
                 // set the element's new position:
+                setIsDragging(true)
 
                 element.style.top = element.offsetTop - pos2 + 'px'
                 element.style.left = element.offsetLeft - pos1 + 'px'
@@ -139,7 +139,7 @@ export default function useDrag(
                     element.offsetTop - pos2
                 )
 
-                //updateNodePosition(applicationId, Number(id), pos3, pos4)
+                setIsDragging(false)
 
                 // stop moving when mouse button is released:
                 document.onmouseup = null
@@ -151,6 +151,6 @@ export default function useDrag(
             }
         }
 
-        makeDraggable(document.getElementById(id))
+        makeDraggable(document.getElementById(String(id)))
     }, [id])
 }

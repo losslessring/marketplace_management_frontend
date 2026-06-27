@@ -1,7 +1,8 @@
 'use client'
 import useDrag from '@/app/components/nodeEditor/coreNodes/hooks/useDrag'
-import { useNodeStore } from '@/app/stores/node-store'
-import { useEffect } from 'react'
+import { useNodeStore, useSelectedNodeStore } from '@/app/stores/node-store'
+import { useState } from 'react'
+import useSetInitialElementPosition from './hooks/useUpdateElementPosition'
 import InputConnection from './InputConnection'
 
 export default function CoreNode({
@@ -10,35 +11,44 @@ export default function CoreNode({
     name,
     className,
 }: React.PropsWithChildren<{
-    id: string
+    id: number
     name: string
     applicationId: number
     className?: string
 }>) {
-    //const { applicationsNodes, updateNodePosition } = useApplicationsNodeStore()
     const { nodes, updateNodePosition } = useNodeStore()
+    const { addId, removeId } = useSelectedNodeStore()
 
-    useEffect(() => {
-        // const nodePosition = applicationsNodes
-        //     .find((application) => application.applicationId === applicationId)
-        //     ?.existingNodes.find((node) => node.nodeId === Number(id))
+    const [isDragging, setIsDragging] = useState<boolean>(false)
+    useSetInitialElementPosition(id, nodes)
 
-        const nodePosition = nodes.find((node) => node.nodeId === Number(id))
+    useDrag(id, updateNodePosition, setIsDragging)
 
-        const element = document.getElementById(id)
-
-        if (element && nodePosition) {
-            element.style.top = nodePosition?.positionY + 'px'
-            element.style.left = nodePosition?.positionX + 'px'
+    const interactionHandler = () => {
+        if (isDragging) {
+            return
         }
-    }, [])
 
-    useDrag(id, applicationId, updateNodePosition)
-    // useEffect(() => console.log('existing nodes store', existingNodes))
+        if (useSelectedNodeStore.getState().ids.has(id)) {
+            removeId(id)
+        } else {
+            addId(id)
+        }
+    }
 
     return (
-        <div id={id} className="draggable">
-            <div className="drag-handle basic-node">{name}</div>
+        <div id={String(id)} className="draggable">
+            <div
+                className={`drag-handle basic-node ${
+                    useSelectedNodeStore.getState().ids.has(id)
+                        ? 'border-4 border-indigo-600'
+                        : ''
+                }`}
+                onMouseUp={interactionHandler}
+                onTouchEnd={interactionHandler}
+            >
+                {name}
+            </div>
             <InputConnection></InputConnection>
         </div>
     )

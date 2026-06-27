@@ -13,7 +13,7 @@ export default function GraphEditor({
             {nodes.map((node, index) => (
                 <div key={index}>
                     <CoreNode
-                        id={String(node.nodeId)}
+                        id={node.nodeId}
                         applicationId={applicationId}
                         name={'Core'}
                         //className="draggable basic-node"
