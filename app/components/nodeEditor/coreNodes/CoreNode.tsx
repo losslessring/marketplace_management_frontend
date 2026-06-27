@@ -16,11 +16,25 @@ export default function CoreNode({
     applicationId: number
     className?: string
 }>) {
-    const { nodes, updateNodePosition } = useNodeStore()
+    const { updateNodePosition } = useNodeStore()
     const { addId, removeId } = useSelectedNodeStore()
 
     const [isDragging, setIsDragging] = useState<boolean>(false)
-    useSetInitialElementPosition(id, nodes)
+    useSetInitialElementPosition(id, Array.from(useNodeStore.getState().nodes))
+
+    // useEffect(() => {
+    //     console.log(id)
+    //     const nodePosition = Array.from(useNodeStore.getState().nodes).find(
+    //         (node) => node.nodeId === id
+    //     )
+
+    //     const element = document.getElementById(String(id))
+
+    //     if (element && nodePosition) {
+    //         element.style.top = nodePosition?.positionY + 'px'
+    //         element.style.left = nodePosition?.positionX + 'px'
+    //     }
+    // }, [id])
 
     useDrag(id, updateNodePosition, setIsDragging)
 

@@ -1,6 +1,6 @@
 'use client'
 import { useRouter } from 'next/navigation'
-import { useNodeStore } from '../stores/node-store'
+import { useNodeStore, useSelectedNodeStore } from '../stores/node-store'
 
 function BackButton({
     className,
@@ -9,12 +9,15 @@ function BackButton({
     className?: string
 }>) {
     const router = useRouter()
-    const { initStore } = useNodeStore()
+    const { initStore: resetNodeStore } = useNodeStore()
+    const { initStore: resetSelectedNodesStore } = useSelectedNodeStore()
+
     return (
         <button
             className={className}
             onClick={() => {
-                initStore()
+                resetNodeStore()
+                resetSelectedNodesStore()
                 router.push('/')
                 router.refresh()
             }}

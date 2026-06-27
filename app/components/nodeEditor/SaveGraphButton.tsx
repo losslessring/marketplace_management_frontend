@@ -10,12 +10,13 @@ function SaveGraphButton({
     className?: string
     applicationId: number
 }>) {
-    const { nodes } = useNodeStore()
+    const {} = useNodeStore()
 
     return (
         <button
             className={className}
             onClick={() => {
+                const nodes = useNodeStore.getState().nodes
                 if (nodes) {
                     fullUpdateTreeNodesInDatabase({
                         nodes,

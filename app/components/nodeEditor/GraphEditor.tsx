@@ -7,10 +7,10 @@ export default function GraphEditor({
 }: {
     applicationId: number
 }) {
-    const { nodes } = useNodeStore()
+    const {} = useNodeStore()
     return (
         <div className="bg-blue-500 relative">
-            {nodes.map((node, index) => (
+            {useNodeStore.getState().nodes.map((node, index) => (
                 <div key={index}>
                     <CoreNode
                         id={node.nodeId}

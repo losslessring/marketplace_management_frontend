@@ -25,7 +25,7 @@ export const useNodeStore = create<INodeStore>((set) => ({
             nodes: [
                 ...state.nodes,
                 {
-                    nodeId: state.nodes.length + 1,
+                    nodeId: Math.floor(Math.random() * (1000000 - 100000)),
                     positionX: 0,
                     positionY: 0,
                 },
@@ -66,6 +66,7 @@ export const useSelectedNodeStore = create<SelectedIdsStore>((set, get) => ({
         set((state) => ({
             ids: new Set<number>(),
         })),
+
     addId: (id) =>
         set((state) => {
             const prev = Array.from(state.ids)

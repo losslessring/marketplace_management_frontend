@@ -15,7 +15,7 @@ export default function NodeEditor({
     applicationId: number
     applicationNodesFromDatabase: TreeNode[]
 }) {
-    const { nodes, initStore, updateNodes } = useNodeStore()
+    const { initStore, updateNodes } = useNodeStore()
 
     useEffect(() => {
         if (applicationNodesFromDatabase.length === 0) {
