@@ -1,7 +1,7 @@
 'use client'
 import { ICoreNode } from '@/app/interfaces/coreNode.interface'
 import { TreeNode } from '@/app/interfaces/TreeNode'
-import { useApplicationsNodeStore } from '@/app/stores/node-store'
+import { useNodeStore } from '@/app/stores/node-store'
 import { useEffect } from 'react'
 import GraphEditor from './GraphEditor'
 import NodeLibrary from './NodeLibrary'
@@ -15,8 +15,10 @@ export default function NodeEditor({
     applicationId: number
     applicationNodesFromDatabase: TreeNode[]
 }) {
-    const { initApplication, addMultipleNodesToApplication } =
-        useApplicationsNodeStore()
+    // const { initApplication, addMultipleNodesToApplication } =
+    //     useApplicationsNodeStore()
+
+    const { nodes, initStore, updateNodes } = useNodeStore()
 
     useEffect(() => {
         console.log(
@@ -24,18 +26,21 @@ export default function NodeEditor({
             applicationNodesFromDatabase
         )
         if (applicationNodesFromDatabase.length === 0) {
-            initApplication(applicationId)
+            // initApplication(applicationId)
+            initStore()
         } else {
-            initApplication(applicationId)
-            addMultipleNodesToApplication(
-                applicationId,
-                applicationNodesFromDatabase.map((node) => ({
-                    positionX: node.positionX,
-                    positionY: node.positionY,
+            // initApplication(applicationId)
+            // addMultipleNodesToApplication(
+            //     applicationId,
+            //     applicationNodesFromDatabase.map((node) => ({
+            //         positionX: node.positionX,
+            //         positionY: node.positionY,
 
-                    nodeId: node.nodeId,
-                }))
-            )
+            //         nodeId: node.nodeId,
+            //     }))
+            // )
+            initStore()
+            updateNodes(applicationNodesFromDatabase)
         }
     }, [])
 

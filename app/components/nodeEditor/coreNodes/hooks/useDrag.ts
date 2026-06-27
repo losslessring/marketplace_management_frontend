@@ -4,7 +4,7 @@ export default function useDrag(
     id: string,
     applicationId: number,
     updateNodePosition: (
-        applicationId: number,
+        // applicationId: number,
         nodeId: number,
         positionX: number,
         positionY: number
@@ -71,6 +71,7 @@ export default function useDrag(
                 }
 
                 // console.log('drag start x: ' + x + ' y:' + y)
+                // dragHandle.style.border = 'thick solid #0000FF'
 
                 // get the mouse cursor position at startup:
                 pos3 = x
@@ -132,7 +133,7 @@ export default function useDrag(
                 //console.log('drag end x: ' + pos3 + ' y:' + pos4)
 
                 updateNodePosition(
-                    applicationId,
+                    // applicationId,
                     Number(id),
                     element.offsetLeft - pos1,
                     element.offsetTop - pos2
@@ -146,6 +147,7 @@ export default function useDrag(
                 document.ontouchend = null //added touch event
                 document.onmousemove = null
                 document.ontouchmove = null //added touch event
+                // dragHandle.style.border = 'none'
             }
         }
 

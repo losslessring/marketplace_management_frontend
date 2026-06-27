@@ -41,40 +41,33 @@ export const useApplicationsNodeStore = create<IApplicationsNodeStore>(
             }),
         addNodeToApplication: (id) =>
             set((state) => ({
-                applicationsNodes: state.applicationsNodes.map(
-                    (applicationNodes) => {
-                        return applicationNodes.applicationId === id
-                            ? {
-                                  ...applicationNodes,
-                                  existingNodes: [
-                                      ...applicationNodes.existingNodes,
-                                      {
-                                          nodeId:
-                                              applicationNodes.existingNodes
-                                                  .length + 1,
-                                          //   name: 'Core',
-                                          positionX: 0,
-                                          positionY: 0,
-                                      },
-                                  ],
-                              }
-                            : applicationNodes
-                    }
-                ),
+                applicationsNodes: state.applicationsNodes.map((nodes) => {
+                    return nodes.applicationId === id
+                        ? {
+                              ...nodes,
+                              existingNodes: [
+                                  ...nodes.existingNodes,
+                                  {
+                                      nodeId: nodes.existingNodes.length + 1,
+                                      positionX: 0,
+                                      positionY: 0,
+                                  },
+                              ],
+                          }
+                        : nodes
+                }),
             })),
 
-        addMultipleNodesToApplication: (id, nodes) =>
+        addMultipleNodesToApplication: (id, nodesToAdd) =>
             set((state) => ({
-                applicationsNodes: state.applicationsNodes.map(
-                    (applicationNodes) => {
-                        return applicationNodes.applicationId === id
-                            ? {
-                                  ...applicationNodes,
-                                  existingNodes: [...nodes],
-                              }
-                            : applicationNodes
-                    }
-                ),
+                applicationsNodes: state.applicationsNodes.map((nodes) => {
+                    return nodes.applicationId === id
+                        ? {
+                              ...nodes,
+                              existingNodes: [...nodesToAdd],
+                          }
+                        : nodes
+                }),
             })),
 
         updateNodePosition: (
@@ -84,72 +77,75 @@ export const useApplicationsNodeStore = create<IApplicationsNodeStore>(
             positionY: number
         ) =>
             set((state) => ({
-                applicationsNodes: state.applicationsNodes.map(
-                    (applicationNodes) => {
-                        return applicationNodes.applicationId === applicationId
-                            ? {
-                                  ...applicationNodes,
-                                  existingNodes:
-                                      applicationNodes.existingNodes.map(
-                                          (existingNode: TreeNode) => {
-                                              return existingNode.nodeId ===
-                                                  nodeId
-                                                  ? {
-                                                        ...existingNode,
-                                                        positionX,
-                                                        positionY,
-                                                    }
-                                                  : existingNode
-                                          }
-                                      ),
-                              }
-                            : applicationNodes
-                    }
-                ),
+                applicationsNodes: state.applicationsNodes.map((nodes) => {
+                    return nodes.applicationId === applicationId
+                        ? {
+                              ...nodes,
+                              existingNodes: nodes.existingNodes.map(
+                                  (existingNode: TreeNode) => {
+                                      return existingNode.nodeId === nodeId
+                                          ? {
+                                                ...existingNode,
+                                                positionX,
+                                                positionY,
+                                            }
+                                          : existingNode
+                                  }
+                              ),
+                          }
+                        : nodes
+                }),
             })),
     })
 )
 
-// interface INodeStore {
-//     existingNodes: ICoreNode[]
-//     addNode: () => void
-//     updateExistingNodePosition: (
-//         id: number,
-//         positionX: number,
-//         positionY: number
-//     ) => void
-// }
+interface INodeStore {
+    nodes: TreeNode[]
+    initStore: () => void
+    addNode: () => void
+    updateNodes: (newNodes: TreeNode[]) => void
+    updateNodePosition: (
+        nodeId: number,
+        positionX: number,
+        positionY: number
+    ) => void
+}
 
-// export const useNodeStore = create<INodeStore>((set) => ({
-//     existingNodes: [],
-//     addNode: () =>
-//         set((state) => ({
-//             existingNodes: [
-//                 ...state.existingNodes,
-//                 {
-//                     id: state.existingNodes.length + 1,
-//                     name: 'Core',
-//                     positionX: 99,
-//                     positionY: 99,
-//                 },
-//             ],
-//         })),
-//     updateExistingNodePosition: (
-//         id: number,
-//         positionX: number,
-//         positionY: number
-//     ) =>
-//         set((state: any) => ({
-//             existingNodes: state.existingNodes.map(
-//                 (existingNode: ICoreNode) => {
-//                     return existingNode.id === id
-//                         ? {
-//                               ...existingNode,
-//                               positionX,
-//                               positionY,
-//                           }
-//                         : existingNode
-//                 }
-//             ),
-//         })),
-// }))
+export const useNodeStore = create<INodeStore>((set) => ({
+    nodes: [],
+    initStore: () =>
+        set((state) => ({
+            nodes: [],
+        })),
+    addNode: () =>
+        set((state) => ({
+            nodes: [
+                ...state.nodes,
+                {
+                    nodeId: state.nodes.length + 1,
+                    positionX: 0,
+                    positionY: 0,
+                },
+            ],
+        })),
+    updateNodePosition: (
+        nodeId: number,
+        positionX: number,
+        positionY: number
+    ) =>
+        set((state: any) => ({
+            nodes: state.nodes.map((node: TreeNode) => {
+                return node.nodeId === nodeId
+                    ? {
+                          nodeId,
+                          positionX,
+                          positionY,
+                      }
+                    : node
+            }),
+        })),
+    updateNodes: (newNodes: TreeNode[]) =>
+        set((state) => ({
+            nodes: [...newNodes],
+        })),
+}))

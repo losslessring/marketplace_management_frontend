@@ -1,7 +1,7 @@
 'use client'
 
 import fullUpdateTreeNodesInDatabase from '@/app/applications/actions/fullUpdateTreeNodesInDatabase'
-import { useApplicationsNodeStore } from '@/app/stores/node-store'
+import { useNodeStore } from '@/app/stores/node-store'
 
 function SaveGraphButton({
     className,
@@ -10,30 +10,32 @@ function SaveGraphButton({
     className?: string
     applicationId: number
 }>) {
-    const { applicationsNodes } = useApplicationsNodeStore()
+    //const { applicationsNodes } = useApplicationsNodeStore()
+
+    const { nodes } = useNodeStore()
 
     return (
         <button
             className={className}
             onClick={() => {
-                console.log(applicationsNodes)
-                const nodesToDatabase = applicationsNodes
-                    .find(
-                        (application) =>
-                            application.applicationId === applicationId
-                    )
-                    ?.existingNodes.map((node) => ({
-                        positionX: node.positionX,
+                console.log(nodes)
+                // const nodesToDatabase = applicationsNodes
+                //     .find(
+                //         (application) =>
+                //             application.applicationId === applicationId
+                //     )
+                //     ?.existingNodes.map((node) => ({
+                //         positionX: node.positionX,
 
-                        positionY: node.positionY,
+                //         positionY: node.positionY,
 
-                        nodeId: node.nodeId,
-                    }))
-                console.log(nodesToDatabase)
+                //         nodeId: node.nodeId,
+                //     }))
+                // console.log(nodesToDatabase)
 
-                if (nodesToDatabase) {
+                if (nodes) {
                     fullUpdateTreeNodesInDatabase({
-                        nodes: nodesToDatabase,
+                        nodes,
                         applicationId,
                     })
                 }

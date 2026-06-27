@@ -1,6 +1,6 @@
 'use client'
 import useDrag from '@/app/components/nodeEditor/coreNodes/hooks/useDrag'
-import { useApplicationsNodeStore } from '@/app/stores/node-store'
+import { useNodeStore } from '@/app/stores/node-store'
 import { useEffect } from 'react'
 import InputConnection from './InputConnection'
 
@@ -15,12 +15,15 @@ export default function CoreNode({
     applicationId: number
     className?: string
 }>) {
-    const { applicationsNodes, updateNodePosition } = useApplicationsNodeStore()
+    //const { applicationsNodes, updateNodePosition } = useApplicationsNodeStore()
+    const { nodes, updateNodePosition } = useNodeStore()
 
     useEffect(() => {
-        const nodePosition = applicationsNodes
-            .find((application) => application.applicationId === applicationId)
-            ?.existingNodes.find((node) => node.nodeId === Number(id))
+        // const nodePosition = applicationsNodes
+        //     .find((application) => application.applicationId === applicationId)
+        //     ?.existingNodes.find((node) => node.nodeId === Number(id))
+
+        const nodePosition = nodes.find((node) => node.nodeId === Number(id))
 
         const element = document.getElementById(id)
 
