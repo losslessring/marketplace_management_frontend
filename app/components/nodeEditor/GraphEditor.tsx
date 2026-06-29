@@ -1,5 +1,6 @@
 'use client'
-import { useNodeStore } from '@/app/stores/node-store'
+import { intersect } from '@/app/common/geometry/intersect'
+import { useNodeStore, useSelectedNodeStore } from '@/app/stores/node-store'
 import { useState } from 'react'
 import CoreNode from './coreNodes/CoreNode'
 
@@ -9,6 +10,8 @@ export default function GraphEditor({
     applicationId: number
 }) {
     const {} = useNodeStore()
+    const { addId, removeId } = useSelectedNodeStore()
+    console.log('node store', useNodeStore.getState().nodes)
 
     const [startX, setStartX] = useState<number | null>(null)
     const [startY, setStartY] = useState<number | null>(null)
@@ -21,6 +24,33 @@ export default function GraphEditor({
         setEndY(e.nativeEvent.offsetY)
         console.log('end x: ' + e.nativeEvent.offsetX)
         console.log('end y: ' + e.nativeEvent.offsetY)
+
+        useNodeStore.getState().nodes.forEach((node) => {
+            if (startX && startY && endX && endY) {
+                const selectionFrame = {
+                    minX: startX,
+                    maxX: endX,
+                    minY: startY,
+                    maxY: endY,
+                }
+
+                const nodeCoordinates = {
+                    minX: node.positionX,
+                    maxX: node.positionX,
+                    minY: node.positionY,
+                    maxY: node.positionY,
+                }
+                const isIntersected = intersect(selectionFrame, nodeCoordinates)
+                console.log(selectionFrame)
+                console.log(nodeCoordinates)
+                console.log('is intersected', isIntersected)
+                if (isIntersected) {
+                    addId(node.nodeId)
+                } else {
+                    removeId(node.nodeId)
+                }
+            }
+        })
     }
 
     return (
@@ -35,10 +65,6 @@ export default function GraphEditor({
                 setIsDragging(true)
             }}
             onMouseUp={(e) => {
-                // setEndX(e.nativeEvent.offsetX)
-                // setEndY(e.nativeEvent.offsetY)
-                // console.log('end x: ' + e.nativeEvent.offsetX)
-                // console.log('end y: ' + e.nativeEvent.offsetY)
                 setIsDragging(false)
 
                 setStartX(null)

@@ -14,7 +14,7 @@ interface INodeStore {
     ) => void
 }
 
-export const useNodeStore = create<INodeStore>((set) => ({
+export const useNodeStore = create<INodeStore>((set, get) => ({
     nodes: [],
     initStore: () =>
         set((state) => ({
