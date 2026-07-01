@@ -1,7 +1,13 @@
 'use client'
 import { intersect } from '@/app/common/geometry/intersect'
-import { useNodeStore, useSelectedNodeStore } from '@/app/stores/node-store'
+import {
+    useConnectingNodeStore,
+    useNodeConnectionStore,
+    useNodeStore,
+    useSelectedNodeStore,
+} from '@/app/stores/node-store'
 import { useState } from 'react'
+import Connection from './Connection'
 import CoreNode from './coreNodes/CoreNode'
 
 export default function GraphEditor({
@@ -11,14 +17,50 @@ export default function GraphEditor({
 }) {
     const {} = useNodeStore()
     const { addId, removeId } = useSelectedNodeStore()
-    console.log('node store', useNodeStore.getState().nodes)
+    const { resetConnection } = useConnectingNodeStore()
+    const { addConnection } = useNodeConnectionStore()
+    // console.log('node store', useNodeStore.getState().nodes)
 
     const [startX, setStartX] = useState<number | null>(null)
     const [startY, setStartY] = useState<number | null>(null)
     const [endX, setEndX] = useState<number | null>(null)
     const [endY, setEndY] = useState<number | null>(null)
     const [isDragging, setIsDragging] = useState<boolean>(false)
+    // console.log(Array.from(useConnectingNodeStore.getState().ids)[0])
+    // console.log(Array.from(useConnectingNodeStore.getState().ids)[1])
 
+    console.log(Array.from(useNodeConnectionStore.getState().connections))
+
+    const nodes = Array.from(useNodeStore.getState().nodes)
+
+    const connections = Array.from(
+        useNodeConnectionStore.getState().connections
+    ).map((connection) => {
+        const fromNode = nodes.find((node) => node.nodeId === connection.fromId)
+
+        const toNode = nodes.find((node) => node.nodeId === connection.toId)
+
+        if (fromNode && toNode) {
+            return {
+                id: `${fromNode.nodeId}_${toNode.nodeId}`,
+                beginX: fromNode.positionX,
+                beginY: fromNode.positionY,
+                endX: toNode.positionX,
+                endY: toNode.positionY,
+            }
+        }
+    })
+    // .map((connection) => {
+    //     return {
+    //         id: `${connection.fromNode?.nodeId}_${connection.toNode?.nodeId}`,
+    //         beginX: connection.fromNode?.positionX,
+    //         beginY: connection.fromNode?.positionY,
+    //         endX: connection.toNode?.positionX,
+    //         endY: connection.toNode?.positionY,
+    //     }
+    // })
+
+    console.log('connections: ', connections)
     const dragHandler = (e: any) => {
         setEndX(e.nativeEvent.offsetX)
         setEndY(e.nativeEvent.offsetY)
@@ -98,6 +140,32 @@ export default function GraphEditor({
                     />
                 </div>
             ))}
+
+            {/* {useConnectingNodeStore.getState().ids.size === 2 ? (
+                <Connection
+                    id={1}
+                    beginX={0}
+                    beginY={0}
+                    endX={200}
+                    endY={200}
+                ></Connection>
+            ) : (
+                ''
+            )} */}
+            {connections.map((connection, index) => {
+                if (connection) {
+                    return (
+                        <Connection
+                            key={index}
+                            id={connection.id}
+                            beginX={connection.beginX}
+                            beginY={connection.beginY}
+                            endX={connection.endX}
+                            endY={connection.endY}
+                        ></Connection>
+                    )
+                }
+            })}
         </div>
     )
 }

@@ -79,3 +79,58 @@ export const useSelectedNodeStore = create<SelectedIdsStore>((set, get) => ({
             return { ids: new Set([...prev]) }
         }),
 }))
+
+interface ConnectingIdsStore {
+    ids: Set<number>
+    resetConnection: () => void
+    addFirstId: (id: number) => void
+    addSecondId: (id: number) => void
+}
+
+export const useConnectingNodeStore = create<ConnectingIdsStore>(
+    (set, get) => ({
+        ids: new Set<number>(),
+        resetConnection: () =>
+            set((state) => ({
+                ids: new Set<number>(),
+            })),
+
+        addFirstId: (id) =>
+            set((state) => {
+                return { ids: new Set([id]) }
+            }),
+        addSecondId: (id) =>
+            set((state) => {
+                const prev = Array.from(state.ids)
+                return { ids: new Set([...prev, id]) }
+            }),
+    })
+)
+
+interface NodeConnection {
+    id: number
+    fromId: number
+    toId: number
+}
+
+interface NodeConnectionStore {
+    connections: Set<NodeConnection>
+    resetConnectionStore: () => void
+    addConnection: (connection: NodeConnection) => void
+}
+
+export const useNodeConnectionStore = create<NodeConnectionStore>(
+    (set, get) => ({
+        connections: new Set<NodeConnection>(),
+        resetConnectionStore: () =>
+            set((state) => ({
+                connections: new Set<NodeConnection>(),
+            })),
+
+        addConnection: (connection) =>
+            set((state) => {
+                const prev = Array.from(state.connections)
+                return { connections: new Set([...prev, { ...connection }]) }
+            }),
+    })
+)
