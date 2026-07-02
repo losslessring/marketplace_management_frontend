@@ -1,9 +1,9 @@
-import Rule from './_Rule'
+import { IRule } from '@/app/interfaces/rulesEngine/Rule'
 
 export default function rule(
     condition: (state: any) => boolean,
     action: (state: any) => any
-): Rule {
+): IRule {
     return {
         condition,
         action,
