@@ -12,9 +12,7 @@ import InputConnection from './InputConnection'
 
 export default function CoreNode({
     id,
-    applicationId,
     name,
-    className,
 }: React.PropsWithChildren<{
     id: number
     name: string
@@ -35,16 +33,13 @@ export default function CoreNode({
     useDrag(id, updateNodePosition, setIsDragging)
 
     useEffect(() => {
-        if (useConnectingNodeStore.getState().ids.size === 2) {
+        const ids = useConnectingNodeStore.getState().ids
+        if (ids.size === 2) {
             addConnection({
-                id: 0,
-                fromId: Array.from(useConnectingNodeStore.getState().ids)[0],
-                toId: Array.from(useConnectingNodeStore.getState().ids)[1],
+                fromId: Array.from(ids)[0],
+                toId: Array.from(ids)[1],
             })
-            console.log(
-                'node connection store',
-                useNodeConnectionStore.getState().connections
-            )
+
             resetConnection()
         }
     })
@@ -60,18 +55,6 @@ export default function CoreNode({
             addId(id)
         }
 
-        // if (useConnectingNodeStore.getState().ids.size === 2) {
-        //     addConnection({
-        //         id: 0,
-        //         fromId: Array.from(useConnectingNodeStore.getState().ids)[0],
-        //         toId: Array.from(useConnectingNodeStore.getState().ids)[1],
-        //     })
-        //     console.log(
-        //         'node connection store',
-        //         useNodeConnectionStore.getState().connections
-        //     )
-        //     resetConnection()
-        // }
         if (useConnectingNodeStore.getState().ids.size === 0) {
             addFirstId(id)
         }
@@ -79,7 +62,7 @@ export default function CoreNode({
             addSecondId(id)
         }
 
-        console.log(useConnectingNodeStore.getState().ids)
+        // console.log(useConnectingNodeStore.getState().ids)
     }
 
     return (

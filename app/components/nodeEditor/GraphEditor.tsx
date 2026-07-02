@@ -26,14 +26,15 @@ export default function GraphEditor({
     const [endX, setEndX] = useState<number | null>(null)
     const [endY, setEndY] = useState<number | null>(null)
     const [isDragging, setIsDragging] = useState<boolean>(false)
-    // console.log(Array.from(useConnectingNodeStore.getState().ids)[0])
-    // console.log(Array.from(useConnectingNodeStore.getState().ids)[1])
 
-    console.log(Array.from(useNodeConnectionStore.getState().connections))
+    console.log(
+        'connections:',
+        Array.from(useNodeConnectionStore.getState().connections)
+    )
 
     const nodes = Array.from(useNodeStore.getState().nodes)
 
-    const connections = Array.from(
+    const connectionsWithCoordinates = Array.from(
         useNodeConnectionStore.getState().connections
     ).map((connection) => {
         const fromNode = nodes.find((node) => node.nodeId === connection.fromId)
@@ -50,17 +51,8 @@ export default function GraphEditor({
             }
         }
     })
-    // .map((connection) => {
-    //     return {
-    //         id: `${connection.fromNode?.nodeId}_${connection.toNode?.nodeId}`,
-    //         beginX: connection.fromNode?.positionX,
-    //         beginY: connection.fromNode?.positionY,
-    //         endX: connection.toNode?.positionX,
-    //         endY: connection.toNode?.positionY,
-    //     }
-    // })
 
-    console.log('connections: ', connections)
+    // console.log('connections: ', connections)
     const dragHandler = (e: any) => {
         setEndX(e.nativeEvent.offsetX)
         setEndY(e.nativeEvent.offsetY)
@@ -135,24 +127,12 @@ export default function GraphEditor({
                         id={node.nodeId}
                         applicationId={applicationId}
                         name={'Core'}
-                        //className="draggable basic-node"
                         className="drag-handle basic-node"
                     />
                 </div>
             ))}
 
-            {/* {useConnectingNodeStore.getState().ids.size === 2 ? (
-                <Connection
-                    id={1}
-                    beginX={0}
-                    beginY={0}
-                    endX={200}
-                    endY={200}
-                ></Connection>
-            ) : (
-                ''
-            )} */}
-            {connections.map((connection, index) => {
+            {connectionsWithCoordinates.map((connection, index) => {
                 if (connection) {
                     return (
                         <Connection

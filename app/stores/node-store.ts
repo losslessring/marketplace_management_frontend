@@ -108,7 +108,6 @@ export const useConnectingNodeStore = create<ConnectingIdsStore>(
 )
 
 interface NodeConnection {
-    id: number
     fromId: number
     toId: number
 }
@@ -129,8 +128,25 @@ export const useNodeConnectionStore = create<NodeConnectionStore>(
 
         addConnection: (connection) =>
             set((state) => {
-                const prev = Array.from(state.connections)
-                return { connections: new Set([...prev, { ...connection }]) }
+                const existingConnections = Array.from(state.connections)
+                if (
+                    existingConnections.find(
+                        (existingConnection) =>
+                            existingConnection.fromId === connection.fromId &&
+                            existingConnection.toId === connection.toId
+                    )
+                ) {
+                    return {
+                        state,
+                    }
+                } else {
+                    return {
+                        connections: new Set([
+                            ...existingConnections,
+                            { ...connection },
+                        ]),
+                    }
+                }
             }),
     })
 )
