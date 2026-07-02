@@ -1,4 +1,6 @@
 'use client'
+import createRules from '@/app/common/ruleEngine/createRules'
+import rule from '@/app/common/ruleEngine/rule'
 import useDrag from '@/app/components/nodeEditor/coreNodes/hooks/useDrag'
 import {
     useConnectingNodePairStore,
@@ -42,12 +44,25 @@ export default function CoreNode({
             addId(id)
         }
 
-        if (useConnectingNodePairStore.getState().ids.size === 0) {
-            addFirstId(id)
-        }
-        if (useConnectingNodePairStore.getState().ids.size === 1) {
-            addSecondId(id)
-        }
+        const runRulesResult = createRules([
+            rule(
+                (size) => size === 0,
+                (_) => addFirstId(id)
+            ),
+            rule(
+                (size) => size === 1,
+                (_) => addSecondId(id)
+            ),
+        ]).runAll(useConnectingNodePairStore.getState().ids.size)
+
+        console.log('run rules result', runRulesResult)
+
+        // if (useConnectingNodePairStore.getState().ids.size === 0) {
+        //     addFirstId(id)
+        // }
+        // if (useConnectingNodePairStore.getState().ids.size === 1) {
+        //     addSecondId(id)
+        // }
     }
 
     return (
