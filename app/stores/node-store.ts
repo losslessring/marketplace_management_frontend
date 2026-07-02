@@ -80,17 +80,17 @@ export const useSelectedNodeStore = create<SelectedIdsStore>((set, get) => ({
         }),
 }))
 
-interface ConnectingIdsStore {
+interface ConnectingNodePair {
     ids: Set<number>
-    resetConnection: () => void
+    resetPairConnection: () => void
     addFirstId: (id: number) => void
     addSecondId: (id: number) => void
 }
 
-export const useConnectingNodeStore = create<ConnectingIdsStore>(
+export const useConnectingNodePairStore = create<ConnectingNodePair>(
     (set, get) => ({
         ids: new Set<number>(),
-        resetConnection: () =>
+        resetPairConnection: () =>
             set((state) => ({
                 ids: new Set<number>(),
             })),

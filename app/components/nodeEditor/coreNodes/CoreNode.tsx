@@ -1,13 +1,13 @@
 'use client'
 import useDrag from '@/app/components/nodeEditor/coreNodes/hooks/useDrag'
 import {
-    useConnectingNodeStore,
-    useNodeConnectionStore,
+    useConnectingNodePairStore,
     useNodeStore,
     useSelectedNodeStore,
 } from '@/app/stores/node-store'
-import { useEffect, useState } from 'react'
-import useSetInitialElementPosition from './hooks/useUpdateElementPosition'
+import { useState } from 'react'
+import useCreateConnection from './hooks/useCreateConnection'
+import useSetInitialElementPosition from './hooks/useSetInitialElementPosition'
 import InputConnection from './InputConnection'
 
 export default function CoreNode({
@@ -22,27 +22,14 @@ export default function CoreNode({
     const { updateNodePosition } = useNodeStore()
     const { addId, removeId } = useSelectedNodeStore()
 
-    const { addConnection } = useNodeConnectionStore()
-
-    const { addFirstId, addSecondId, resetConnection } =
-        useConnectingNodeStore()
+    const { addFirstId, addSecondId } = useConnectingNodePairStore()
 
     const [isDragging, setIsDragging] = useState<boolean>(false)
     useSetInitialElementPosition(id, Array.from(useNodeStore.getState().nodes))
 
     useDrag(id, updateNodePosition, setIsDragging)
 
-    useEffect(() => {
-        const ids = useConnectingNodeStore.getState().ids
-        if (ids.size === 2) {
-            addConnection({
-                fromId: Array.from(ids)[0],
-                toId: Array.from(ids)[1],
-            })
-
-            resetConnection()
-        }
-    })
+    useCreateConnection()
 
     const interactionHandler = () => {
         if (isDragging) {
@@ -55,14 +42,12 @@ export default function CoreNode({
             addId(id)
         }
 
-        if (useConnectingNodeStore.getState().ids.size === 0) {
+        if (useConnectingNodePairStore.getState().ids.size === 0) {
             addFirstId(id)
         }
-        if (useConnectingNodeStore.getState().ids.size === 1) {
+        if (useConnectingNodePairStore.getState().ids.size === 1) {
             addSecondId(id)
         }
-
-        // console.log(useConnectingNodeStore.getState().ids)
     }
 
     return (

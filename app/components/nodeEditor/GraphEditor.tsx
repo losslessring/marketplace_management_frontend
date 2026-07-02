@@ -1,7 +1,7 @@
 'use client'
 import { intersect } from '@/app/common/geometry/intersect'
 import {
-    useConnectingNodeStore,
+    useConnectingNodePairStore,
     useNodeConnectionStore,
     useNodeStore,
     useSelectedNodeStore,
@@ -17,7 +17,7 @@ export default function GraphEditor({
 }) {
     const {} = useNodeStore()
     const { addId, removeId } = useSelectedNodeStore()
-    const { resetConnection } = useConnectingNodeStore()
+    const {} = useConnectingNodePairStore()
     const { addConnection } = useNodeConnectionStore()
     // console.log('node store', useNodeStore.getState().nodes)
 

@@ -6,7 +6,6 @@ export default function useSetInitialElementPosition(
     nodes: TreeNode[]
 ) {
     useEffect(() => {
-        console.log(id)
         const nodePosition = nodes.find((node) => node.nodeId === id)
 
         const element = document.getElementById(String(id))
