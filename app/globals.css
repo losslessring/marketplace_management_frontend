@@ -75,7 +75,7 @@
     position: absolute;
     stroke:rgb(186,230,253);
     stroke-width:2;
-    z-index: 8;
+    /* z-index: 8; */
     top: 0;
     left: 0;
     height: 100%;

@@ -134,21 +134,25 @@ export default function GraphEditor({
                     />
                 </div>
             ))}
-
-            {connectionsWithCoordinates.map((connection, index) => {
-                if (connection) {
-                    return (
-                        <Connection
-                            key={index}
-                            id={connection.id}
-                            beginX={connection.beginX + connectionOffsetX}
-                            beginY={connection.beginY + connectionOffsetY}
-                            endX={connection.endX + connectionOffsetX}
-                            endY={connection.endY + connectionOffsetY}
-                        ></Connection>
-                    )
-                }
-            })}
+            <svg
+                id={`connection_container_${applicationId}`}
+                className={'connection'}
+            >
+                {connectionsWithCoordinates.map((connection, index) => {
+                    if (connection) {
+                        return (
+                            <Connection
+                                key={index}
+                                id={connection.id}
+                                beginX={connection.beginX + connectionOffsetX}
+                                beginY={connection.beginY + connectionOffsetY}
+                                endX={connection.endX + connectionOffsetX}
+                                endY={connection.endY + connectionOffsetY}
+                            ></Connection>
+                        )
+                    }
+                })}
+            </svg>
         </div>
     )
 }
