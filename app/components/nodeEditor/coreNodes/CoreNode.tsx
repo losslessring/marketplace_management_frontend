@@ -27,6 +27,9 @@ export default function CoreNode({
     const { addFirstId, addSecondId } = useConnectingNodePairStore()
 
     const [isDragging, setIsDragging] = useState<boolean>(false)
+
+    const nodes = Array.from(useNodeStore.getState().nodes)
+
     useSetInitialElementPosition(id, Array.from(useNodeStore.getState().nodes))
 
     useDrag(id, updateNodePosition, setIsDragging)
@@ -53,9 +56,9 @@ export default function CoreNode({
                 (size) => size === 1,
                 (_) => addSecondId(id)
             ),
-        ]).runAll(useConnectingNodePairStore.getState().ids.size)
+        ]).run(useConnectingNodePairStore.getState().ids.size)
 
-        console.log('run rules result', runRulesResult)
+        // console.log('run rules result', runRulesResult)
 
         // if (useConnectingNodePairStore.getState().ids.size === 0) {
         //     addFirstId(id)
@@ -64,10 +67,18 @@ export default function CoreNode({
         //     addSecondId(id)
         // }
     }
-
+    const nodePosition = nodes.find((node) => node.nodeId === id)
     return (
-        <div id={String(id)} className="draggable">
+        <div
+            id={String(id)}
+            className="draggable"
+            style={{
+                top: nodePosition?.positionY + 'px',
+                left: nodePosition?.positionX + 'px',
+            }}
+        >
             <div
+                id={String(id) + '_drag_handle'}
                 className={`drag-handle basic-node rounded-full grid place-items-center ${
                     useSelectedNodeStore.getState().ids.has(id)
                         ? 'border-4 border-indigo-600'

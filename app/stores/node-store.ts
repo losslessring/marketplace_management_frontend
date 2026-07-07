@@ -107,13 +107,14 @@ export const useConnectingNodePairStore = create<ConnectingNodePair>(
     })
 )
 
-interface NodeConnection {
+export interface NodeConnection {
     fromId: number
     toId: number
 }
 
 interface NodeConnectionStore {
     connections: Set<NodeConnection>
+    updateConnectionStore: (connections: NodeConnection[]) => void
     resetConnectionStore: () => void
     addConnection: (connection: NodeConnection) => void
 }
@@ -121,6 +122,12 @@ interface NodeConnectionStore {
 export const useNodeConnectionStore = create<NodeConnectionStore>(
     (set, get) => ({
         connections: new Set<NodeConnection>(),
+
+        updateConnectionStore: (connections: NodeConnection[]) =>
+            set((state) => ({
+                connections: new Set<NodeConnection>([...connections]),
+            })),
+
         resetConnectionStore: () =>
             set((state) => ({
                 connections: new Set<NodeConnection>(),
@@ -128,13 +135,31 @@ export const useNodeConnectionStore = create<NodeConnectionStore>(
 
         addConnection: (connection) =>
             set((state) => {
-                const existingConnections = Array.from(state.connections)
-                if (
+                const hasDuplicates = (
+                    existingConnections: NodeConnection[],
+                    connection: NodeConnection
+                ) =>
                     existingConnections.find(
                         (existingConnection) =>
                             existingConnection.fromId === connection.fromId &&
                             existingConnection.toId === connection.toId
                     )
+
+                const isReverseConnection = (
+                    existingConnections: NodeConnection[],
+                    connection: NodeConnection
+                ) =>
+                    existingConnections.find(
+                        (existingConnection) =>
+                            existingConnection.fromId === connection.toId &&
+                            existingConnection.toId === connection.fromId
+                    )
+
+                const existingConnections = Array.from(state.connections)
+
+                if (
+                    hasDuplicates(existingConnections, connection) ||
+                    isReverseConnection(existingConnections, connection)
                 ) {
                     return {
                         state,

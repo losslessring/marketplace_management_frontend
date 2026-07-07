@@ -1,7 +1,8 @@
 'use client'
 
+import fullUpdateConnectionsInDatabase from '@/app/applications/actions/fullUpdateConnectionsInDatabase'
 import fullUpdateTreeNodesInDatabase from '@/app/applications/actions/fullUpdateTreeNodesInDatabase'
-import { useNodeStore } from '@/app/stores/node-store'
+import { useNodeConnectionStore, useNodeStore } from '@/app/stores/node-store'
 
 function SaveGraphButton({
     className,
@@ -11,15 +12,27 @@ function SaveGraphButton({
     applicationId: number
 }>) {
     const {} = useNodeStore()
+    const {} = useNodeConnectionStore()
 
     return (
         <button
             className={className}
             onClick={() => {
                 const nodes = useNodeStore.getState().nodes
+
                 if (nodes) {
                     fullUpdateTreeNodesInDatabase({
                         nodes,
+                        applicationId,
+                    })
+                }
+
+                const connections =
+                    useNodeConnectionStore.getState().connections
+
+                if (connections) {
+                    fullUpdateConnectionsInDatabase({
+                        connections: Array.from(connections),
                         applicationId,
                     })
                 }

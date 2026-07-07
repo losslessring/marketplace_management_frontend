@@ -27,6 +27,9 @@ export default function GraphEditor({
     const [endY, setEndY] = useState<number | null>(null)
     const [isDragging, setIsDragging] = useState<boolean>(false)
 
+    const [connectionOffsetX, setConnectionOffsetX] = useState<number>(30)
+    const [connectionOffsetY, setConnectionOffsetY] = useState<number>(30)
+
     console.log(
         'connections:',
         Array.from(useNodeConnectionStore.getState().connections)
@@ -138,10 +141,10 @@ export default function GraphEditor({
                         <Connection
                             key={index}
                             id={connection.id}
-                            beginX={connection.beginX}
-                            beginY={connection.beginY}
-                            endX={connection.endX}
-                            endY={connection.endY}
+                            beginX={connection.beginX + connectionOffsetX}
+                            beginY={connection.beginY + connectionOffsetY}
+                            endX={connection.endX + connectionOffsetX}
+                            endY={connection.endY + connectionOffsetY}
                         ></Connection>
                     )
                 }

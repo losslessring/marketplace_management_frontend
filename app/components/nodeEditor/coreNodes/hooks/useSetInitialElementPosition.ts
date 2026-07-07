@@ -7,12 +7,13 @@ export default function useSetInitialElementPosition(
 ) {
     useEffect(() => {
         const nodePosition = nodes.find((node) => node.nodeId === id)
-
-        const element = document.getElementById(String(id))
-
+        const element = document.getElementById(String(id) + '_drag_handle')
         if (element && nodePosition) {
-            element.style.top = nodePosition?.positionY + 'px'
-            element.style.left = nodePosition?.positionX + 'px'
+            // element.style.top = nodePosition?.positionY + 'px'
+            // element.style.left = nodePosition?.positionX + 'px'
+            // console.log('element width: ', element.style.width)
+            // console.log('element height: ', element.style.height)
+            // console.log('element offset width', element.offsetWidth)
         }
     }, [id])
 }

@@ -1,7 +1,7 @@
 'use server'
 
 import { put } from '@/app/common/util/fetch'
-import { CreateTreeNodesRequest } from '../interfaces/CreateTreeNodesRequest.interface'
+import { CreateTreeNodesRequest } from '@/app/interfaces/CreateTreeNodesRequest.interface'
 
 export default async function fullUpdateTreeNodesInDatabase(
     nodeData: CreateTreeNodesRequest

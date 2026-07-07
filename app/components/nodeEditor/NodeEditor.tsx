@@ -1,7 +1,8 @@
 'use client'
 import { ICoreNode } from '@/app/interfaces/coreNode.interface'
+import { Connection } from '@/app/interfaces/dto/connection/Connection'
 import { TreeNode } from '@/app/interfaces/TreeNode'
-import { useNodeStore } from '@/app/stores/node-store'
+import { useNodeConnectionStore, useNodeStore } from '@/app/stores/node-store'
 import { useEffect } from 'react'
 import GraphEditor from './GraphEditor'
 import NodeLibrary from './NodeLibrary'
@@ -10,12 +11,29 @@ export default function NodeEditor({
     coreNodes,
     applicationId,
     applicationNodesFromDatabase,
+    connectionsFromDatabase,
 }: {
     coreNodes: ICoreNode[]
     applicationId: number
     applicationNodesFromDatabase: TreeNode[]
+    connectionsFromDatabase: Connection[]
 }) {
     const { initStore, updateNodes } = useNodeStore()
+    const { updateConnectionStore, resetConnectionStore } =
+        useNodeConnectionStore()
+
+    useEffect(() => {
+        if (connectionsFromDatabase.length === 0) {
+            resetConnectionStore()
+        } else {
+            resetConnectionStore()
+            updateConnectionStore(connectionsFromDatabase)
+        }
+        // console.log(
+        //     'Connections from database: ',
+        //     useNodeConnectionStore.getState().connections
+        // )
+    }, [])
 
     useEffect(() => {
         if (applicationNodesFromDatabase.length === 0) {

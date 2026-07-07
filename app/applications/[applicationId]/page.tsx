@@ -5,6 +5,7 @@ import SaveGraphButton from '@/app/components/nodeEditor/SaveGraphButton'
 import { revalidatePath } from 'next/cache'
 import { headers } from 'next/headers'
 import getApplication from './getApplication'
+import getApplicationConnections from './getApplicationConnections'
 import getApplicationNodes from './getApplicationNodes'
 import getCoreNodes from './getCoreNodes'
 
@@ -21,14 +22,19 @@ export default async function SingleApplication({
     revalidatePath('/')
 
     const applicationId = +params.applicationId
-    const [application, coreNodes, applicationNodesFromDatabase] =
-        await Promise.all([
-            getApplication(applicationId),
-            getCoreNodes(),
-            getApplicationNodes(applicationId),
-        ]).then((values) => {
-            return values
-        })
+    const [
+        application,
+        coreNodes,
+        applicationNodesFromDatabase,
+        connectionsFromDatabase,
+    ] = await Promise.all([
+        getApplication(applicationId),
+        getCoreNodes(),
+        getApplicationNodes(applicationId),
+        getApplicationConnections(applicationId),
+    ]).then((values) => {
+        return values
+    })
 
     return (
         <div>
@@ -40,6 +46,7 @@ export default async function SingleApplication({
                 coreNodes={coreNodes}
                 applicationId={application.id}
                 applicationNodesFromDatabase={applicationNodesFromDatabase}
+                connectionsFromDatabase={connectionsFromDatabase}
             ></NodeEditor>
         </div>
     )
