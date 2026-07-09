@@ -78,9 +78,9 @@ export default function GraphEditor({
                     maxY: node.positionY,
                 }
                 const isIntersected = intersect(selectionFrame, nodeCoordinates)
-                console.log(selectionFrame)
-                console.log(nodeCoordinates)
-                console.log('is intersected', isIntersected)
+                // console.log(selectionFrame)
+                // console.log(nodeCoordinates)
+                // console.log('is intersected', isIntersected)
                 if (isIntersected) {
                     addId(node.nodeId)
                 } else {
