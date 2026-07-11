@@ -82,6 +82,15 @@
     width: 100%;
   }
 
+  .default-line {
+    stroke-width: 2;
+    stroke-color: oklch(90.1% 0.058 230.902)
+  }
+
+  .selected-line {
+    stroke-width: 10;
+    stroke-color: oklch(98.7% 0.026 102.212)
+  }
 
     .input-connection {
       position: absolute;

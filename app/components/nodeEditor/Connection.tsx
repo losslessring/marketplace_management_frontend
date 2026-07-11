@@ -1,15 +1,25 @@
 import { Path } from '@/app/interfaces/geometry/Path'
+import { useSelectedConnectionsStore } from '@/app/stores/node-store'
 import { useEffect, useState } from 'react'
 
 export default function Connection({ id, beginX, beginY, endX, endY }: Path) {
-    const defaultLineStyle = 'stroke-sky-200 stroke-[2]'
-    const selectedLineStyle = 'stroke-yellow-50 stroke-[10]'
+    // const defaultLineStyle = 'stroke-sky-200 stroke-[2]'
+    const defaultLineStyle = 'default-line'
+    // const selectedLineStyle = 'stroke-yellow-50 stroke-[10]'
+    const selectedLineStyle = 'selected-line'
     const hiddenInteractionLineStyle = 'stroke-sky-200 stroke-[10] opacity-0'
 
+    const { addConnectionId, removeConnectionId } =
+        useSelectedConnectionsStore()
+
     const [lineStyle, setLineStyle] = useState<string>(defaultLineStyle)
-    const [isSelected, setIsSelected] = useState<boolean>(false)
+    const [isSelected, setIsSelected] = useState<boolean>(
+        // useSelectedConnectionsStore.getState().ids.has(id)
+        false
+    )
 
     useEffect(() => {
+        console.log(useSelectedConnectionsStore.getState().ids.has(id))
         if (isSelected) {
             setLineStyle(selectedLineStyle)
         } else {
@@ -44,6 +54,7 @@ export default function Connection({ id, beginX, beginY, endX, endY }: Path) {
                 }}
                 onClick={() => {
                     isSelected ? setIsSelected(false) : setIsSelected(true)
+                    isSelected ? removeConnectionId(id) : addConnectionId(id)
                 }}
                 className={hiddenInteractionLineStyle}
             />

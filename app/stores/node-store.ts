@@ -175,3 +175,32 @@ export const useNodeConnectionStore = create<NodeConnectionStore>(
             }),
     })
 )
+
+interface SelectedConnectionsStore {
+    ids: Set<string>
+    initStore: () => void
+    addConnectionId: (id: string) => void
+    removeConnectionId: (id: string) => void
+}
+
+export const useSelectedConnectionsStore = create<SelectedConnectionsStore>(
+    (set, get) => ({
+        ids: new Set(),
+        initStore: () =>
+            set((state) => ({
+                ids: new Set(),
+            })),
+
+        addConnectionId: (id) =>
+            set((state) => {
+                const prev = Array.from(state.ids)
+                return { ids: new Set([...prev, id]) }
+            }),
+        removeConnectionId: (id) =>
+            set((state) => {
+                state.ids.delete(id)
+                const prev = Array.from(state.ids)
+                return { ids: new Set([...prev]) }
+            }),
+    })
+)
