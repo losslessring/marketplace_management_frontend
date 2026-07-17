@@ -19,6 +19,7 @@ export default function Connection({ id, beginX, beginY, endX, endY }: Path) {
     )
 
     useEffect(() => {
+        console.log(useSelectedConnectionsStore.getState().ids)
         console.log(useSelectedConnectionsStore.getState().ids.has(id))
         if (isSelected) {
             setLineStyle(selectedLineStyle)

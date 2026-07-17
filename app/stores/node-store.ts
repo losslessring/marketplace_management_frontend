@@ -181,6 +181,7 @@ interface SelectedConnectionsStore {
     initStore: () => void
     addConnectionId: (id: string) => void
     removeConnectionId: (id: string) => void
+    // removeConnections: (ids: string[]) => void
 }
 
 export const useSelectedConnectionsStore = create<SelectedConnectionsStore>(
@@ -198,9 +199,17 @@ export const useSelectedConnectionsStore = create<SelectedConnectionsStore>(
             }),
         removeConnectionId: (id) =>
             set((state) => {
-                state.ids.delete(id)
-                const prev = Array.from(state.ids)
-                return { ids: new Set([...prev]) }
+                const remaining = Array.from(state.ids).filter(
+                    (currentId) => currentId !== id
+                )
+                return { ids: new Set([...remaining]) }
             }),
+        // removeConnections: (ids) =>
+        //     set((state) => {
+        //         const remaining = Array.from(state.ids).filter(
+        //             (currentId) => !ids.includes(currentId)
+        //         )
+        //         return { ids: new Set([...remaining]) }
+        //     }),
     })
 )

@@ -2,10 +2,24 @@
 
 import { TreeNode } from '@/app/interfaces/TreeNode'
 import {
+    NodeConnection,
     useNodeConnectionStore,
     useNodeStore,
+    useSelectedConnectionsStore,
     useSelectedNodeStore,
 } from '@/app/stores/node-store'
+
+const removeNodelessConnections = (
+    unselectedNodes: TreeNode[],
+    connections: NodeConnection[]
+) => {
+    return connections.filter((connection) => {
+        return (
+            unselectedNodes.find((node) => node.nodeId === connection.fromId) &&
+            unselectedNodes.find((node) => node.nodeId === connection.toId)
+        )
+    })
+}
 
 function DeleteNodesButton({
     className,
@@ -16,6 +30,8 @@ function DeleteNodesButton({
     const { initStore } = useSelectedNodeStore()
 
     const { updateConnectionStore } = useNodeConnectionStore()
+
+    const {} = useSelectedConnectionsStore()
 
     return (
         <button
@@ -37,17 +53,43 @@ function DeleteNodesButton({
                 const connections = Array.from(
                     useNodeConnectionStore.getState().connections
                 )
-                const actualConnections = connections.filter((connection) => {
-                    return (
-                        unselectedNodes.find(
-                            (node) => node.nodeId === connection.fromId
-                        ) &&
-                        unselectedNodes.find(
-                            (node) => node.nodeId === connection.toId
-                        )
-                    )
-                })
+
+                const actualConnections = removeNodelessConnections(
+                    unselectedNodes,
+                    connections
+                )
+
                 updateConnectionStore(actualConnections)
+
+                const selectedConnections = Array.from(
+                    useSelectedConnectionsStore.getState().ids
+                )
+                console.log('selected connections: ', selectedConnections)
+
+                if (selectedConnections) {
+                    const unselectedConnections = Array.from(
+                        useNodeConnectionStore.getState().connections
+                    )
+                        .map((connection) => {
+                            return {
+                                id: `${connection.fromId}_${connection.toId}`,
+                                fromId: connection.fromId,
+                                toId: connection.toId,
+                            }
+                        })
+                        .filter(
+                            (connection) =>
+                                !selectedConnections.includes(connection.id)
+                        )
+                        .map(({ fromId, toId }) => ({ fromId, toId }))
+
+                    updateConnectionStore(unselectedConnections)
+
+                    console.log(
+                        'unselected connections: ',
+                        unselectedConnections
+                    )
+                }
             }}
         >
             Delete selected
