@@ -9,8 +9,6 @@ import {
 } from '@/app/stores/node-store'
 import { useState } from 'react'
 import useCreateConnection from './hooks/useCreateConnection'
-import useSetInitialElementPosition from './hooks/useSetInitialElementPosition'
-import InputConnection from './InputConnection'
 
 export default function CoreNode({
     id,
@@ -29,8 +27,6 @@ export default function CoreNode({
     const [isDragging, setIsDragging] = useState<boolean>(false)
 
     const nodes = Array.from(useNodeStore.getState().nodes)
-
-    useSetInitialElementPosition(id, Array.from(useNodeStore.getState().nodes))
 
     useDrag(id, updateNodePosition, setIsDragging)
 
@@ -68,6 +64,9 @@ export default function CoreNode({
         // }
     }
     const nodePosition = nodes.find((node) => node.nodeId === id)
+
+    // console.log('node position x:', nodePosition?.positionX)
+    // console.log('node position y:', nodePosition?.positionY)
     return (
         <div
             id={String(id)}
@@ -79,17 +78,17 @@ export default function CoreNode({
         >
             <div
                 id={String(id) + '_drag_handle'}
-                className={`drag-handle basic-node rounded-full grid place-items-center ${
+                className={`drag-handle basic-node  rounded-full grid place-items-center ${
                     useSelectedNodeStore.getState().ids.has(id)
-                        ? 'border-4 border-indigo-600'
-                        : ''
+                        ? 'selected-node'
+                        : 'unselected-node'
                 }`}
                 onMouseUp={interactionHandler}
                 onTouchEnd={interactionHandler}
             >
                 {name}
             </div>
-            <InputConnection></InputConnection>
+            {/* <InputConnection></InputConnection> */}
         </div>
     )
 }

@@ -124,6 +124,7 @@ export default function useDrag(
                 pos3 = x
                 pos4 = y
                 // set the element's new position:
+
                 setIsDragging(true)
 
                 element.style.top = element.offsetTop - pos2 + 'px'
@@ -134,11 +135,13 @@ export default function useDrag(
                 //console.log('drag end x: ' + pos3 + ' y:' + pos4)
 
                 updateNodePosition(
-                    // applicationId,
                     Number(id),
                     element.offsetLeft - pos1,
                     element.offsetTop - pos2
                 )
+
+                pos1 = 0
+                pos2 = 0
 
                 setIsDragging(false)
 
