@@ -29,6 +29,9 @@ export default function GraphEditor({
 
     const [connectionOffsetX, setConnectionOffsetX] = useState<number>(30)
     const [connectionOffsetY, setConnectionOffsetY] = useState<number>(30)
+    const nodeSize = Math.sqrt(
+        Math.pow(connectionOffsetY, 2) + Math.pow(connectionOffsetX, 2)
+    )
 
     // console.log(
     //     'connections:',
@@ -148,6 +151,7 @@ export default function GraphEditor({
                                 beginY={connection.beginY + connectionOffsetY}
                                 endX={connection.endX + connectionOffsetX}
                                 endY={connection.endY + connectionOffsetY}
+                                arrowShift={nodeSize - 7}
                             ></Connection>
                         )
                     }

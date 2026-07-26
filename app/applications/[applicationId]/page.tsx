@@ -1,4 +1,5 @@
 import BackButton from '@/app/components/BackButton'
+import ConnectionModeButton from '@/app/components/nodeEditor/ConnectionModeButton'
 import DeleteNodesButton from '@/app/components/nodeEditor/DeleteNodesButton'
 import NodeEditor from '@/app/components/nodeEditor/NodeEditor'
 import SaveGraphButton from '@/app/components/nodeEditor/SaveGraphButton'
@@ -42,6 +43,7 @@ export default async function SingleApplication({
             <div className="mb-1">{application.name}</div>
             <SaveGraphButton applicationId={applicationId}></SaveGraphButton>
             <DeleteNodesButton className="ml-4"></DeleteNodesButton>
+            <ConnectionModeButton></ConnectionModeButton>
             <NodeEditor
                 coreNodes={coreNodes}
                 applicationId={application.id}

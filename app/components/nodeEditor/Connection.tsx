@@ -1,8 +1,15 @@
-import { Path } from '@/app/interfaces/geometry/Path'
+import { IConnection } from '@/app/interfaces/geometry/IConnection'
 import { useSelectedConnectionsStore } from '@/app/stores/node-store'
 import { useEffect, useState } from 'react'
 
-export default function Connection({ id, beginX, beginY, endX, endY }: Path) {
+export default function Connection({
+    id,
+    beginX,
+    beginY,
+    endX,
+    endY,
+    arrowShift,
+}: IConnection) {
     const defaultLineStyle = 'default-line'
     const selectedLineStyle = 'selected-line'
     const hiddenInteractionLineStyle = 'stroke-sky-200 stroke-[10] opacity-0'
@@ -14,9 +21,13 @@ export default function Connection({ id, beginX, beginY, endX, endY }: Path) {
     const [isSelected, setIsSelected] = useState<boolean>(false)
 
     const th = Math.atan2(endY - beginY, endX - beginX)
-    const arrowPointDistance =
-        Math.sqrt(Math.pow(endY - beginY, 2) + Math.pow(endX - beginX, 2)) / 2
+    const connectionLength = Math.sqrt(
+        Math.pow(endY - beginY, 2) + Math.pow(endX - beginX, 2)
+    )
+    const arrowPointDistance = connectionLength - arrowShift
+
     console.log('theta: ', th)
+    console.log('connection length', connectionLength)
     console.log('arrow point distance: ', arrowPointDistance)
     const arrowPointX = beginX + arrowPointDistance * Math.cos(th)
     const arrowPointY = beginY + arrowPointDistance * Math.sin(th)
