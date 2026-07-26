@@ -213,3 +213,38 @@ export const useSelectedConnectionsStore = create<SelectedConnectionsStore>(
         //     }),
     })
 )
+
+interface Modes {
+    connection: boolean
+}
+
+interface ModesStore {
+    modes: Modes
+    resetModes: () => void
+    setConnectionModeOn: () => void
+    setConnectionModeOff: () => void
+    switchConnectionMode: () => void
+}
+
+export const useModesStore = create<ModesStore>((set, get) => ({
+    modes: { connection: false },
+    resetModes: () =>
+        set((state) => ({
+            modes: { connection: false },
+        })),
+
+    setConnectionModeOn: () =>
+        set((state) => {
+            return { modes: { ...state.modes, connection: true } }
+        }),
+    setConnectionModeOff: () =>
+        set((state) => {
+            return { modes: { ...state.modes, connection: false } }
+        }),
+    switchConnectionMode: () =>
+        set((state) => {
+            return {
+                modes: { ...state.modes, connection: !state.modes.connection },
+            }
+        }),
+}))

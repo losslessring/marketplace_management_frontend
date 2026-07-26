@@ -29,10 +29,6 @@ export default function NodeEditor({
             resetConnectionStore()
             updateConnectionStore(connectionsFromDatabase)
         }
-        // console.log(
-        //     'Connections from database: ',
-        //     useNodeConnectionStore.getState().connections
-        // )
     }, [])
 
     useEffect(() => {

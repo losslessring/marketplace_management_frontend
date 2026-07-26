@@ -1,9 +1,8 @@
 'use client'
-import createRules from '@/app/common/ruleEngine/createRules'
-import rule from '@/app/common/ruleEngine/rule'
 import useDrag from '@/app/components/nodeEditor/coreNodes/hooks/useDrag'
 import {
     useConnectingNodePairStore,
+    useModesStore,
     useNodeStore,
     useSelectedNodeStore,
 } from '@/app/stores/node-store'
@@ -24,6 +23,8 @@ export default function CoreNode({
 
     const { addFirstId, addSecondId } = useConnectingNodePairStore()
 
+    const {} = useModesStore()
+
     const [isDragging, setIsDragging] = useState<boolean>(false)
 
     const nodes = Array.from(useNodeStore.getState().nodes)
@@ -37,31 +38,35 @@ export default function CoreNode({
             return
         }
 
-        if (useSelectedNodeStore.getState().ids.has(id)) {
-            removeId(id)
-        } else {
-            addId(id)
+        if (useModesStore.getState().modes.connection === false) {
+            if (useSelectedNodeStore.getState().ids.has(id)) {
+                removeId(id)
+            } else {
+                addId(id)
+            }
+
+            return
         }
 
-        const runRulesResult = createRules([
-            rule(
-                (size) => size === 0,
-                (_) => addFirstId(id)
-            ),
-            rule(
-                (size) => size === 1,
-                (_) => addSecondId(id)
-            ),
-        ]).run(useConnectingNodePairStore.getState().ids.size)
+        // const runRulesResult = createRules([
+        //     rule(
+        //         (size) => size === 0,
+        //         (_) => addFirstId(id)
+        //     ),
+        //     rule(
+        //         (size) => size === 1,
+        //         (_) => addSecondId(id)
+        //     ),
+        // ]).run(useConnectingNodePairStore.getState().ids.size)
 
         // console.log('run rules result', runRulesResult)
 
-        // if (useConnectingNodePairStore.getState().ids.size === 0) {
-        //     addFirstId(id)
-        // }
-        // if (useConnectingNodePairStore.getState().ids.size === 1) {
-        //     addSecondId(id)
-        // }
+        if (useConnectingNodePairStore.getState().ids.size === 0) {
+            addFirstId(id)
+        }
+        if (useConnectingNodePairStore.getState().ids.size === 1) {
+            addSecondId(id)
+        }
     }
     const nodePosition = nodes.find((node) => node.nodeId === id)
 

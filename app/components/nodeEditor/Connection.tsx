@@ -26,9 +26,9 @@ export default function Connection({
     )
     const arrowPointDistance = connectionLength - arrowShift
 
-    console.log('theta: ', th)
-    console.log('connection length', connectionLength)
-    console.log('arrow point distance: ', arrowPointDistance)
+    // console.log('theta: ', th)
+    // console.log('connection length', connectionLength)
+    // console.log('arrow point distance: ', arrowPointDistance)
     const arrowPointX = beginX + arrowPointDistance * Math.cos(th)
     const arrowPointY = beginY + arrowPointDistance * Math.sin(th)
 
