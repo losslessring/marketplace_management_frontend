@@ -5,4 +5,5 @@ export interface IConnection {
     endX: number
     endY: number
     arrowShift: number
+    beginShift: number
 }

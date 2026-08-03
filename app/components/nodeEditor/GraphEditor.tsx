@@ -150,6 +150,7 @@ export default function GraphEditor({
                                 endX={connection.endX + connectionOffsetX}
                                 endY={connection.endY + connectionOffsetY}
                                 arrowShift={nodeSize - 7}
+                                beginShift={nodeSize - 15}
                             ></Connection>
                         )
                     }

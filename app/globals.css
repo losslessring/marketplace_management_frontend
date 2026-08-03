@@ -26,7 +26,7 @@
         left: 0;
         height: 60px;
         width: 60px;
-        cursor: pointer;
+        /* cursor: pointer; */
         user-select: none;
       }
      
@@ -50,12 +50,12 @@
       .draggable {
         position: absolute;
         z-index: 9;
-        cursor: move;
+        /* cursor: move; */
         touch-action: none;
     }
 
     .drag-handle {
-      cursor: move;
+      /* cursor: move; */
       z-index: 10;
   }
 

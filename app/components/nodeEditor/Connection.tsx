@@ -9,6 +9,7 @@ export default function Connection({
     endX,
     endY,
     arrowShift,
+    beginShift,
 }: IConnection) {
     const defaultLineStyle = 'default-line'
     const selectedLineStyle = 'selected-line'
@@ -31,6 +32,9 @@ export default function Connection({
     // console.log('arrow point distance: ', arrowPointDistance)
     const arrowPointX = beginX + arrowPointDistance * Math.cos(th)
     const arrowPointY = beginY + arrowPointDistance * Math.sin(th)
+
+    const connectionBeginX = beginX + beginShift * Math.cos(th)
+    const connectionBeginY = beginY + beginShift * Math.sin(th)
 
     useEffect(() => {
         console.log(useSelectedConnectionsStore.getState().ids)
@@ -61,17 +65,17 @@ export default function Connection({
             </defs>
             <line
                 id={`connection_line_${id}`}
-                x1={`${beginX}`}
-                y1={`${beginY}`}
-                x2={`${endX}`}
-                y2={`${endY}`}
+                x1={`${connectionBeginX}`}
+                y1={`${connectionBeginY}`}
+                x2={`${arrowPointX}`}
+                y2={`${arrowPointY}`}
                 className={lineStyle}
             />
 
             <line
                 id={`connection_arrow_line_${id}`}
-                x1={`${beginX}`}
-                y1={`${beginY}`}
+                x1={`${connectionBeginX}`}
+                y1={`${connectionBeginY}`}
                 x2={`${arrowPointX}`}
                 y2={`${arrowPointY}`}
                 className={'line-arrow'}

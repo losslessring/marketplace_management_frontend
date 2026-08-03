@@ -125,6 +125,12 @@ export default function useDrag(
                 pos4 = y
                 // set the element's new position:
 
+                if (Math.abs(pos1) + Math.abs(pos2) <= 1) {
+                    pos1 = 0
+                    pos2 = 0
+                    return
+                }
+
                 setIsDragging(true)
 
                 element.style.top = element.offsetTop - pos2 + 'px'
