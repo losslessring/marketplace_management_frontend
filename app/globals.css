@@ -20,6 +20,33 @@
         background-color: hotpink;
     }
 
+    .header {
+      height: 5vh;
+    }
+
+    .application-editor {
+      height: 85vh;
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      grid-template-rows: auto min-content;
+      grid-template-areas: 
+      "node-library graph-editor"
+    }
+
+    .navbar {
+      grid-area: navbar;
+      max-height: 10vh;
+    }
+    .node-library {
+      grid-area: node-library;
+      
+    }
+
+    .graph-editor {
+      grid-area: graph-editor;     
+      overflow: auto;
+    }
+
     .basic-node {
         position: absolute;
         top: 0;

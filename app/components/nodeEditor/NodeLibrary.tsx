@@ -10,7 +10,7 @@ export default function NodeLibrary({
 }) {
     const { addNode } = useNodeStore()
     return (
-        <div className="bg-pink-300">
+        <div className=" node-library bg-pink-300">
             <div>Node Library</div>
             {coreNodes.map((coreNode, index) => {
                 const currentNodeId = index + 1

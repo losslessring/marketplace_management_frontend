@@ -93,7 +93,7 @@ export default function GraphEditor({
 
     return (
         <div
-            className="bg-blue-500 relative"
+            className="graph-editor bg-blue-500 relative"
             id="graph_editor"
             onMouseDown={(e) => {
                 setStartX(e.nativeEvent.offsetX)

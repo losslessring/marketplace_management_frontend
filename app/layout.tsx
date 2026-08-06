@@ -25,7 +25,7 @@ export default async function RootLayout({
             <body className={inter.className}>
                 <div>
                     <Providers authenticated={isAuthenticated}>
-                        <div className="">
+                        <div className="header">
                             <Header logout={logout} />
                         </div>
                         <div>{children}</div>
