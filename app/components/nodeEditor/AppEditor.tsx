@@ -1,5 +1,6 @@
 'use client'
 import { ICoreNode } from '@/app/interfaces/coreNode.interface'
+import { NodeData } from '@/app/interfaces/data/NodeData'
 import { Connection } from '@/app/interfaces/dto/connection/Connection'
 import { TreeNode } from '@/app/interfaces/TreeNode'
 import { useNodeConnectionStore, useNodeStore } from '@/app/stores/node-store'
@@ -18,6 +19,7 @@ export default function AppEditor({
     applicationId: number
     applicationNodesFromDatabase: TreeNode[]
     connectionsFromDatabase: Connection[]
+    nodesData: NodeData[]
 }) {
     const { initStore, updateNodes } = useNodeStore()
     const { updateConnectionStore, resetConnectionStore } =

@@ -9,6 +9,7 @@ import getApplication from './getApplication'
 import getApplicationConnections from './getApplicationConnections'
 import getApplicationNodes from './getApplicationNodes'
 import getCoreNodes from './getCoreNodes'
+import getNodesData from './getNodesData'
 
 interface SingleApplicationProps {
     params: { applicationId: string }
@@ -28,11 +29,13 @@ export default async function SingleApplication({
         coreNodes,
         applicationNodesFromDatabase,
         connectionsFromDatabase,
+        nodesData,
     ] = await Promise.all([
         getApplication(applicationId),
         getCoreNodes(),
         getApplicationNodes(applicationId),
         getApplicationConnections(applicationId),
+        getNodesData(applicationId),
     ]).then((values) => {
         return values
     })
@@ -53,6 +56,7 @@ export default async function SingleApplication({
                 applicationId={application.id}
                 applicationNodesFromDatabase={applicationNodesFromDatabase}
                 connectionsFromDatabase={connectionsFromDatabase}
+                nodesData={nodesData}
             ></AppEditor>
         </div>
     )

@@ -19,6 +19,19 @@ export const postNode = async (path: string, data: any) => {
     return { error: '' }
 }
 
+export const postData = async (path: string, data: any = undefined) => {
+    const res = await fetch(`${API_URL}/${path}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', ...getHeaders() },
+        body: data ? JSON.stringify(data) : undefined,
+    })
+    const parsedRes = await res.json()
+    if (!res.ok) {
+        return { error: getErrorMessage(parsedRes) }
+    }
+    return parsedRes
+}
+
 export const put = async (path: string, data: any) => {
     const res = await fetch(`${API_URL}/${path}`, {
         method: 'PUT',

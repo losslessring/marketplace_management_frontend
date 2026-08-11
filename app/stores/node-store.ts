@@ -204,13 +204,6 @@ export const useSelectedConnectionsStore = create<SelectedConnectionsStore>(
                 )
                 return { ids: new Set([...remaining]) }
             }),
-        // removeConnections: (ids) =>
-        //     set((state) => {
-        //         const remaining = Array.from(state.ids).filter(
-        //             (currentId) => !ids.includes(currentId)
-        //         )
-        //         return { ids: new Set([...remaining]) }
-        //     }),
     })
 )
 
