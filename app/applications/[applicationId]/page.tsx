@@ -3,6 +3,8 @@ import AppEditor from '@/app/components/nodeEditor/AppEditor'
 import ConnectionModeButton from '@/app/components/nodeEditor/ConnectionModeButton'
 import DeleteNodesButton from '@/app/components/nodeEditor/DeleteNodesButton'
 import SaveGraphButton from '@/app/components/nodeEditor/SaveGraphButton'
+import { NodeData } from '@/app/interfaces/data/NodeData'
+import { NodeDataFromServer } from '@/app/interfaces/data/NodeDataFromServer'
 import { revalidatePath } from 'next/cache'
 import { headers } from 'next/headers'
 import getApplication from './getApplication'
@@ -29,7 +31,7 @@ export default async function SingleApplication({
         coreNodes,
         applicationNodesFromDatabase,
         connectionsFromDatabase,
-        nodesData,
+        nodeData,
     ] = await Promise.all([
         getApplication(applicationId),
         getCoreNodes(),
@@ -39,6 +41,8 @@ export default async function SingleApplication({
     ]).then((values) => {
         return values
     })
+
+    console.log(nodeData)
 
     return (
         <div className="application-editor-container">
@@ -56,7 +60,13 @@ export default async function SingleApplication({
                 applicationId={application.id}
                 applicationNodesFromDatabase={applicationNodesFromDatabase}
                 connectionsFromDatabase={connectionsFromDatabase}
-                nodesData={nodesData}
+                nodeData={nodeData.map(
+                    (nodeDataFromServer: NodeDataFromServer): NodeData => ({
+                        id: nodeDataFromServer.nodeId,
+                        type: nodeDataFromServer.nodeDataType,
+                        data: nodeDataFromServer.nodeData,
+                    })
+                )}
             ></AppEditor>
         </div>
     )

@@ -1,4 +1,5 @@
 export interface NodeData {
-    nodeId: number
-    nodeData: string
+    id: number
+    type: string
+    data: string
 }

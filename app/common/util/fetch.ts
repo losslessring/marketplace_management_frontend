@@ -41,10 +41,7 @@ export const put = async (path: string, data: any) => {
 
     const parsedRes = await res.json()
 
-    if (!res.ok) {
-        return { error: getErrorMessage(parsedRes) }
-    }
-    return { error: '' }
+    return parsedRes
 }
 
 export const post = async (path: string, formData: FormData) => {

@@ -3,7 +3,11 @@ import { ICoreNode } from '@/app/interfaces/coreNode.interface'
 import { NodeData } from '@/app/interfaces/data/NodeData'
 import { Connection } from '@/app/interfaces/dto/connection/Connection'
 import { TreeNode } from '@/app/interfaces/TreeNode'
-import { useNodeConnectionStore, useNodeStore } from '@/app/stores/node-store'
+import {
+    useNodeConnectionStore,
+    useNodeDataStore,
+    useNodeStore,
+} from '@/app/stores/node-store'
 import { useEffect } from 'react'
 import GraphEditor from './GraphEditor'
 import NodeEditor from './NodeEditor'
@@ -14,16 +18,19 @@ export default function AppEditor({
     applicationId,
     applicationNodesFromDatabase,
     connectionsFromDatabase,
+    nodeData,
 }: {
     coreNodes: ICoreNode[]
     applicationId: number
     applicationNodesFromDatabase: TreeNode[]
     connectionsFromDatabase: Connection[]
-    nodesData: NodeData[]
+    nodeData: NodeData[]
 }) {
     const { initStore, updateNodes } = useNodeStore()
     const { updateConnectionStore, resetConnectionStore } =
         useNodeConnectionStore()
+
+    const { initNodeDataStore } = useNodeDataStore()
 
     useEffect(() => {
         if (connectionsFromDatabase.length === 0) {
@@ -41,6 +48,10 @@ export default function AppEditor({
             initStore()
             updateNodes(applicationNodesFromDatabase)
         }
+    }, [])
+
+    useEffect(() => {
+        initNodeDataStore(nodeData)
     }, [])
 
     return (

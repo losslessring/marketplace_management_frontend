@@ -33,6 +33,10 @@
       "node-library graph-editor"
     }
 
+    .text-area {
+      background-color: black
+    }
+
     .navbar {
       grid-area: navbar;
       max-height: 10vh;

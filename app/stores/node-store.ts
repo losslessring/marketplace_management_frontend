@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { NodeData } from '../interfaces/data/NodeData'
 import { TreeNode } from '../interfaces/TreeNode'
 
 interface INodeStore {
@@ -50,6 +51,45 @@ export const useNodeStore = create<INodeStore>((set, get) => ({
     updateNodes: (newNodes: TreeNode[]) =>
         set((state) => ({
             nodes: [...newNodes],
+        })),
+}))
+
+interface NodeDataStore {
+    nodeData: NodeData[]
+    addNodeData: (id: number, type: string, data: string) => void
+    updateNodeData: (id: number, type: string, data: string) => void
+    initNodeDataStore: (allNodeData: NodeData[]) => void
+}
+
+export const useNodeDataStore = create<NodeDataStore>((set, get) => ({
+    nodeData: [],
+
+    addNodeData: (id, type = 'text', data = '') =>
+        set((state: any) => ({
+            nodeData: [
+                ...state.nodeData,
+                {
+                    id,
+                    type,
+                    data,
+                },
+            ],
+        })),
+    updateNodeData: (id: number, type: string, data: string) =>
+        set((state: any) => ({
+            nodeData: state.nodeData.map((node: NodeData) => {
+                return node.id === id
+                    ? {
+                          id: node.id,
+                          type,
+                          data,
+                      }
+                    : node
+            }),
+        })),
+    initNodeDataStore: (allNodeData: NodeData[]) =>
+        set((state) => ({
+            nodeData: [...allNodeData],
         })),
 }))
 
