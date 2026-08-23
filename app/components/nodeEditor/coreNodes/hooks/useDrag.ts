@@ -135,8 +135,8 @@ export default function useDrag(
 
                 element.style.top = element.offsetTop - pos2 + 'px'
                 element.style.left = element.offsetLeft - pos1 + 'px'
-                console.log(element.style.top)
-                console.log(element.style.left)
+                // console.log(element.style.top)
+                // console.log(element.style.left)
             }
 
             function closeDragElement() {

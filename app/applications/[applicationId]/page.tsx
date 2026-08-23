@@ -52,7 +52,10 @@ export default async function SingleApplication({
                 <SaveGraphButton
                     applicationId={applicationId}
                 ></SaveGraphButton>
-                <DeleteNodesButton className="ml-4"></DeleteNodesButton>
+                <DeleteNodesButton
+                    className="ml-4"
+                    applicationId={applicationId}
+                ></DeleteNodesButton>
                 <ConnectionModeButton></ConnectionModeButton>
             </div>
             <AppEditor

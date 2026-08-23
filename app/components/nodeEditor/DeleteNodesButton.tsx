@@ -1,5 +1,6 @@
 'use client'
 
+import deleteTreeNodeInDatabase from '@/app/applications/actions/deleteTreeNodeInDatabase'
 import { TreeNode } from '@/app/interfaces/TreeNode'
 import {
     NodeConnection,
@@ -23,8 +24,10 @@ const removeNodelessConnections = (
 
 function DeleteNodesButton({
     className,
+    applicationId,
 }: React.PropsWithChildren<{
     className?: string
+    applicationId: number
 }>) {
     const { updateNodes } = useNodeStore()
     const { initStore } = useSelectedNodeStore()
@@ -85,11 +88,16 @@ function DeleteNodesButton({
 
                     updateConnectionStore(unselectedConnections)
 
-                    console.log(
-                        'unselected connections: ',
-                        unselectedConnections
-                    )
+                    // console.log(
+                    //     'unselected connections: ',
+                    //     unselectedConnections
+                    // )
                 }
+
+                console.log('application id: ', applicationId)
+                console.log('deleting nodes ids: ', selectedNodeIds)
+
+                deleteTreeNodeInDatabase(applicationId, selectedNodeIds)
             }}
         >
             Delete selected

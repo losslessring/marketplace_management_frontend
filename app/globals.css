@@ -20,6 +20,10 @@
         background-color: hotpink;
     }
 
+    html {
+      user-select: none;
+    }
+
     .header {
       height: 5vh;
     }

@@ -44,6 +44,20 @@ export const put = async (path: string, data: any) => {
     return parsedRes
 }
 
+export const fetchRequest = async (path: string, method: string, data: any) => {
+    const res = await fetch(`${API_URL}/${path}`, {
+        method,
+        headers: { 'Content-Type': 'application/json', ...getHeaders() },
+        body: JSON.stringify(data),
+    })
+
+    const parsedRes = await res.json()
+
+    console.log(parsedRes)
+
+    return parsedRes
+}
+
 export const post = async (path: string, formData: FormData) => {
     const res = await fetch(`${API_URL}/${path}`, {
         method: 'POST',

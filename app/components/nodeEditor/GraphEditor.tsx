@@ -62,8 +62,8 @@ export default function GraphEditor({
     const dragHandler = (e: any) => {
         setEndX(e.nativeEvent.offsetX)
         setEndY(e.nativeEvent.offsetY)
-        console.log('end x: ' + e.nativeEvent.offsetX)
-        console.log('end y: ' + e.nativeEvent.offsetY)
+        // console.log('end x: ' + e.nativeEvent.offsetX)
+        // console.log('end y: ' + e.nativeEvent.offsetY)
 
         useNodeStore.getState().nodes.forEach((node) => {
             if (startX && startY && endX && endY) {

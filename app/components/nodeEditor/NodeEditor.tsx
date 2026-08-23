@@ -44,7 +44,7 @@ export default function NodeEditor({
                 rows={5}
                 value={lastSelectedNodeData ? lastSelectedNodeData.data : ''}
                 onChange={(e) =>
-                    updateNodeData(lastSelectedNodeId, 'string', e.target.value)
+                    updateNodeData(lastSelectedNodeId, 'text', e.target.value)
                 }
             ></textarea>
             <button
@@ -56,9 +56,10 @@ export default function NodeEditor({
                                 nodeData.id === lastSelectedNodeId
                         )
                     if (actualNodeData) {
-                        const result = await saveNodeData(actualNodeData.id, {
+                        const result = await saveNodeData(applicationId, {
                             nodeDataType: actualNodeData.type,
                             nodeData: actualNodeData.data,
+                            nodeId: actualNodeData.id,
                         })
                         console.log(result)
                     }
