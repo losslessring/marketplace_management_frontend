@@ -1,3 +1,4 @@
+import createTreeNodesInDatabase from '@/app/applications/actions/createTreeNodesInDatabase'
 import { ICoreNode } from '@/app/interfaces/coreNode.interface'
 import { useNodeStore } from '@/app/stores/node-store'
 
@@ -23,8 +24,14 @@ export default function NodeLibrary({
                             onClick={() => {
                                 addNode()
                                 console.log(useNodeStore.getState().nodes)
+                                const nodes = useNodeStore.getState().nodes
+                                const lastNode = nodes[nodes.length - 1]
 
                                 console.log('created node')
+                                createTreeNodesInDatabase({
+                                    nodes: [{ ...lastNode }],
+                                    applicationId,
+                                })
                             }}
                         >
                             Add Node
