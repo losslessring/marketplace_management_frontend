@@ -33,6 +33,8 @@ export default function GraphEditor({
         Math.pow(connectionOffsetY, 2) + Math.pow(connectionOffsetX, 2)
     )
 
+    const frameOffset = 8
+
     // console.log(
     //     'connections:',
     //     Array.from(useNodeConnectionStore.getState().connections)
@@ -62,8 +64,9 @@ export default function GraphEditor({
     const dragHandler = (e: any) => {
         setEndX(e.nativeEvent.offsetX)
         setEndY(e.nativeEvent.offsetY)
-        // console.log('end x: ' + e.nativeEvent.offsetX)
-        // console.log('end y: ' + e.nativeEvent.offsetY)
+        console.log('end x: ' + e.nativeEvent.offsetX)
+        console.log('end y: ' + e.nativeEvent.offsetY)
+        console.log(e.nativeEvent.target.getAttribute('id'))
 
         useNodeStore.getState().nodes.forEach((node) => {
             if (startX && startY && endX && endY) {
@@ -112,17 +115,38 @@ export default function GraphEditor({
             }}
             onMouseMove={isDragging ? dragHandler : undefined}
         >
-            {startX && startY && endX && endY ? (
+            {startX &&
+            startY &&
+            endX &&
+            endY &&
+            startX < endX &&
+            startY < endY ? (
                 <div
-                    id="frame_area"
+                    className="frame-area"
                     style={{
                         left: startX,
                         top: startY,
-                        width: endX - startX,
-                        height: endY - startY,
+                        width: endX - startX - frameOffset,
+                        height: endY - startY - frameOffset,
                     }}
                 ></div>
             ) : (
+                // : startX &&
+                //   startY &&
+                //   endX &&
+                //   endY &&
+                //   startX > endX &&
+                //   startY > endY ? (
+                //     <div
+                //         className="frame-area"
+                //         style={{
+                //             left: endX,
+                //             top: endY,
+                //             width: startX - endX,
+                //             height: startY - endY,
+                //         }}
+                //     ></div>
+                // )
                 ''
             )}
             {useNodeStore.getState().nodes.map((node, index) => (

@@ -1,1 +1,8 @@
 Create store for nodeData
+
+On dragging, whe mouse runs over the node, it catches its relative coordinates
+when using offsetX and offsetY, and the dragging frame resets and blinks.
+Idea to avoid this: check the target id, if it is different fron canvas, or,
+better from id, that was initially on drag start.
+If it is changed, i should use the last drag value. The frame will stop,
+but it is still better than blinking on reset.
