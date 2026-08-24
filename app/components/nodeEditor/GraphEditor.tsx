@@ -97,10 +97,10 @@ export default function GraphEditor({
         console.log('end x: ' + e.nativeEvent.offsetX)
         console.log('end y: ' + e.nativeEvent.offsetY)
         // console.log('ref for node under cursor: ', nodeUnderCursor.current)
-        console.log(
-            'node under cursor: ',
-            e.nativeEvent.target.getAttribute('id')
-        )
+        // console.log(
+        //     'node under cursor: ',
+        //     e.nativeEvent.target.getAttribute('id')
+        // )
 
         dragRightDown.current = startX < endX && startY < endY
 
@@ -119,8 +119,7 @@ export default function GraphEditor({
         console.log('is dragging right up? ', dragRightUp.current)
 
         useNodeStore.getState().nodes.forEach((node) => {
-            // if (startX && startY && endX && endY) {
-            if (isDragging) {
+            if (isDragging && startX && startY && endX && endY) {
                 const selectionFrameBox = dragRightDown.current
                     ? {
                           minX: startX,
@@ -150,10 +149,10 @@ export default function GraphEditor({
                           maxY: startY,
                       }
                     : {
-                          minX: startX,
-                          maxX: endX,
-                          minY: startY,
-                          maxY: endY,
+                          minX: 0,
+                          maxX: 0,
+                          minY: 0,
+                          maxY: 0,
                       }
 
                 const nodeCoordinates = {
