@@ -21,10 +21,10 @@ export default function GraphEditor({
     const { addConnection } = useNodeConnectionStore()
     // console.log('node store', useNodeStore.getState().nodes)
 
-    const [startX, setStartX] = useState<number | null>(null)
-    const [startY, setStartY] = useState<number | null>(null)
-    const [endX, setEndX] = useState<number | null>(null)
-    const [endY, setEndY] = useState<number | null>(null)
+    const [startX, setStartX] = useState<number>(0)
+    const [startY, setStartY] = useState<number>(0)
+    const [endX, setEndX] = useState<number>(0)
+    const [endY, setEndY] = useState<number>(0)
     const [isDragging, setIsDragging] = useState<boolean>(false)
 
     const [connectionOffsetX, setConnectionOffsetX] = useState<number>(30)
@@ -33,7 +33,19 @@ export default function GraphEditor({
         Math.pow(connectionOffsetY, 2) + Math.pow(connectionOffsetX, 2)
     )
 
-    const nodeUnderCursor = useRef(undefined)
+    // const nodeUnderCursor = useRef(undefined)
+
+    const dragRightDown = useRef(false)
+
+    const dragLeftUp = useRef(false)
+
+    // const rightDownSelectionBox = {
+    //     minX: startX,
+    //     maxX: endX,
+    //     minY: startY,
+    //     maxY: endY,
+    // }
+    // const selectionFrameBox = useRef(rightDownSelectionBox)
 
     const nodes = Array.from(useNodeStore.getState().nodes)
 
@@ -57,23 +69,22 @@ export default function GraphEditor({
 
     // console.log('connections: ', connections)
     const dragHandler = (e: any) => {
-        if (!nodeUnderCursor.current) {
-            nodeUnderCursor.current = e.nativeEvent.target.getAttribute('id')
-        }
+        // if (!nodeUnderCursor.current) {
+        //     nodeUnderCursor.current = e.nativeEvent.target.getAttribute('id')
+        // }
 
-        if (
-            nodeUnderCursor.current !== e.nativeEvent.target.getAttribute('id')
-        ) {
-            console.log(
-                'node under cursor: ',
-                e.nativeEvent.target.getAttribute('id')
-            )
-            console.log('state end x: ', endX)
-            console.log('state end y: ', endY)
-            // setEndX(endX + e.nativeEvent.offsetX)
-            // setEndY(endY + e.nativeEvent.offsetY)
-            return
-        }
+        // if (
+        //     nodeUnderCursor.current !== e.nativeEvent.target.getAttribute('id')
+        // ) {
+        //     console.log(
+        //         'node under cursor: ',
+        //         e.nativeEvent.target.getAttribute('id')
+        //     )
+        //     console.log('state end x: ', endX)
+        //     console.log('state end y: ', endY)
+
+        //     return
+        // }
 
         setEndX(e.nativeEvent.offsetX)
         setEndY(e.nativeEvent.offsetY)
@@ -81,20 +92,43 @@ export default function GraphEditor({
         console.log('state end y: ', endY)
         console.log('end x: ' + e.nativeEvent.offsetX)
         console.log('end y: ' + e.nativeEvent.offsetY)
-        console.log('ref for node under cursor: ', nodeUnderCursor.current)
+        // console.log('ref for node under cursor: ', nodeUnderCursor.current)
         console.log(
             'node under cursor: ',
             e.nativeEvent.target.getAttribute('id')
         )
 
+        dragRightDown.current = startX < endX && startY < endY
+
+        console.log('is dragging right down? ', dragRightDown.current)
+
+        dragLeftUp.current = startX > endX && startY > endY
+
+        console.log('is dragging left up? ', dragLeftUp.current)
+
         useNodeStore.getState().nodes.forEach((node) => {
-            if (startX && startY && endX && endY) {
-                const selectionFrame = {
-                    minX: startX,
-                    maxX: endX,
-                    minY: startY,
-                    maxY: endY,
-                }
+            // if (startX && startY && endX && endY) {
+            if (isDragging) {
+                const selectionFrameBox = dragRightDown.current
+                    ? {
+                          minX: startX,
+                          maxX: endX,
+                          minY: startY,
+                          maxY: endY,
+                      }
+                    : dragLeftUp.current
+                    ? {
+                          minX: endX,
+                          maxX: startX,
+                          minY: endY,
+                          maxY: startY,
+                      }
+                    : {
+                          minX: startX,
+                          maxX: endX,
+                          minY: startY,
+                          maxY: endY,
+                      }
 
                 const nodeCoordinates = {
                     minX: node.positionX,
@@ -102,7 +136,11 @@ export default function GraphEditor({
                     minY: node.positionY,
                     maxY: node.positionY,
                 }
-                const isIntersected = intersect(selectionFrame, nodeCoordinates)
+                console.log(selectionFrameBox)
+                const isIntersected = intersect(
+                    selectionFrameBox,
+                    nodeCoordinates
+                )
 
                 if (isIntersected) {
                     addId(node.nodeId)
@@ -125,21 +163,17 @@ export default function GraphEditor({
                 setIsDragging(true)
             }}
             onMouseUp={(e) => {
+                setStartX(0)
+                setStartY(0)
+                setEndX(0)
+                setEndY(0)
                 setIsDragging(false)
-
-                setStartX(null)
-                setStartY(null)
-                setEndX(null)
-                setEndY(null)
+                dragRightDown.current = false
+                dragLeftUp.current = false
             }}
             onMouseMove={isDragging ? dragHandler : undefined}
         >
-            {startX &&
-            startY &&
-            endX &&
-            endY &&
-            startX < endX &&
-            startY < endY ? (
+            {isDragging && dragRightDown.current ? (
                 <div
                     className="frame-area"
                     style={{
@@ -150,12 +184,7 @@ export default function GraphEditor({
                         pointerEvents: 'none',
                     }}
                 ></div>
-            ) : startX &&
-              startY &&
-              endX &&
-              endY &&
-              startX > endX &&
-              startY > endY ? (
+            ) : isDragging && dragLeftUp.current ? (
                 <div
                     className="frame-area"
                     style={{
