@@ -6,7 +6,7 @@ import {
     useNodeStore,
     useSelectedNodeStore,
 } from '@/app/stores/node-store'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import Connection from './Connection'
 import CoreNode from './coreNodes/CoreNode'
 
@@ -33,12 +33,7 @@ export default function GraphEditor({
         Math.pow(connectionOffsetY, 2) + Math.pow(connectionOffsetX, 2)
     )
 
-    const frameOffset = 8
-
-    // console.log(
-    //     'connections:',
-    //     Array.from(useNodeConnectionStore.getState().connections)
-    // )
+    const nodeUnderCursor = useRef(undefined)
 
     const nodes = Array.from(useNodeStore.getState().nodes)
 
@@ -62,11 +57,35 @@ export default function GraphEditor({
 
     // console.log('connections: ', connections)
     const dragHandler = (e: any) => {
+        if (!nodeUnderCursor.current) {
+            nodeUnderCursor.current = e.nativeEvent.target.getAttribute('id')
+        }
+
+        if (
+            nodeUnderCursor.current !== e.nativeEvent.target.getAttribute('id')
+        ) {
+            console.log(
+                'node under cursor: ',
+                e.nativeEvent.target.getAttribute('id')
+            )
+            console.log('state end x: ', endX)
+            console.log('state end y: ', endY)
+            // setEndX(endX + e.nativeEvent.offsetX)
+            // setEndY(endY + e.nativeEvent.offsetY)
+            return
+        }
+
         setEndX(e.nativeEvent.offsetX)
         setEndY(e.nativeEvent.offsetY)
+        console.log('state end x: ', endX)
+        console.log('state end y: ', endY)
         console.log('end x: ' + e.nativeEvent.offsetX)
         console.log('end y: ' + e.nativeEvent.offsetY)
-        console.log(e.nativeEvent.target.getAttribute('id'))
+        console.log('ref for node under cursor: ', nodeUnderCursor.current)
+        console.log(
+            'node under cursor: ',
+            e.nativeEvent.target.getAttribute('id')
+        )
 
         useNodeStore.getState().nodes.forEach((node) => {
             if (startX && startY && endX && endY) {
@@ -126,36 +145,36 @@ export default function GraphEditor({
                     style={{
                         left: startX,
                         top: startY,
-                        width: endX - startX - frameOffset,
-                        height: endY - startY - frameOffset,
+                        width: endX - startX,
+                        height: endY - startY,
+                        pointerEvents: 'none',
+                    }}
+                ></div>
+            ) : startX &&
+              startY &&
+              endX &&
+              endY &&
+              startX > endX &&
+              startY > endY ? (
+                <div
+                    className="frame-area"
+                    style={{
+                        left: endX,
+                        top: endY,
+                        width: startX - endX,
+                        height: startY - endY,
+                        pointerEvents: 'none',
                     }}
                 ></div>
             ) : (
-                // : startX &&
-                //   startY &&
-                //   endX &&
-                //   endY &&
-                //   startX > endX &&
-                //   startY > endY ? (
-                //     <div
-                //         className="frame-area"
-                //         style={{
-                //             left: endX,
-                //             top: endY,
-                //             width: startX - endX,
-                //             height: startY - endY,
-                //         }}
-                //     ></div>
-                // )
                 ''
             )}
             {useNodeStore.getState().nodes.map((node, index) => (
                 <div key={index}>
                     <CoreNode
                         id={node.nodeId}
-                        applicationId={applicationId}
                         name={'Core'}
-                        className="drag-handle basic-node"
+                        pointerEvents={isDragging ? 'none' : 'auto'}
                     />
                 </div>
             ))}

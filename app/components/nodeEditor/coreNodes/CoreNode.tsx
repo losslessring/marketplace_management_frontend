@@ -12,11 +12,11 @@ import useCreateConnection from './hooks/useCreateConnection'
 export default function CoreNode({
     id,
     name,
+    pointerEvents,
 }: React.PropsWithChildren<{
     id: number
     name: string
-    applicationId: number
-    className?: string
+    pointerEvents: React.CSSProperties['pointerEvents'] | undefined
 }>) {
     const { updateNodePosition } = useNodeStore()
     const { addId, removeId } = useSelectedNodeStore()
@@ -79,6 +79,8 @@ export default function CoreNode({
             style={{
                 top: nodePosition?.positionY + 'px',
                 left: nodePosition?.positionX + 'px',
+                pointerEvents:
+                    pointerEvents as React.CSSProperties['pointerEvents'],
             }}
         >
             <div

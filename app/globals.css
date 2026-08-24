@@ -146,10 +146,11 @@
     .frame-area {
 	    border:1px #99CCFF solid;
 	    background: rgba(153, 204, 255, 0.5);
-	    position: absolute;
-	    
+	    position: absolute;	    
 	    z-index:10;
 	}
+
+  
    
 
 }
