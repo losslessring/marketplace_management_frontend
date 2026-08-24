@@ -39,6 +39,10 @@ export default function GraphEditor({
 
     const dragLeftUp = useRef(false)
 
+    const dragLeftDown = useRef(false)
+
+    const dragRightUp = useRef(false)
+
     // const rightDownSelectionBox = {
     //     minX: startX,
     //     maxX: endX,
@@ -106,6 +110,14 @@ export default function GraphEditor({
 
         console.log('is dragging left up? ', dragLeftUp.current)
 
+        dragLeftDown.current = startX > endX && startY < endY
+
+        console.log('is dragging left down? ', dragLeftDown.current)
+
+        dragRightUp.current = startX < endX && startY > endY
+
+        console.log('is dragging right up? ', dragRightUp.current)
+
         useNodeStore.getState().nodes.forEach((node) => {
             // if (startX && startY && endX && endY) {
             if (isDragging) {
@@ -120,6 +132,20 @@ export default function GraphEditor({
                     ? {
                           minX: endX,
                           maxX: startX,
+                          minY: endY,
+                          maxY: startY,
+                      }
+                    : dragLeftDown.current
+                    ? {
+                          minX: endX,
+                          maxX: startX,
+                          minY: startY,
+                          maxY: endY,
+                      }
+                    : dragRightUp.current
+                    ? {
+                          minX: startX,
+                          maxX: endX,
                           minY: endY,
                           maxY: startY,
                       }
@@ -170,6 +196,8 @@ export default function GraphEditor({
                 setIsDragging(false)
                 dragRightDown.current = false
                 dragLeftUp.current = false
+                dragLeftDown.current = false
+                dragRightUp.current = false
             }}
             onMouseMove={isDragging ? dragHandler : undefined}
         >
@@ -191,6 +219,28 @@ export default function GraphEditor({
                         left: endX,
                         top: endY,
                         width: startX - endX,
+                        height: startY - endY,
+                        pointerEvents: 'none',
+                    }}
+                ></div>
+            ) : isDragging && dragLeftDown.current ? (
+                <div
+                    className="frame-area"
+                    style={{
+                        left: endX,
+                        top: startY,
+                        width: startX - endX,
+                        height: endY - startY,
+                        pointerEvents: 'none',
+                    }}
+                ></div>
+            ) : isDragging && dragRightUp.current ? (
+                <div
+                    className="frame-area"
+                    style={{
+                        left: startX,
+                        top: endY,
+                        width: endX - startX,
                         height: startY - endY,
                         pointerEvents: 'none',
                     }}
