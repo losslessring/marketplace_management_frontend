@@ -42,7 +42,9 @@ export default async function SingleApplication({
         return values
     })
 
-    console.log(nodeData)
+    // console.log(nodeData)
+    console.log('application nodes: ', applicationNodesFromDatabase)
+    console.log('connections: ', connectionsFromDatabase)
 
     return (
         <div className="application-editor-container">

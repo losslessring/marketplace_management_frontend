@@ -37,8 +37,8 @@ export default function Connection({
     const connectionBeginY = beginY + beginShift * Math.sin(th)
 
     useEffect(() => {
-        console.log(useSelectedConnectionsStore.getState().ids)
-        console.log(useSelectedConnectionsStore.getState().ids.has(id))
+        // console.log(useSelectedConnectionsStore.getState().ids)
+        // console.log(useSelectedConnectionsStore.getState().ids.has(id))
         if (isSelected) {
             setLineStyle(selectedLineStyle)
         } else {
