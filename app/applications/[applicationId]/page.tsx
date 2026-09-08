@@ -2,6 +2,7 @@ import BackButton from '@/app/components/BackButton'
 import AppEditor from '@/app/components/nodeEditor/AppEditor'
 import ConnectionModeButton from '@/app/components/nodeEditor/ConnectionModeButton'
 import DeleteNodesButton from '@/app/components/nodeEditor/DeleteNodesButton'
+import RunButton from '@/app/components/nodeEditor/RunButton'
 import SaveGraphButton from '@/app/components/nodeEditor/SaveGraphButton'
 import { NodeData } from '@/app/interfaces/data/NodeData'
 import { NodeDataFromServer } from '@/app/interfaces/data/NodeDataFromServer'
@@ -59,6 +60,7 @@ export default async function SingleApplication({
                     applicationId={applicationId}
                 ></DeleteNodesButton>
                 <ConnectionModeButton></ConnectionModeButton>
+                <RunButton></RunButton>
             </div>
             <AppEditor
                 coreNodes={coreNodes}
