@@ -38,7 +38,14 @@
     }
 
     .text-area {
+      display:block;
+      width: 100%; 
+      max-width: 100%;
       background-color: black
+    }
+
+    .select-node-data-type {
+      color: black;
     }
 
     .navbar {

@@ -8,3 +8,6 @@ If it is changed, i should use the last drag value. The frame will stop,
 but it is still better than blinking on reset.
 
 On dragging, when dragging backwards, the mouse event offsetX and offsetY catches itself as a target and the frame coordinates resets and the frame blinks. Fixed it by adding some offset.
+
+Fix the node data. When selecting the node, its data value is added to node data store even if it is not saved in database yet.
+No need to fix. Node data is inialized with some data, when selecting.

@@ -4,6 +4,7 @@ import { createAdjacencyList } from '@/app/common/graph/createAdjacencyList'
 import { dfsRecursive } from '@/app/common/graph/dfsRecursive'
 import {
     useNodeConnectionStore,
+    useNodeDataStore,
     useNodeStore,
     useSelectedNodeStore,
 } from '@/app/stores/node-store'
@@ -12,6 +13,7 @@ function RunButton({}: React.PropsWithChildren<{}>) {
     const {} = useNodeStore()
     const {} = useNodeConnectionStore()
     const {} = useSelectedNodeStore()
+    const {} = useNodeDataStore()
 
     return (
         <button
@@ -27,18 +29,32 @@ function RunButton({}: React.PropsWithChildren<{}>) {
                     useSelectedNodeStore.getState().ids
                 )
 
-                console.log(nodeIds)
-                console.log(connections)
-                console.log(selectedNodes)
+                const nodeData: any = useNodeDataStore
+                    .getState()
+                    .nodeData.reduce((acc, cur) => {
+                        return {
+                            ...acc,
+                            [cur.id]: { type: cur.type, data: cur.data },
+                        }
+                    }, {})
+
+                console.log(nodeData)
+                // console.log(nodeIds)
+                // console.log(connections)
+                // console.log(selectedNodes)
                 const adjacencyList = createAdjacencyList(nodeIds, connections)
-                console.log(adjacencyList)
+                // console.log(adjacencyList)
                 const startNode = selectedNodes[0]
                     ? selectedNodes[0]
                     : nodeIds[0]
                 if (startNode) {
-                    dfsRecursive(startNode, adjacencyList, (node: number) =>
-                        console.log(node)
-                    )
+                    dfsRecursive(startNode, adjacencyList, (node: number) => {
+                        console.log(nodeData[node])
+                        // const nodeElement = document.getElementById(`${node}`)
+                        // if (nodeElement) {
+                        //     nodeElement.style.color = 'red'
+                        // }
+                    })
                 }
             }}
         >

@@ -29,18 +29,57 @@ export default function NodeEditor({
         }
     })
 
+    const dataTypes = ['text', 'json', 'number', 'code']
+
     return (
         <div className="node-editor bg-amber-700">
             Node Data <br />
             id: {lastSelectedNodeId}
             <br />
-            type: {lastSelectedNodeData?.type}
+            {/* <div>Data type: {lastSelectedNodeData?.type}</div> */}
+            {/* <NodeDataSelectList
+                currentDataType={
+                    lastSelectedNodeData ? lastSelectedNodeData.type : 'text'
+                }
+            ></NodeDataSelectList> */}
+            <div>
+                <label htmlFor="node_data_type">Data type:</label>
+                <select
+                    // defaultValue={
+                    //     lastSelectedNodeData
+                    //         ? lastSelectedNodeData.type
+                    //         : 'text'
+                    // }
+                    name="node_data_type"
+                    id="node_data_type"
+                    className={'select-node-data-type'}
+                    value={
+                        lastSelectedNodeData
+                            ? lastSelectedNodeData.type
+                            : 'text'
+                    }
+                    onChange={(e) =>
+                        updateNodeData(
+                            lastSelectedNodeId,
+                            e.target.value,
+                            lastSelectedNodeData
+                                ? lastSelectedNodeData.data
+                                : ''
+                        )
+                    }
+                >
+                    {dataTypes.map((dataType) => (
+                        <option value={dataType} key={dataType}>
+                            {dataType}
+                        </option>
+                    ))}
+                </select>
+            </div>
             <br />
             data:
             <textarea
                 className="text-area"
                 name="node_data"
-                cols={30}
                 rows={5}
                 value={lastSelectedNodeData ? lastSelectedNodeData.data : ''}
                 onChange={(e) =>
