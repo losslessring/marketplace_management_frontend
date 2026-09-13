@@ -7,10 +7,8 @@ import { useEffect } from 'react'
 
 export default function NodeEditor({
     applicationId,
-}: // currentNodeId,
-{
+}: {
     applicationId: number
-    // currentNodeId: number
 }) {
     const {} = useSelectedNodeStore()
     const { addNodeData, updateNodeData } = useNodeDataStore()
@@ -18,11 +16,16 @@ export default function NodeEditor({
 
     const lastSelectedNodeId = selectedNodes[selectedNodes.length - 1]
 
-    const lastSelectedNodeData = useNodeDataStore
+    const foundLastSelectedNodeData = useNodeDataStore
         .getState()
         .nodeData.find(
             (nodeData: NodeData) => nodeData.id === lastSelectedNodeId
         )
+
+    const lastSelectedNodeData = foundLastSelectedNodeData
+        ? foundLastSelectedNodeData
+        : { type: 'text', data: '' }
+
     useEffect(() => {
         if (selectedNodes.length > 0 && lastSelectedNodeData === undefined) {
             addNodeData(lastSelectedNodeId, 'text', 'Initial data')
@@ -36,35 +39,18 @@ export default function NodeEditor({
             Node Data <br />
             id: {lastSelectedNodeId}
             <br />
-            {/* <div>Data type: {lastSelectedNodeData?.type}</div> */}
-            {/* <NodeDataSelectList
-                currentDataType={
-                    lastSelectedNodeData ? lastSelectedNodeData.type : 'text'
-                }
-            ></NodeDataSelectList> */}
             <div>
                 <label htmlFor="node_data_type">Data type:</label>
                 <select
-                    // defaultValue={
-                    //     lastSelectedNodeData
-                    //         ? lastSelectedNodeData.type
-                    //         : 'text'
-                    // }
                     name="node_data_type"
                     id="node_data_type"
                     className={'select-node-data-type'}
-                    value={
-                        lastSelectedNodeData
-                            ? lastSelectedNodeData.type
-                            : 'text'
-                    }
+                    value={lastSelectedNodeData.type}
                     onChange={(e) =>
                         updateNodeData(
                             lastSelectedNodeId,
                             e.target.value,
-                            lastSelectedNodeData
-                                ? lastSelectedNodeData.data
-                                : ''
+                            lastSelectedNodeData.data
                         )
                     }
                 >
@@ -75,13 +61,12 @@ export default function NodeEditor({
                     ))}
                 </select>
             </div>
-            <br />
             data:
             <textarea
                 className="text-area"
                 name="node_data"
                 rows={5}
-                value={lastSelectedNodeData ? lastSelectedNodeData.data : ''}
+                value={lastSelectedNodeData.data}
                 onChange={(e) =>
                     updateNodeData(lastSelectedNodeId, 'text', e.target.value)
                 }
