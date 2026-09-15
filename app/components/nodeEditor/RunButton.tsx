@@ -38,7 +38,7 @@ function RunButton({}: React.PropsWithChildren<{}>) {
                         }
                     }, {})
 
-                console.log(nodeData)
+                // console.log(nodeData)
                 // console.log(nodeIds)
                 // console.log(connections)
                 // console.log(selectedNodes)
@@ -49,11 +49,24 @@ function RunButton({}: React.PropsWithChildren<{}>) {
                     : nodeIds[0]
                 if (startNode) {
                     dfsRecursive(startNode, adjacencyList, (node: number) => {
-                        console.log(nodeData[node])
+                        // console.log(nodeData[node])
                         // const nodeElement = document.getElementById(`${node}`)
                         // if (nodeElement) {
                         //     nodeElement.style.color = 'red'
                         // }
+                        const currentNodeData = nodeData[node]
+                        if (
+                            currentNodeData &&
+                            currentNodeData.type === 'code'
+                        ) {
+                            try {
+                                eval(
+                                    `(async () => {${currentNodeData.data}})()`
+                                )
+                            } catch (error) {
+                                console.log(error)
+                            }
+                        }
                     })
                 }
             }}

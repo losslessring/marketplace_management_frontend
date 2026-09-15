@@ -92,31 +92,27 @@ export default function GraphEditor({
 
         setEndX(e.nativeEvent.offsetX)
         setEndY(e.nativeEvent.offsetY)
-        console.log('state end x: ', endX)
-        console.log('state end y: ', endY)
-        console.log('end x: ' + e.nativeEvent.offsetX)
-        console.log('end y: ' + e.nativeEvent.offsetY)
-        // console.log('ref for node under cursor: ', nodeUnderCursor.current)
-        // console.log(
-        //     'node under cursor: ',
-        //     e.nativeEvent.target.getAttribute('id')
-        // )
+
+        // console.log('state end x: ', endX)
+        // console.log('state end y: ', endY)
+        // console.log('end x: ' + e.nativeEvent.offsetX)
+        // console.log('end y: ' + e.nativeEvent.offsetY)
 
         dragRightDown.current = startX < endX && startY < endY
 
-        console.log('is dragging right down? ', dragRightDown.current)
+        // console.log('is dragging right down? ', dragRightDown.current)
 
         dragLeftUp.current = startX > endX && startY > endY
 
-        console.log('is dragging left up? ', dragLeftUp.current)
+        // console.log('is dragging left up? ', dragLeftUp.current)
 
         dragLeftDown.current = startX > endX && startY < endY
 
-        console.log('is dragging left down? ', dragLeftDown.current)
+        // console.log('is dragging left down? ', dragLeftDown.current)
 
         dragRightUp.current = startX < endX && startY > endY
 
-        console.log('is dragging right up? ', dragRightUp.current)
+        // console.log('is dragging right up? ', dragRightUp.current)
 
         useNodeStore.getState().nodes.forEach((node) => {
             if (isDragging && startX && startY && endX && endY) {
@@ -161,7 +157,7 @@ export default function GraphEditor({
                     minY: node.positionY,
                     maxY: node.positionY,
                 }
-                console.log(selectionFrameBox)
+                // console.log(selectionFrameBox)
                 const isIntersected = intersect(
                     selectionFrameBox,
                     nodeCoordinates
@@ -183,8 +179,8 @@ export default function GraphEditor({
             onMouseDown={(e) => {
                 setStartX(e.nativeEvent.offsetX)
                 setStartY(e.nativeEvent.offsetY)
-                console.log('start x: ' + e.nativeEvent.offsetX)
-                console.log('start y: ' + e.nativeEvent.offsetY)
+                // console.log('start x: ' + e.nativeEvent.offsetX)
+                // console.log('start y: ' + e.nativeEvent.offsetY)
                 setIsDragging(true)
             }}
             onMouseUp={(e) => {

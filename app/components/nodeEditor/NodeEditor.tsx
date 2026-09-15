@@ -68,7 +68,11 @@ export default function NodeEditor({
                 rows={5}
                 value={lastSelectedNodeData.data}
                 onChange={(e) =>
-                    updateNodeData(lastSelectedNodeId, 'text', e.target.value)
+                    updateNodeData(
+                        lastSelectedNodeId,
+                        lastSelectedNodeData.type,
+                        e.target.value
+                    )
                 }
             ></textarea>
             <button
