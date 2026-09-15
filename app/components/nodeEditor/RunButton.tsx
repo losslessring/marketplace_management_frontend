@@ -48,26 +48,36 @@ function RunButton({}: React.PropsWithChildren<{}>) {
                     ? selectedNodes[0]
                     : nodeIds[0]
                 if (startNode) {
-                    dfsRecursive(startNode, adjacencyList, (node: number) => {
-                        // console.log(nodeData[node])
-                        // const nodeElement = document.getElementById(`${node}`)
-                        // if (nodeElement) {
-                        //     nodeElement.style.color = 'red'
-                        // }
-                        const currentNodeData = nodeData[node]
-                        if (
-                            currentNodeData &&
-                            currentNodeData.type === 'code'
-                        ) {
-                            try {
-                                eval(
-                                    `(async () => {${currentNodeData.data}})()`
-                                )
-                            } catch (error) {
-                                console.log(error)
+                    dfsRecursive(
+                        startNode,
+                        adjacencyList,
+                        undefined,
+                        (node: number, prevNodeResult: any) => {
+                            // console.log(nodeData[node])
+                            // const nodeElement = document.getElementById(`${node}`)
+                            // if (nodeElement) {
+                            //     nodeElement.style.color = 'red'
+                            // }
+                            // console.log(prevNodeResult)
+
+                            const currentNodeData = nodeData[node]
+                            if (
+                                currentNodeData &&
+                                currentNodeData.type === 'code'
+                            ) {
+                                try {
+                                    return eval(
+                                        `(async () => {
+                                            const prevNodeResult = ${prevNodeResult}
+                                            ${currentNodeData.data}
+                                        })()`
+                                    )
+                                } catch (error) {
+                                    console.log(error)
+                                }
                             }
                         }
-                    })
+                    )
                 }
             }}
         >
