@@ -21,14 +21,17 @@ export default function NodeEditor({
         .nodeData.find(
             (nodeData: NodeData) => nodeData.id === lastSelectedNodeId
         )
-
+    // Data in a new nodes is not editable, possibly because of this code
     const lastSelectedNodeData = foundLastSelectedNodeData
         ? foundLastSelectedNodeData
-        : { type: 'text', data: '' }
+        : { type: 'uninitialized', data: '' }
 
     useEffect(() => {
-        if (selectedNodes.length > 0 && lastSelectedNodeData === undefined) {
-            addNodeData(lastSelectedNodeId, 'text', 'Initial data')
+        if (
+            selectedNodes.length > 0 &&
+            lastSelectedNodeData.type === 'uninitialized'
+        ) {
+            addNodeData(lastSelectedNodeId, 'text', '')
         }
     })
 

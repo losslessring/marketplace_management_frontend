@@ -38,40 +38,41 @@ function RunButton({}: React.PropsWithChildren<{}>) {
                         }
                     }, {})
 
-                // console.log(nodeData)
-                // console.log(nodeIds)
-                // console.log(connections)
-                // console.log(selectedNodes)
                 const adjacencyList = createAdjacencyList(nodeIds, connections)
-                // console.log(adjacencyList)
+
                 const startNode = selectedNodes[0]
                     ? selectedNodes[0]
                     : nodeIds[0]
+
                 if (startNode) {
                     dfsRecursive(
                         startNode,
                         adjacencyList,
                         undefined,
                         (node: number, prevNodeResult: any) => {
-                            // console.log(nodeData[node])
-                            // const nodeElement = document.getElementById(`${node}`)
-                            // if (nodeElement) {
-                            //     nodeElement.style.color = 'red'
-                            // }
-                            // console.log(prevNodeResult)
-
                             const currentNodeData = nodeData[node]
                             if (
                                 currentNodeData &&
                                 currentNodeData.type === 'code'
                             ) {
                                 try {
-                                    return eval(
-                                        `(async () => {
-                                            const prevNodeResult = ${prevNodeResult}
-                                            ${currentNodeData.data}
-                                        })()`
-                                    )
+                                    // const result = eval(
+                                    //     `((prev) => {
+
+                                    //         ${currentNodeData.data}
+                                    //     })("${prevNodeResult}")`
+                                    // )
+                                    // console.log(result)
+
+                                    const code = currentNodeData.data
+
+                                    // const prev = prevNodeResult
+
+                                    let wrappedCode = `(async (prevNodeResult) => { ${code} })('${prevNodeResult}');`
+
+                                    const result = eval(wrappedCode)
+
+                                    return result
                                 } catch (error) {
                                     console.log(error)
                                 }

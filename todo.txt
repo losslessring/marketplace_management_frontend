@@ -11,3 +11,9 @@ On dragging, when dragging backwards, the mouse event offsetX and offsetY catche
 
 Fix the node data. When selecting the node, its data value is added to node data store even if it is not saved in database yet.
 No need to fix. Node data is inialized with some data, when selecting.
+
+Node data is not changable in a new node.
+
+Getting error when trying to return object or array from the code in a text area.
+Probably the problem is with promises
+
