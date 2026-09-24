@@ -51,31 +51,39 @@ function RunButton({}: React.PropsWithChildren<{}>) {
                         undefined,
                         (node: number, prevNodeResult: any) => {
                             const currentNodeData = nodeData[node]
-                            if (
-                                currentNodeData &&
-                                currentNodeData.type === 'code'
-                            ) {
-                                try {
-                                    // const result = eval(
-                                    //     `((prev) => {
 
-                                    //         ${currentNodeData.data}
-                                    //     })("${prevNodeResult}")`
-                                    // )
-                                    // console.log(result)
-
+                            try {
+                                if (
+                                    currentNodeData &&
+                                    currentNodeData.type === 'code'
+                                ) {
                                     const code = currentNodeData.data
-
-                                    // const prev = prevNodeResult
 
                                     let wrappedCode = `(async (prevNodeResult) => { ${code} })('${prevNodeResult}');`
 
                                     const result = eval(wrappedCode)
 
                                     return result
-                                } catch (error) {
-                                    console.log(error)
                                 }
+
+                                if (
+                                    currentNodeData &&
+                                    currentNodeData.type === 'text'
+                                ) {
+                                    return currentNodeData.data
+                                }
+
+                                if (
+                                    currentNodeData &&
+                                    currentNodeData.type === 'json'
+                                ) {
+                                    // TODO: Figure out how to deal with JSON,
+                                    //new line characters are causing it to fail parsing
+                                    console.log(currentNodeData.data)
+                                    return currentNodeData.data
+                                }
+                            } catch (error) {
+                                console.log(error)
                             }
                         }
                     )
