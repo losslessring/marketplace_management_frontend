@@ -31,7 +31,7 @@
     .application-editor {
       height: 85vh;
       display: grid;
-      grid-template-columns: 200px 1fr;
+      grid-template-columns: 350px 1fr;
       grid-template-rows: auto min-content;
       grid-template-areas: 
       "node-library graph-editor"
@@ -41,7 +41,8 @@
       display:block;
       width: 100%; 
       max-width: 100%;
-      background-color: black
+      background-color: black;
+      height: 300px;
     }
 
     .select-node-data-type {

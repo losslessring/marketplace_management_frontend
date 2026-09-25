@@ -59,17 +59,40 @@ function RunButton({}: React.PropsWithChildren<{}>) {
                                 ) {
                                     const code = currentNodeData.data
 
-                                    let wrappedCode = `(async (prevNodeResult) => { ${code} })('${prevNodeResult}');`
+                                    if (
+                                        prevNodeResult !== undefined &&
+                                        typeof prevNodeResult === 'string'
+                                    ) {
+                                        const prevNodeResultWithEscapedCharacters =
+                                            prevNodeResult
+                                                .replace(
+                                                    /(\r\n|\n|\r)/gm,
+                                                    '\\n'
+                                                )
+                                                .replace(/'/g, "\\'")
 
-                                    const result = eval(wrappedCode)
-
-                                    return result
+                                        return eval(
+                                            `(async (prevNodeResult) => { ${code} })('${prevNodeResultWithEscapedCharacters}');`
+                                        )
+                                    } else if (
+                                        prevNodeResult !== undefined &&
+                                        typeof prevNodeResult === 'number'
+                                    ) {
+                                        return eval(
+                                            `(async (prevNodeResult) => { ${code} })('${prevNodeResult}');`
+                                        )
+                                    } else if (prevNodeResult === undefined) {
+                                        return eval(
+                                            `(async () => { ${code} })();`
+                                        )
+                                    }
                                 }
 
                                 if (
                                     currentNodeData &&
                                     currentNodeData.type === 'text'
                                 ) {
+                                    // console.log(currentNodeData.data)
                                     return currentNodeData.data
                                 }
 
@@ -79,7 +102,7 @@ function RunButton({}: React.PropsWithChildren<{}>) {
                                 ) {
                                     // TODO: Figure out how to deal with JSON,
                                     //new line characters are causing it to fail parsing
-                                    console.log(currentNodeData.data)
+                                    // console.log(currentNodeData.data)
                                     return currentNodeData.data
                                 }
                             } catch (error) {

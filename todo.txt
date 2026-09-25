@@ -19,3 +19,11 @@ Probably the problem is with promises
 
 When pressing Save Graph button, all graph and all node data should be saved.
 
+Implement code nodes without JSON.stringify/JSON.parse
+Probably here is the hint to the solution
+https://stackoverflow.com/questions/3710204/how-to-check-if-a-string-is-a-valid-json-string
+Node should check if the data is the object and act differently if JSON parsing is failing
+on undefined or [Object] object
+
+Create a larger input field for code and JSON objects
+
