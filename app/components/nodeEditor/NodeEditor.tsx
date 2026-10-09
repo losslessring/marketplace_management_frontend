@@ -38,7 +38,7 @@ export default function NodeEditor({
     const dataTypes = ['text', 'json', 'number', 'code']
 
     return (
-        <div className="node-editor bg-amber-700">
+        <div className="node-editor">
             Node Data <br />
             id: {lastSelectedNodeId}
             <br />

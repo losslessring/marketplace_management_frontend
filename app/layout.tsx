@@ -1,9 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import authenticated from './auth/authenticated'
-import logout from './auth/logout'
 import './globals.css'
-import Header from './header/header'
 import Providers from './providers'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -25,8 +23,8 @@ export default async function RootLayout({
             <body className={inter.className}>
                 <div>
                     <Providers authenticated={isAuthenticated}>
-                        <div className="header">
-                            <Header logout={logout} />
+                        <div className="">
+                            {/* <Header logout={logout} /> */}
                         </div>
                         <div>{children}</div>
                     </Providers>

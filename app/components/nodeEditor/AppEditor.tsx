@@ -9,9 +9,13 @@ import {
     useNodeStore,
 } from '@/app/stores/node-store'
 import { useEffect } from 'react'
+import ConnectionModeButton from './ConnectionModeButton'
+import DeleteNodesButton from './DeleteNodesButton'
 import GraphEditor from './GraphEditor'
 import NodeEditor from './NodeEditor'
 import NodeLibrary from './NodeLibrary'
+import RunButton from './RunButton'
+import SaveGraphButton from './SaveGraphButton'
 
 export default function AppEditor({
     coreNodes,
@@ -64,7 +68,20 @@ export default function AppEditor({
                 ></NodeLibrary>
                 <NodeEditor applicationId={applicationId}></NodeEditor>
             </div>
-            <GraphEditor applicationId={applicationId}></GraphEditor>
+            <div>
+                <div className="graph-editor-nav">
+                    <SaveGraphButton
+                        applicationId={applicationId}
+                    ></SaveGraphButton>
+                    <DeleteNodesButton
+                        className="ml-4"
+                        applicationId={applicationId}
+                    ></DeleteNodesButton>
+                    <ConnectionModeButton></ConnectionModeButton>
+                    <RunButton></RunButton>
+                </div>
+                <GraphEditor applicationId={applicationId}></GraphEditor>
+            </div>
         </div>
     )
 }

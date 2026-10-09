@@ -2,6 +2,7 @@
 
 import { createAdjacencyList } from '@/app/common/graph/createAdjacencyList'
 import { dfsRecursive } from '@/app/common/graph/dfsRecursive'
+import { nodeParser } from '@/app/common/graph/nodeParser'
 import {
     useNodeConnectionStore,
     useNodeDataStore,
@@ -49,66 +50,8 @@ function RunButton({}: React.PropsWithChildren<{}>) {
                         startNode,
                         adjacencyList,
                         undefined,
-                        (node: number, prevNodeResult: any) => {
-                            const currentNodeData = nodeData[node]
-
-                            try {
-                                if (
-                                    currentNodeData &&
-                                    currentNodeData.type === 'code'
-                                ) {
-                                    const code = currentNodeData.data
-
-                                    if (
-                                        prevNodeResult !== undefined &&
-                                        typeof prevNodeResult === 'string'
-                                    ) {
-                                        const prevNodeResultWithEscapedCharacters =
-                                            prevNodeResult
-                                                .replace(
-                                                    /(\r\n|\n|\r)/gm,
-                                                    '\\n'
-                                                )
-                                                .replace(/'/g, "\\'")
-
-                                        return eval(
-                                            `(async (prevNodeResult) => { ${code} })('${prevNodeResultWithEscapedCharacters}');`
-                                        )
-                                    } else if (
-                                        prevNodeResult !== undefined &&
-                                        typeof prevNodeResult === 'number'
-                                    ) {
-                                        return eval(
-                                            `(async (prevNodeResult) => { ${code} })('${prevNodeResult}');`
-                                        )
-                                    } else if (prevNodeResult === undefined) {
-                                        return eval(
-                                            `(async () => { ${code} })();`
-                                        )
-                                    }
-                                }
-
-                                if (
-                                    currentNodeData &&
-                                    currentNodeData.type === 'text'
-                                ) {
-                                    // console.log(currentNodeData.data)
-                                    return currentNodeData.data
-                                }
-
-                                if (
-                                    currentNodeData &&
-                                    currentNodeData.type === 'json'
-                                ) {
-                                    // TODO: Figure out how to deal with JSON,
-                                    //new line characters are causing it to fail parsing
-                                    // console.log(currentNodeData.data)
-                                    return currentNodeData.data
-                                }
-                            } catch (error) {
-                                console.log(error)
-                            }
-                        }
+                        (node: number, prevNodeResult: any) =>
+                            nodeParser(node, prevNodeResult, nodeData)
                     )
                 }
             }}

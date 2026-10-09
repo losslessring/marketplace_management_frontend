@@ -1,9 +1,7 @@
+import logout from '@/app/auth/logout'
 import BackButton from '@/app/components/BackButton'
 import AppEditor from '@/app/components/nodeEditor/AppEditor'
-import ConnectionModeButton from '@/app/components/nodeEditor/ConnectionModeButton'
-import DeleteNodesButton from '@/app/components/nodeEditor/DeleteNodesButton'
-import RunButton from '@/app/components/nodeEditor/RunButton'
-import SaveGraphButton from '@/app/components/nodeEditor/SaveGraphButton'
+import Header from '@/app/header/header'
 import { NodeData } from '@/app/interfaces/data/NodeData'
 import { NodeDataFromServer } from '@/app/interfaces/data/NodeDataFromServer'
 import { revalidatePath } from 'next/cache'
@@ -50,17 +48,8 @@ export default async function SingleApplication({
     return (
         <div className="application-editor-container">
             <div className="navbar">
-                <BackButton>Back</BackButton>
-                <div className="mb-1">{application.name}</div>
-                <SaveGraphButton
-                    applicationId={applicationId}
-                ></SaveGraphButton>
-                <DeleteNodesButton
-                    className="ml-4"
-                    applicationId={applicationId}
-                ></DeleteNodesButton>
-                <ConnectionModeButton></ConnectionModeButton>
-                <RunButton></RunButton>
+                <BackButton>Back</BackButton>&nbsp;<div>{application.name}</div>
+                <Header logout={logout} />
             </div>
             <AppEditor
                 coreNodes={coreNodes}

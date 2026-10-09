@@ -29,12 +29,17 @@
     }
 
     .application-editor {
-      height: 85vh;
+      /* height: 95vh; */
       display: grid;
-      grid-template-columns: 350px 1fr;
+      /* grid-template-columns: 350px 1fr;
       grid-template-rows: auto min-content;
       grid-template-areas: 
-      "node-library graph-editor"
+      "node-library graph-editor"; */
+      /* background-color: rgb(75 85 99); */
+      
+  grid-template-columns: 30% 70%;
+  /* min-height: 100vh; */
+  width: 100%;
     }
 
     .text-area {
@@ -50,17 +55,31 @@
     }
 
     .navbar {
-      grid-area: navbar;
-      max-height: 10vh;
+      /* grid-area: navbar;
+      max-height: 10vh; */
+      display: flex;
     }
     .node-library {
       grid-area: node-library;
       
     }
 
+    .graph-editor-block {
+      /* height: 100vh; */
+    }
+
     .graph-editor {
-      grid-area: graph-editor;     
-      overflow: auto;
+      /* grid-area: graph-editor;      */
+      
+      background-color: rgb(59, 130, 246);
+      /* overflow: auto; */
+      
+    
+      
+    }
+
+    .graph-editor-nav {
+      
     }
 
     .basic-node {
@@ -109,8 +128,10 @@
     /* z-index: 8; */
     top: 0;
     left: 0;
-    height: 100%;
+    height: 100vh;
     width: 100%;
+    background-color: rgb(59, 130, 246);
+
   }
 
   .default-line {

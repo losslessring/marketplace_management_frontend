@@ -173,6 +173,8 @@ export default function GraphEditor({
     }
 
     return (
+        // <div className="graph-editor-block">
+        //     <div className="graph-editor-navbar">navbar</div>
         <div
             className="graph-editor bg-blue-500 relative"
             id="graph_editor"
@@ -274,5 +276,6 @@ export default function GraphEditor({
                 })}
             </svg>
         </div>
+        // </div>
     )
 }
