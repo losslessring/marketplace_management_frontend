@@ -1,3 +1,4 @@
+import Options from '@/app/applications/Options/Options'
 import logout from '@/app/auth/logout'
 import BackButton from '@/app/components/BackButton'
 import AppEditor from '@/app/components/nodeEditor/AppEditor'
@@ -49,6 +50,7 @@ export default async function SingleApplication({
         <div className="application-editor-container">
             <div className="navbar">
                 <BackButton>Back</BackButton>&nbsp;<div>{application.name}</div>
+                <Options></Options>
                 <Header logout={logout} />
             </div>
             <AppEditor
