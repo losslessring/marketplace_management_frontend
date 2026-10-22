@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import getUiOptions from './applications/actions/getUiOptions'
 import authenticated from './auth/authenticated'
 import './globals.css'
 import Providers from './providers'
@@ -17,10 +18,17 @@ export default async function RootLayout({
     children: React.ReactNode
 }>) {
     const isAuthenticated = await authenticated()
+    const style = await getUiOptions()
 
     return (
         <html lang="en">
-            <body className={inter.className}>
+            <body
+                className={inter.className}
+                style={{
+                    backgroundColor: style.globalBackgroundColor,
+                    color: style.globalFontColor,
+                }}
+            >
                 <div>
                     <Providers authenticated={isAuthenticated}>
                         <div className="">
