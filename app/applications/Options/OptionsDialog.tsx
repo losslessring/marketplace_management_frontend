@@ -1,9 +1,13 @@
+'use client'
+import { Style } from '@/app/interfaces/style/Style'
 import OptionsForm from './OptionsForm'
 
 export default function OptionsDialog({
     handleClose,
+    uiOptions,
 }: {
     handleClose: () => void
+    uiOptions: Style
 }) {
     return (
         <div className="w-full h-full bg-transparent fixed flex justify-center items-center z-50 top-0 left-0">
@@ -12,7 +16,10 @@ export default function OptionsDialog({
                     <h1>Options</h1>
                 </div>
                 <div className="dialog-body">
-                    <OptionsForm handleClose={() => handleClose()} />
+                    <OptionsForm
+                        handleClose={() => handleClose()}
+                        uiOptions={uiOptions}
+                    />
                     <button
                         className="create-application-button"
                         onClick={handleClose}

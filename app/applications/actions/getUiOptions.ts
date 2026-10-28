@@ -1,8 +1,8 @@
 'use server'
 
-import { get } from '@/app/common/util/fetch'
+import { getData } from '@/app/common/util/fetch'
 import { Style } from '@/app/interfaces/style/Style'
 
-export default async function getUiOptions(): Promise<Style> {
-    return get<Style>('ui-options')
+export default async function getUiOptions(): Promise<Style | any> {
+    return await getData<Style>('ui-options')
 }

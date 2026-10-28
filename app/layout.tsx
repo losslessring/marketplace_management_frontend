@@ -18,15 +18,15 @@ export default async function RootLayout({
     children: React.ReactNode
 }>) {
     const isAuthenticated = await authenticated()
-    const style = await getUiOptions()
+    const response = await getUiOptions()
 
     return (
         <html lang="en">
             <body
                 className={inter.className}
                 style={{
-                    backgroundColor: style.globalBackgroundColor,
-                    color: style.globalFontColor,
+                    backgroundColor: response.globalBackgroundColor ?? 'black',
+                    color: response.globalFontColor ?? 'white',
                 }}
             >
                 <div>

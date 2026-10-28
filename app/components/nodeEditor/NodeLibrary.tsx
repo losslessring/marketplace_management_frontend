@@ -23,11 +23,11 @@ export default function NodeLibrary({
                         <button
                             onClick={() => {
                                 addNode()
-                                console.log(useNodeStore.getState().nodes)
+                                // console.log(useNodeStore.getState().nodes)
                                 const nodes = useNodeStore.getState().nodes
                                 const lastNode = nodes[nodes.length - 1]
 
-                                console.log('created node')
+                                // console.log('created node')
                                 createTreeNodesInDatabase({
                                     nodes: [{ ...lastNode }],
                                     applicationId,

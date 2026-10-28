@@ -7,6 +7,7 @@ import { NodeData } from '@/app/interfaces/data/NodeData'
 import { NodeDataFromServer } from '@/app/interfaces/data/NodeDataFromServer'
 import { revalidatePath } from 'next/cache'
 import { headers } from 'next/headers'
+import getUiOptions from '../actions/getUiOptions'
 import getApplication from './getApplication'
 import getApplicationConnections from './getApplicationConnections'
 import getApplicationNodes from './getApplicationNodes'
@@ -32,25 +33,34 @@ export default async function SingleApplication({
         applicationNodesFromDatabase,
         connectionsFromDatabase,
         nodeData,
+        _uiOptions,
     ] = await Promise.all([
         getApplication(applicationId),
         getCoreNodes(),
         getApplicationNodes(applicationId),
         getApplicationConnections(applicationId),
         getNodesData(applicationId),
+        getUiOptions(),
     ]).then((values) => {
         return values
     })
 
+    // const response = await getUiOptions()
+
+    const uiOptions = {
+        globalBackgroundColor: _uiOptions.globalBackgroundColor ?? 'black',
+        globalFontColor: _uiOptions.globalFontColor ?? 'white',
+    }
+
     // console.log(nodeData)
-    console.log('application nodes: ', applicationNodesFromDatabase)
-    console.log('connections: ', connectionsFromDatabase)
+    // console.log('application nodes: ', applicationNodesFromDatabase)
+    // console.log('connections: ', connectionsFromDatabase)
 
     return (
         <div className="application-editor-container">
             <div className="navbar">
                 <BackButton>Back</BackButton>&nbsp;<div>{application.name}</div>
-                <Options></Options>
+                <Options uiOptions={uiOptions}></Options>
                 <Header logout={logout} />
             </div>
             <AppEditor

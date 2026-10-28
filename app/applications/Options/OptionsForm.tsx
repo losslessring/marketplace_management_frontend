@@ -1,29 +1,55 @@
 'use client'
 
 import { setStyle } from '@/app/common/style/setStyle'
+import { Style } from '@/app/interfaces/style/Style'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import patchUiOptions from '../actions/patchUiOptions'
 
-export default function OptionsForm({ handleClose }: any) {
-    const [globalBackgroundColor, setGlobalBackgroundColor] =
-        useState<string>('')
-    const [globalFontColor, setGlobalFontColor] = useState<string>('')
+export default function OptionsForm({
+    handleClose,
+    uiOptions,
+}: {
+    handleClose: () => void
+    uiOptions: Style
+}) {
+    const [globalBackgroundColor, setGlobalBackgroundColor] = useState<string>(
+        uiOptions.globalBackgroundColor
+    )
+    const [globalFontColor, setGlobalFontColor] = useState<string>(
+        uiOptions.globalFontColor
+    )
 
-    useEffect(() => {
-        const storedStyle = JSON.parse(localStorage.getItem('style') ?? 'null')
-        setGlobalBackgroundColor(storedStyle.globalBackgroundColor)
-        setGlobalFontColor(storedStyle.globalFontColor)
-    }, [])
+    const router = useRouter()
+
+    // useEffect(() => {
+    //     const fetchStyleData = async () => {
+    //         try {
+    //             const response = await getUiOptions()
+
+    //             if (response.statusCode === 404) {
+    //                 setGlobalBackgroundColor('black')
+    //                 setGlobalFontColor('white')
+    //             } else if (
+    //                 response.globalBackgroundColor &&
+    //                 response.globalFontColor
+    //             ) {
+    //                 setGlobalBackgroundColor(response.globalBackgroundColor)
+    //                 setGlobalFontColor(response.globalFontColor)
+    //             }
+    //         } catch (err) {
+    //             console.log(err)
+    //         }
+    //     }
+
+    //     fetchStyleData()
+    // }, [])
 
     useEffect(() => {
         const style = { globalBackgroundColor, globalFontColor }
-        if (globalBackgroundColor && globalFontColor) {
-            localStorage.setItem('style', JSON.stringify(style))
-        }
 
-        const storedStyle = JSON.parse(localStorage.getItem('style') ?? 'null')
-
-        setStyle(storedStyle)
-    }, [globalBackgroundColor, globalFontColor])
+        setStyle(style)
+    }, [globalBackgroundColor, globalFontColor, uiOptions])
 
     return (
         <form className="flex flex-col gap-2 m-4">
@@ -57,11 +83,26 @@ export default function OptionsForm({ handleClose }: any) {
                 <button
                     type="button"
                     className="dialog-btn-primary"
-                    onClick={() => handleClose()}
+                    onClick={() => {
+                        router.refresh()
+                        handleClose()
+                    }}
                 >
                     Cancel
                 </button>
-                <button type="submit" className="dialog-btn-primary">
+                <button
+                    type="button"
+                    className="dialog-btn-primary"
+                    onClick={async () => {
+                        const response = await patchUiOptions({
+                            globalBackgroundColor,
+                            globalFontColor,
+                        })
+
+                        console.log(response)
+                        router.refresh()
+                    }}
+                >
                     Save
                 </button>
             </div>

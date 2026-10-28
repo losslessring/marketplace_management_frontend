@@ -92,7 +92,7 @@ export default function NodeEditor({
                             nodeData: actualNodeData.data,
                             nodeId: actualNodeData.id,
                         })
-                        console.log(result)
+                        // console.log(result)
                     }
                 }}
             >

@@ -53,7 +53,7 @@ export const fetchRequest = async (path: string, method: string, data: any) => {
 
     const parsedRes = await res.json()
 
-    console.log(parsedRes)
+    // console.log(parsedRes)
 
     return parsedRes
 }
@@ -79,4 +79,27 @@ export const get = async <Response>(path: string, tags?: string[]) => {
         cache: 'no-store',
     })
     return res.json() as Response
+}
+
+export const getData = async <Response>(path: string, tags?: string[]) => {
+    // unstable_noStore()
+    const res = await fetch(`${API_URL}/${path}`, {
+        headers: { ...getHeaders() },
+        next: { tags },
+        cache: 'no-store',
+    })
+    return res.json() as Response
+}
+
+export const patchData = async (path: string, data: any = undefined) => {
+    const res = await fetch(`${API_URL}/${path}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json', ...getHeaders() },
+        body: data ? JSON.stringify(data) : undefined,
+    })
+    const parsedRes = (await res.json()) as Response
+    if (!res.ok) {
+        return { error: getErrorMessage(parsedRes) }
+    }
+    return parsedRes
 }
