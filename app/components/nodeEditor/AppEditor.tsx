@@ -61,7 +61,7 @@ export default function AppEditor({
     return (
         // <div className="grid grid-cols-1 grid-rows-[1fr_6fr] md:grid-rows-[1fr] md:grid-cols-[1fr_6fr]">
         <div className="application-editor">
-            <div>
+            <div className="node-menu">
                 <NodeLibrary
                     coreNodes={coreNodes}
                     applicationId={applicationId}

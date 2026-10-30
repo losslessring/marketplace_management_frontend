@@ -20,6 +20,12 @@
         background-color: hotpink;
     }
 
+    :root {
+      --space-between: 6px;
+      --outer-edge: 6px;      
+
+    }
+
     html {
       user-select: none;
       /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; */
@@ -37,6 +43,11 @@
       width: 100%;
     }
 
+    .node-menu {
+      margin-left: var(--outer-edge);
+      margin-right: 4px;
+    }
+
     .text-area {
       display:block;
       width: 100%; 
@@ -50,20 +61,34 @@
     }
 
     .navbar {
-      --space-between: 12px;
-      --outer-edge: 12px;        
+        
       display: flex;
       flex-direction: row;
-      gap: var(--space-between);          /* between items */
-      padding: var(--outer-edge); 
+      /* gap: var(--space-between);           */
+      /* padding: var(--outer-edge);  */
     }
 
-    /* button {
-      transition: background-color 0.2s ease;
-    } */
+    button {
+      position: relative;
+      /* padding-top: 4px;
+      padding-bottom: 4px; */
+      padding: 8px;
+      /* transition: background-color 0.15s ease; */
+    }
+
+    button::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-color: white;
+      opacity: 0;
+      /* transition: opacity 0.15s ease; */
+      pointer-events: none;
+      border-radius: inherit;
+    }
     
-    button:hover {
-      background-color: color-mix(in srgb, currentColor 85%, white);
+    button:hover::after {
+      opacity: 0.06; 
     }
 
     .application-control-button {
