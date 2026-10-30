@@ -22,6 +22,9 @@
 
     html {
       user-select: none;
+      /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; */
+      
+      
     }
 
     .header {
@@ -29,17 +32,9 @@
     }
 
     .application-editor {
-      /* height: 95vh; */
       display: grid;
-      /* grid-template-columns: 350px 1fr;
-      grid-template-rows: auto min-content;
-      grid-template-areas: 
-      "node-library graph-editor"; */
-      /* background-color: rgb(75 85 99); */
-      
-  grid-template-columns: 30% 70%;
-  /* min-height: 100vh; */
-  width: 100%;
+      grid-template-columns: 30% 70%;
+      width: 100%;
     }
 
     .text-area {
@@ -55,27 +50,38 @@
     }
 
     .navbar {
-      /* grid-area: navbar;
-      max-height: 10vh; */
+      --space-between: 12px;
+      --outer-edge: 12px;        
       display: flex;
+      flex-direction: row;
+      gap: var(--space-between);          /* between items */
+      padding: var(--outer-edge); 
     }
+
+    /* button {
+      transition: background-color 0.2s ease;
+    } */
+    
+    button:hover {
+      background-color: color-mix(in srgb, currentColor 85%, white);
+    }
+
+    .application-control-button {
+      /* margin: 1rem; */
+    }
+
+   
     .node-library {
       grid-area: node-library;
       
     }
 
     .graph-editor-block {
-      /* height: 100vh; */
     }
 
     .graph-editor {
-      /* grid-area: graph-editor;      */
-      
       background-color: rgb(59, 130, 246);
       /* overflow: auto; */
-      
-    
-      
     }
 
     .graph-editor-nav {

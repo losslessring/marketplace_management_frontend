@@ -21,7 +21,7 @@ function Options({ uiOptions }: React.PropsWithChildren<{ uiOptions: Style }>) {
                 />
             )}
             <button
-                className="create-application-button"
+                className="application-control-button"
                 onClick={() => setDialogVisible(true)}
             >
                 Options

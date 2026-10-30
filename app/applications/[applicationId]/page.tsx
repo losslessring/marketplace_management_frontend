@@ -45,23 +45,18 @@ export default async function SingleApplication({
         return values
     })
 
-    // const response = await getUiOptions()
-
     const uiOptions = {
         globalBackgroundColor: _uiOptions.globalBackgroundColor ?? 'black',
         globalFontColor: _uiOptions.globalFontColor ?? 'white',
     }
 
-    // console.log(nodeData)
-    // console.log('application nodes: ', applicationNodesFromDatabase)
-    // console.log('connections: ', connectionsFromDatabase)
-
     return (
         <div className="application-editor-container">
             <div className="navbar">
-                <BackButton>Back</BackButton>&nbsp;<div>{application.name}</div>
+                <BackButton>Back</BackButton>
                 <Options uiOptions={uiOptions}></Options>
                 <Header logout={logout} />
+                <div>{application.name}</div>
             </div>
             <AppEditor
                 coreNodes={coreNodes}

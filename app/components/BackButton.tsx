@@ -2,19 +2,14 @@
 import { useRouter } from 'next/navigation'
 import { useNodeStore, useSelectedNodeStore } from '../stores/node-store'
 
-function BackButton({
-    className,
-    children,
-}: React.PropsWithChildren<{
-    className?: string
-}>) {
+function BackButton({ children }: React.PropsWithChildren<{}>) {
     const router = useRouter()
     const { initStore: resetNodeStore } = useNodeStore()
     const { initStore: resetSelectedNodesStore } = useSelectedNodeStore()
 
     return (
         <button
-            className={className}
+            className="application-control-button"
             onClick={() => {
                 resetNodeStore()
                 resetSelectedNodesStore()

@@ -22,29 +22,6 @@ export default function OptionsForm({
 
     const router = useRouter()
 
-    // useEffect(() => {
-    //     const fetchStyleData = async () => {
-    //         try {
-    //             const response = await getUiOptions()
-
-    //             if (response.statusCode === 404) {
-    //                 setGlobalBackgroundColor('black')
-    //                 setGlobalFontColor('white')
-    //             } else if (
-    //                 response.globalBackgroundColor &&
-    //                 response.globalFontColor
-    //             ) {
-    //                 setGlobalBackgroundColor(response.globalBackgroundColor)
-    //                 setGlobalFontColor(response.globalFontColor)
-    //             }
-    //         } catch (err) {
-    //             console.log(err)
-    //         }
-    //     }
-
-    //     fetchStyleData()
-    // }, [])
-
     useEffect(() => {
         const style = { globalBackgroundColor, globalFontColor }
 
@@ -94,12 +71,11 @@ export default function OptionsForm({
                     type="button"
                     className="dialog-btn-primary"
                     onClick={async () => {
-                        const response = await patchUiOptions({
+                        patchUiOptions({
                             globalBackgroundColor,
                             globalFontColor,
                         })
 
-                        console.log(response)
                         router.refresh()
                     }}
                 >
