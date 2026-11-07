@@ -1,5 +1,7 @@
 'use client'
 import { intersect } from '@/app/common/geometry/intersect'
+import { maxCoordinate } from '@/app/common/geometry/maxCoordinate'
+import { ConnectionCoordinates } from '@/app/interfaces/geometry/ConnectionCoordinates'
 import {
     useConnectingNodePairStore,
     useNodeConnectionStore,
@@ -53,43 +55,35 @@ export default function GraphEditor({
 
     const nodes = Array.from(useNodeStore.getState().nodes)
 
-    const connectionsWithCoordinates = Array.from(
+    const connectionsWithCoordinates: ConnectionCoordinates[] = Array.from(
         useNodeConnectionStore.getState().connections
-    ).map((connection) => {
-        const fromNode = nodes.find((node) => node.nodeId === connection.fromId)
+    )
+        .map((connection) => {
+            const fromNode = nodes.find(
+                (node) => node.nodeId === connection.fromId
+            )
 
-        const toNode = nodes.find((node) => node.nodeId === connection.toId)
+            const toNode = nodes.find((node) => node.nodeId === connection.toId)
 
-        if (fromNode && toNode) {
-            return {
-                id: `${fromNode.nodeId}_${toNode.nodeId}`,
-                beginX: fromNode.positionX,
-                beginY: fromNode.positionY,
-                endX: toNode.positionX,
-                endY: toNode.positionY,
+            if (fromNode && toNode) {
+                return {
+                    id: `${fromNode.nodeId}_${toNode.nodeId}`,
+                    beginX: fromNode.positionX,
+                    beginY: fromNode.positionY,
+                    endX: toNode.positionX,
+                    endY: toNode.positionY,
+                }
             }
-        }
-    })
+        })
+        .filter((c): c is ConnectionCoordinates => c !== undefined)
+    console.log(connectionsWithCoordinates)
+    const maxX = maxCoordinate(connectionsWithCoordinates, 'x')
+    const maxY = maxCoordinate(connectionsWithCoordinates, 'y')
 
-    // console.log('connections: ', connections)
+    console.log('max x:', maxX)
+    console.log(console.log('max y:', maxY))
+
     const dragHandler = (e: any) => {
-        // if (!nodeUnderCursor.current) {
-        //     nodeUnderCursor.current = e.nativeEvent.target.getAttribute('id')
-        // }
-
-        // if (
-        //     nodeUnderCursor.current !== e.nativeEvent.target.getAttribute('id')
-        // ) {
-        //     console.log(
-        //         'node under cursor: ',
-        //         e.nativeEvent.target.getAttribute('id')
-        //     )
-        //     console.log('state end x: ', endX)
-        //     console.log('state end y: ', endY)
-
-        //     return
-        // }
-
         setEndX(e.nativeEvent.offsetX)
         setEndY(e.nativeEvent.offsetY)
 
@@ -176,7 +170,7 @@ export default function GraphEditor({
         // <div className="graph-editor-block">
         //     <div className="graph-editor-navbar">navbar</div>
         <div
-            className="graph-editor bg-blue-500 relative"
+            className="graph-editor  relative"
             id="graph_editor"
             onMouseDown={(e) => {
                 setStartX(e.nativeEvent.offsetX)
@@ -257,6 +251,10 @@ export default function GraphEditor({
             <svg
                 id={`connection_container_${applicationId}`}
                 className={'connection'}
+                style={{
+                    height: `${maxY ? maxY + 40 : 0}px`,
+                    width: `${maxX ? maxX + 40 : 0}px`,
+                }}
             >
                 {connectionsWithCoordinates.map((connection, index) => {
                     if (connection) {

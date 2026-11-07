@@ -74,7 +74,6 @@ export default function AppEditor({
                         applicationId={applicationId}
                     ></SaveGraphButton>
                     <DeleteNodesButton
-                        className="ml-4"
                         applicationId={applicationId}
                     ></DeleteNodesButton>
                     <ConnectionModeButton></ConnectionModeButton>

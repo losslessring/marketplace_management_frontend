@@ -6,21 +6,31 @@ export async function dfsRecursive(
     adjacencyList: AdjacencyList,
     prevNodeResult: any = undefined,
     callback: Function = (node: number, prevNodeResult: any = undefined) => {},
-    visited: Visited = {}
+    visited: Visited = {},
+    trace: number[] = []
 ) {
     visited[startNode] = true
 
+    trace.push(startNode)
+
     const actualNodeResult = await callback(startNode, prevNodeResult)
+
+    if (adjacencyList[startNode].length === 0) {
+        return trace
+    }
 
     for (const child of adjacencyList[startNode]) {
         if (!visited[child]) {
-            dfsRecursive(
+            await dfsRecursive(
                 child,
                 adjacencyList,
                 actualNodeResult,
                 callback,
-                visited
+                visited,
+                trace
             )
         }
     }
+
+    return trace
 }

@@ -14,7 +14,7 @@ test('depth first search', async () => {
         855500: [],
     }
     const startNode = 827707
-    const result = dfsRecursive(startNode, adjacencyList)
+    const result = await dfsRecursive(startNode, adjacencyList)
     const expected = [
         827707, 612534, 600305, 145109, 725860, 34534, 855500, 582608, 776040,
     ]

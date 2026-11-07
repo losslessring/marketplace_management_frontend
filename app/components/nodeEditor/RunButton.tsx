@@ -18,7 +18,6 @@ function RunButton({}: React.PropsWithChildren<{}>) {
 
     return (
         <button
-            className={'ml-4'}
             onClick={() => {
                 const nodeIds = Array.from(useNodeStore.getState().nodes).map(
                     (node) => node.nodeId

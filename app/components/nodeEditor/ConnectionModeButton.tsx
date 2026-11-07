@@ -7,7 +7,6 @@ function ConnectionModeButton({}: React.PropsWithChildren<{}>) {
 
     return (
         <button
-            className={'ml-4'}
             onClick={() => {
                 switchConnectionMode()
             }}

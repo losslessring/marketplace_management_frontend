@@ -56,7 +56,7 @@ export default async function SingleApplication({
                 <BackButton>Back</BackButton>
                 <Options uiOptions={uiOptions}></Options>
                 <Header logout={logout} />
-                <div>{application.name}</div>
+                <div className="application-name">{application.name}</div>
             </div>
             <AppEditor
                 coreNodes={coreNodes}

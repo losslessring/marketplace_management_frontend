@@ -61,11 +61,21 @@
     }
 
     .navbar {
-        
+      
       display: flex;
       flex-direction: row;
       /* gap: var(--space-between);           */
       /* padding: var(--outer-edge);  */
+    }
+
+    .application-name {
+      
+      display: flex;
+      justify-content: center; 
+      align-items: center;     
+      text-align: center;
+      margin: var(--space-between);
+      
     }
 
     button {
@@ -107,10 +117,16 @@
     .graph-editor {
       background-color: rgb(59, 130, 246);
       /* overflow: auto; */
+      flex: 1;               /* absorb remaining space */
+      min-height: 0;         /* CRITICAL: lets it shrink below content size */
+      overflow: auto;        /* scrollbar appears only when content overflows */
+      height: 88vh;
+      
     }
 
     .graph-editor-nav {
-      
+      display: flex;
+      flex-direction: row;
     }
 
     .basic-node {
@@ -159,7 +175,7 @@
     /* z-index: 8; */
     top: 0;
     left: 0;
-    height: 100vh;
+    height: 88vh;
     width: 100%;
     background-color: rgb(59, 130, 246);
 
