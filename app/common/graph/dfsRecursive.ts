@@ -2,24 +2,27 @@ import { AdjacencyList } from '@/app/interfaces/graph/AdjacencyList'
 import { Visited } from '@/app/interfaces/graph/Visited'
 
 export async function dfsRecursive(
-    startNode: number,
+    node: number,
     adjacencyList: AdjacencyList,
     prevNodeResult: any = undefined,
-    callback: Function = (node: number, prevNodeResult: any = undefined) => {},
+    callback: Function = (
+        currentNode: number,
+        prevNodeResult: any = undefined
+    ) => {},
     visited: Visited = {},
     trace: number[] = []
 ) {
-    visited[startNode] = true
+    visited[node] = true
 
-    trace.push(startNode)
+    trace.push(node)
 
-    const actualNodeResult = await callback(startNode, prevNodeResult)
+    const actualNodeResult = await callback(node, prevNodeResult)
 
-    if (adjacencyList[startNode].length === 0) {
+    if (adjacencyList[node].length === 0) {
         return trace
     }
 
-    for (const child of adjacencyList[startNode]) {
+    for (const child of adjacencyList[node]) {
         if (!visited[child]) {
             await dfsRecursive(
                 child,

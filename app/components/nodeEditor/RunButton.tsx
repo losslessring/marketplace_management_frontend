@@ -49,8 +49,16 @@ function RunButton({}: React.PropsWithChildren<{}>) {
                         startNode,
                         adjacencyList,
                         undefined,
-                        (node: number, prevNodeResult: any) =>
-                            nodeParser(node, prevNodeResult, nodeData)
+                        async (node: number, prevNodeResult: any) => {
+                            const result = await nodeParser(
+                                node,
+                                prevNodeResult,
+                                nodeData
+                            )
+                            //TODO: Render result here
+                            console.log(result)
+                            return result
+                        }
                     )
                 }
             }}

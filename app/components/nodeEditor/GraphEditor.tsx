@@ -20,7 +20,7 @@ export default function GraphEditor({
     const {} = useNodeStore()
     const { addId, removeId } = useSelectedNodeStore()
     const {} = useConnectingNodePairStore()
-    const { addConnection } = useNodeConnectionStore()
+    const {} = useNodeConnectionStore()
     // console.log('node store', useNodeStore.getState().nodes)
 
     const [startX, setStartX] = useState<number>(0)
@@ -36,6 +36,9 @@ export default function GraphEditor({
     )
 
     // const nodeUnderCursor = useRef(undefined)
+
+    const nodeWidth = 60
+    const nodeHeight = 60
 
     const dragRightDown = useRef(false)
 
@@ -55,8 +58,10 @@ export default function GraphEditor({
 
     const nodes = Array.from(useNodeStore.getState().nodes)
 
+    const connections = useNodeConnectionStore.getState().connections
+
     const connectionsWithCoordinates: ConnectionCoordinates[] = Array.from(
-        useNodeConnectionStore.getState().connections
+        connections
     )
         .map((connection) => {
             const fromNode = nodes.find(
@@ -76,21 +81,13 @@ export default function GraphEditor({
             }
         })
         .filter((c): c is ConnectionCoordinates => c !== undefined)
-    console.log(connectionsWithCoordinates)
+
     const maxX = maxCoordinate(connectionsWithCoordinates, 'x')
     const maxY = maxCoordinate(connectionsWithCoordinates, 'y')
-
-    console.log('max x:', maxX)
-    console.log(console.log('max y:', maxY))
 
     const dragHandler = (e: any) => {
         setEndX(e.nativeEvent.offsetX)
         setEndY(e.nativeEvent.offsetY)
-
-        // console.log('state end x: ', endX)
-        // console.log('state end y: ', endY)
-        // console.log('end x: ' + e.nativeEvent.offsetX)
-        // console.log('end y: ' + e.nativeEvent.offsetY)
 
         dragRightDown.current = startX < endX && startY < endY
 
@@ -167,16 +164,13 @@ export default function GraphEditor({
     }
 
     return (
-        // <div className="graph-editor-block">
-        //     <div className="graph-editor-navbar">navbar</div>
         <div
             className="graph-editor  relative"
             id="graph_editor"
             onMouseDown={(e) => {
                 setStartX(e.nativeEvent.offsetX)
                 setStartY(e.nativeEvent.offsetY)
-                // console.log('start x: ' + e.nativeEvent.offsetX)
-                // console.log('start y: ' + e.nativeEvent.offsetY)
+
                 setIsDragging(true)
             }}
             onMouseUp={(e) => {
@@ -252,8 +246,8 @@ export default function GraphEditor({
                 id={`connection_container_${applicationId}`}
                 className={'connection'}
                 style={{
-                    height: `${maxY ? maxY + 40 : 0}px`,
-                    width: `${maxX ? maxX + 40 : 0}px`,
+                    height: maxY ? `${maxY + nodeHeight}px` : '50vh',
+                    width: maxX ? `${maxX + nodeWidth}px` : '100%',
                 }}
             >
                 {connectionsWithCoordinates.map((connection, index) => {
@@ -274,6 +268,5 @@ export default function GraphEditor({
                 })}
             </svg>
         </div>
-        // </div>
     )
 }
