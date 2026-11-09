@@ -3,6 +3,7 @@ import { ICoreNode } from '@/app/interfaces/coreNode.interface'
 import { NodeData } from '@/app/interfaces/data/NodeData'
 import { Connection } from '@/app/interfaces/dto/connection/Connection'
 import { TreeNode } from '@/app/interfaces/TreeNode'
+import { useLogStore } from '@/app/stores/log-store'
 import {
     useNodeConnectionStore,
     useNodeDataStore,
@@ -36,6 +37,8 @@ export default function AppEditor({
 
     const { initNodeDataStore } = useNodeDataStore()
 
+    const {} = useLogStore()
+
     useEffect(() => {
         if (connectionsFromDatabase.length === 0) {
             resetConnectionStore()
@@ -68,6 +71,7 @@ export default function AppEditor({
                 ></NodeLibrary>
                 <NodeEditor applicationId={applicationId}></NodeEditor>
             </div>
+            <div className="render-window">{useLogStore.getState().log}</div>
             <div>
                 <div className="graph-editor-nav">
                     <SaveGraphButton

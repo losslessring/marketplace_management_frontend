@@ -3,6 +3,7 @@
 import { createAdjacencyList } from '@/app/common/graph/createAdjacencyList'
 import { dfsRecursive } from '@/app/common/graph/dfsRecursive'
 import { nodeParser } from '@/app/common/graph/nodeParser'
+import { useLogStore } from '@/app/stores/log-store'
 import {
     useNodeConnectionStore,
     useNodeDataStore,
@@ -15,6 +16,8 @@ function RunButton({}: React.PropsWithChildren<{}>) {
     const {} = useNodeConnectionStore()
     const {} = useSelectedNodeStore()
     const {} = useNodeDataStore()
+
+    const { pushLog, clearLog } = useLogStore()
 
     return (
         <button
@@ -44,6 +47,8 @@ function RunButton({}: React.PropsWithChildren<{}>) {
                     ? selectedNodes[0]
                     : nodeIds[0]
 
+                clearLog()
+
                 if (startNode) {
                     dfsRecursive(
                         startNode,
@@ -56,7 +61,9 @@ function RunButton({}: React.PropsWithChildren<{}>) {
                                 nodeData
                             )
                             //TODO: Render result here
-                            console.log(result)
+                            // console.log(result)
+                            pushLog(result)
+
                             return result
                         }
                     )
